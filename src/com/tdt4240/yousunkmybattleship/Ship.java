@@ -2,8 +2,12 @@ package com.tdt4240.yousunkmybattleship;
 
 import com.tdt4240.yousunkmybattleship.Constants.DirectionType;
 
+<<<<<<< HEAD
 public class Ship {
 
+=======
+public class Ship {	
+>>>>>>> c6a3d82cb9823191363e558f85659488c355f863
 	private int size;
 	//list of ships
 	private int[] ship;
