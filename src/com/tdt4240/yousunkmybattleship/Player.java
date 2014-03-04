@@ -6,8 +6,6 @@ public class Player {
 	// The number of non sunk ships of the player
 	private int shipsRemaining;
 	
-	private PlayerState playerState;
-	
 	public Player(String name) {
 		this.name = name;
 		shipsRemaining = Constants.NUMBER_SHIPS;
@@ -21,10 +19,6 @@ public class Player {
 		
 	}
 	
-	public PlayerState getPlayerState() {
-		return playerState;
-	}
-	
 	public void shipSunk() {
 		shipsRemaining -= 1;
 		
@@ -32,4 +26,5 @@ public class Player {
 			// game over
 		}
 	}
+
 }
