@@ -4,6 +4,7 @@ import sheep.game.Game;
 
 public class Constants {
 	public static Game game;
+	public static Player p1, p2;
 	
 	/* Window sizes */
 	public static int WINDOW_WIDTH  = 0;
@@ -15,7 +16,11 @@ public class Constants {
 	
 	public static int NUMBER_SHIPS = 5;
 	
-	public enum DirectionType {
-		HORIZONTAL, VERTICAL;
+
+	public static Player getOther(Player p){
+		if(p==p1)
+			return p2;
+		else
+			return p1;
 	}
 }
