@@ -4,16 +4,15 @@ import com.tdt4240.yousunkmybattleship.Constants.DirectionType;
 
 public class Ship {	
 	private int size;
-	//list of ships
+	// List of ships
 	private int[] ship;
 
+	// The position of the top left square of the ship in the grid
 	private int posX, posY;
 	
-
 	private DirectionType direction;
 	private boolean placedOnBoard;
     
-	//gives opponent points.
 	private boolean shipSunk;
 
 	public Ship(int size, int[] ship) {

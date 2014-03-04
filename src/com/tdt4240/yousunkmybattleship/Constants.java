@@ -16,6 +16,10 @@ public class Constants {
 	
 	public static int NUMBER_SHIPS = 5;
 	
+	public enum DirectionType {
+		HORIZONTAL, VERTICAL;
+	}
+	
 
 	public static Player getOther(Player p){
 		if(p==p1)
