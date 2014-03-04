@@ -3,14 +3,20 @@ package com.tdt4240.yousunkmybattleship;
 public class Ship {
 	private final String VERTICAL = "VERTICAL";
 	private final String HORIZONTAL = "HORIZONTAL";
-	private String direction;
 	
 	private int size;
+	//list of ships
 	private int[] ship;
+
 	private int posX, posY;
 	
+
+	private DirectionType direction;
+	private boolean placedOnBoard;
+    
+	//gives opponent points.
 	private boolean shipSunk;
-	
+
 	public Ship(int size, int[] ship) {
 		this.size = size;
 		
@@ -22,25 +28,21 @@ public class Ship {
 		this.ship = ship;
 		
 		this.shipSunk = false;
+		
+		this.direction = DirectionType.HORIZONTAL;
+		this.placedOnBoard = false;
 	}
-	
+
 	public boolean isSunk() {
 		return this.shipSunk;
 	}
-	
-	public void setVertical() {
-		this.direction = VERTICAL;
-	}
-	
-	public void setHorizontal() {
-		this.direction = HORIZONTAL;
-	}
-	
+
 	public boolean isVertical() {
-		if (this.direction == VERTICAL) {
+		if (direction == DirectionType.VERTICAL) {
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 	
 	public void placeShip(int posX, int posY, String direction) {
