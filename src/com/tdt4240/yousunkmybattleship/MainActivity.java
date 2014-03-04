@@ -3,6 +3,7 @@ package com.tdt4240.yousunkmybattleship;
 import sheep.game.Game;
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.Display;
 import android.view.Menu;
 
 public class MainActivity extends Activity {
@@ -10,7 +11,12 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        Display display = getWindowManager().getDefaultDisplay(); 
+		Constants.width = display.getWidth();
+		Constants.height = display.getHeight();
         Game game = new Game(this, null);
+        Constants.game=game;
         game.pushState(new MainMenuState());
         setContentView(game);
     }
