@@ -5,6 +5,7 @@ public class Ship {
 	private int[] ship;
 
 	private DirectionType direction;
+	private boolean placedOnBoard;
 
 	private boolean shipSunk;
 
@@ -12,10 +13,17 @@ public class Ship {
 		this.size = size;
 		this.ship = ship;
 		this.shipSunk = false;
+		
+		this.direction = DirectionType.HORIZONTAL;
+		this.placedOnBoard = false;
 	}
 
 	public boolean isSunk() {
 		return this.shipSunk;
+	}
+	
+	public boolean isPlaced() {
+		return this.placedOnBoard;
 	}
 
 	public boolean isVertical() {
