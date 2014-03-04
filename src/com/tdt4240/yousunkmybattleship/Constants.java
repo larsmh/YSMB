@@ -16,6 +16,7 @@ public class Constants {
 	
 	public static int NUMBER_SHIPS = 5;
 	
+
 	public static Player getOther(Player p){
 		if(p==p1)
 			return p2;

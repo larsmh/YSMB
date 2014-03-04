@@ -1,9 +1,14 @@
 package com.tdt4240.yousunkmybattleship;
 
-public class Ship {
+import com.tdt4240.yousunkmybattleship.Constants.DirectionType;
+
+public class Ship {	
 	private int size;
 	//list of ships
 	private int[] ship;
+
+	private int posX, posY;
+	
 
 	private DirectionType direction;
 	private boolean placedOnBoard;
@@ -13,7 +18,14 @@ public class Ship {
 
 	public Ship(int size, int[] ship) {
 		this.size = size;
+		
+		/*this.ship = new int[size];
+		for (int i = 0; i < size; i++) {
+			this.ship[i] = ship[i];
+		}*/
+		
 		this.ship = ship;
+		
 		this.shipSunk = false;
 		
 		this.direction = DirectionType.HORIZONTAL;
@@ -23,10 +35,6 @@ public class Ship {
 	public boolean isSunk() {
 		return this.shipSunk;
 	}
-	
-	public boolean isPlaced() {
-		return this.placedOnBoard;
-	}
 
 	public boolean isVertical() {
 		if (direction == DirectionType.VERTICAL) {
@@ -34,5 +42,17 @@ public class Ship {
 		} else {
 			return false;
 		}
+	}
+	
+	public void placeShip(int posX, int posY, DirectionType direction) {
+		
+	}
+	
+	public int getPosX() {
+		return this.posX;
+	}
+	
+	public int getPosY() {
+		return this.posY;
 	}
 }
