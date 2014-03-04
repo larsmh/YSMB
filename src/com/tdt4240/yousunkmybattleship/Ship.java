@@ -2,11 +2,13 @@ package com.tdt4240.yousunkmybattleship;
 
 public class Ship {
 	private int size;
+	//list of ships
 	private int[] ship;
 
 	private DirectionType direction;
 	private boolean placedOnBoard;
-
+    
+	//gives opponent points.
 	private boolean shipSunk;
 
 	public Ship(int size, int[] ship) {
