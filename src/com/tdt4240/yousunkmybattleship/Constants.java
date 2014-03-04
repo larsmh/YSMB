@@ -14,4 +14,8 @@ public class Constants {
 	public static int GRID_HEIGHT = 10;
 	
 	public static int NUMBER_SHIPS = 5;
+	
+	public enum DirectionType {
+		HORIZONTAL, VERTICAL;
+	}
 }

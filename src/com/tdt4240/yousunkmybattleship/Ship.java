@@ -1,5 +1,7 @@
 package com.tdt4240.yousunkmybattleship;
 
+import com.tdt4240.yousunkmybattleship.Constants.DirectionType;
+
 public class Ship {
 	private final String VERTICAL = "VERTICAL";
 	private final String HORIZONTAL = "HORIZONTAL";
