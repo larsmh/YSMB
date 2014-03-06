@@ -4,4 +4,7 @@ import sheep.game.State;
 
 public class ShipPlacementState extends State {
 	
+	public ShipPlacementState(){
+		
+	}
 }

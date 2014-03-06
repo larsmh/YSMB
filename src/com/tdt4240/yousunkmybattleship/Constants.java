@@ -4,11 +4,11 @@ import sheep.game.Game;
 
 public class Constants {
 	public static Game game;
-	public static Player p1, p2;
+	public Player p1, p2;
 	
 	/* Window sizes */
-	public static int WINDOW_WIDTH  = 0;
-	public static int WINDOW_HEIGHT = 0;
+	public static float WINDOW_WIDTH  = 0;
+	public static float WINDOW_HEIGHT = 0;
 	
 	/* Grid properties */
 	public static int GRID_WIDTH = 10;
@@ -21,7 +21,7 @@ public class Constants {
 	}
 	
 
-	public static Player getOther(Player p){
+	public Player getOther(Player p){
 		if(p==p1)
 			return p2;
 		else

@@ -8,7 +8,7 @@ import sheep.input.TouchListener;
 public class GameState extends State implements TouchListener {
 
 	public GameState() {
-
+		
 	}
 
 	public void draw(Canvas canvas) {
