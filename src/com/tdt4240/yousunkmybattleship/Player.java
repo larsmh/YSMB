@@ -6,13 +6,13 @@ public class Player {
 	
 	// The number of non sunk ships of the player
 	private int shipsRemaining;
-	private char board[][];
+	private int board[][];
 	private boolean drops[][];
 	
 	public Player(String name) {
 		this.name = name;
 		shipsRemaining = Constants.NUMBER_SHIPS;
-		board = new char[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
+		board = new int[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
 		drops = new boolean[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
 	}
 	

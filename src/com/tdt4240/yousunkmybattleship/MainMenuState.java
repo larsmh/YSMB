@@ -1,6 +1,8 @@
 package com.tdt4240.yousunkmybattleship;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 import sheep.game.State;
 import sheep.graphics.Image;
@@ -11,10 +13,19 @@ public class MainMenuState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.menu_bgtest);
 	TextButton newGame;
 	TextButton settings;
+	Paint[] paint;
 	
 	public MainMenuState(){
-		newGame = new TextButton(Constants.WINDOW_WIDTH/2, Constants.WINDOW_HEIGHT*0.2f, "New Game");
-		settings = new TextButton(Constants.WINDOW_WIDTH/2, Constants.WINDOW_HEIGHT*0.4f, "Settings");
+		paint= new Paint[2];
+		for(int i=0; i<paint.length; i++){
+			paint[i] = new Paint();
+			paint[i].setColor(Color.WHITE);
+			paint[i].setTextSize(Constants.WINDOW_WIDTH/21);
+		}
+		newGame = new TextButton(Constants.WINDOW_WIDTH*0.39f, Constants.WINDOW_HEIGHT*0.2f, 
+				"New Game", paint);
+		settings = new TextButton(Constants.WINDOW_WIDTH*0.42f, Constants.WINDOW_HEIGHT*0.36f,
+				"Settings", paint);
 	}
 	
 	public void draw(Canvas canvas) {
