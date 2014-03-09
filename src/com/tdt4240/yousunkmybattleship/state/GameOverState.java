@@ -1,4 +1,4 @@
-package com.tdt4240.yousunkmybattleship;
+package com.tdt4240.yousunkmybattleship.state;
 
 import android.graphics.Canvas;
 import sheep.game.State;

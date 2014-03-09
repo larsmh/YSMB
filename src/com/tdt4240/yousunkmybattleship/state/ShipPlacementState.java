@@ -1,6 +1,9 @@
-package com.tdt4240.yousunkmybattleship;
+package com.tdt4240.yousunkmybattleship.state;
 
+import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.R;
+import com.tdt4240.yousunkmybattleship.Ship;
+import com.tdt4240.yousunkmybattleship.ShipType;
 import android.graphics.Canvas;
 import sheep.game.State;
 import sheep.graphics.Image;

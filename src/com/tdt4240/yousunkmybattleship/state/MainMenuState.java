@@ -1,5 +1,6 @@
-package com.tdt4240.yousunkmybattleship;
+package com.tdt4240.yousunkmybattleship.state;
 
+import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.R;
 import android.graphics.Canvas;
 import android.graphics.Color;
