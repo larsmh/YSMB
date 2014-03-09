@@ -1,5 +1,6 @@
 package com.tdt4240.yousunkmybattleship;
 
+import com.tdt4240.yousunkmybattleship.R;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,34 +15,36 @@ public class MainMenuState extends State implements TouchListener {
 	TextButton newGame;
 	TextButton settings;
 	Paint[] paint;
-	
-	public MainMenuState(){
-		paint= new Paint[2];
-		for(int i=0; i<paint.length; i++){
+
+	public MainMenuState() {
+		paint = new Paint[2];
+		for (int i = 0; i < paint.length; i++) {
 			paint[i] = new Paint();
 			paint[i].setColor(Color.WHITE);
-			paint[i].setTextSize(Constants.WINDOW_WIDTH/21);
+			paint[i].setTextSize(Constants.WINDOW_WIDTH / 21);
 		}
-		newGame = new TextButton(Constants.WINDOW_WIDTH*0.39f, Constants.WINDOW_HEIGHT*0.2f, 
-				"New Game", paint);
-		settings = new TextButton(Constants.WINDOW_WIDTH*0.42f, Constants.WINDOW_HEIGHT*0.36f,
-				"Settings", paint);
+		newGame = new TextButton(Constants.WINDOW_WIDTH * 0.39f,
+				Constants.WINDOW_HEIGHT * 0.2f, "New Game", paint);
+		settings = new TextButton(Constants.WINDOW_WIDTH * 0.42f,
+				Constants.WINDOW_HEIGHT * 0.36f, "Settings", paint);
 	}
-	
+
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
 		newGame.draw(canvas);
 		settings.draw(canvas);
 	}
-	/*
-	public void update(float dt) {
 
-	}*/
-	
-	public boolean onTouchDown(MotionEvent event){
-		if(newGame.onTouchDown(event))
+	/*
+	 * public void update(float dt) {
+	 * 
+	 * }
+	 */
+
+	public boolean onTouchDown(MotionEvent event) {
+		if (newGame.onTouchDown(event))
 			Constants.game.pushState(new ShipPlacementState());
-		else if(settings.onTouchDown(event))
+		else if (settings.onTouchDown(event))
 			Constants.game.pushState(new SettingsState());
 		return true;
 	}

@@ -1,5 +1,8 @@
 package com.tdt4240.yousunkmybattleship;
 
+import com.tdt4240.yousunkmybattleship.R;
+import com.tdt4240.yousunkmybattleship.R.drawable;
+
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.State;
@@ -8,17 +11,17 @@ import sheep.input.TouchListener;
 
 public class SettingsState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.menu_bg);
-	
-	public SettingsState(){
-		
+
+	public SettingsState() {
+
 	}
-	
-	public void draw(Canvas canvas){
+
+	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
 	}
-	
-	public boolean onTouchDown(MotionEvent event){
-			Constants.game.popState();
+
+	public boolean onTouchDown(MotionEvent event) {
+		Constants.game.popState();
 		return true;
 	}
 }
