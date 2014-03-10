@@ -4,24 +4,32 @@ import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Image;
+import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
 public class ShipPlacementState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.gameboard);
+	Image button = new Image(R.drawable.button);
 	Sprite[] sprites;
 	Player p1, p2, p;
 	int moveableShip;
+	TextButton submit;
 
 	public ShipPlacementState() {
+		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f, Constants.START_OF_GRID-192/2, 
+				"Submit", Constants.paint);
 		p1 = new Player("Player1");
 		p2 = new Player("Player2");
 		p=p1;
 		moveableShip=-1;
 		createSprites();
+		
 	}
 
 	private void createSprites() {
@@ -31,9 +39,8 @@ public class ShipPlacementState extends State implements TouchListener {
 		placeOnTiles();
 	}
 	public void placeOnTiles(){
-		for(int i=0; i<sprites.length; i++){
-			sprites[i].setPosition(p.getShips()[i].getPosX()*108+sprites[i].getOffset().getX(), 840+p.getShips()[i].getPosY()*108+sprites[i].getOffset().getY());
-		}
+		for(int i=0; i<sprites.length; i++)
+			sprites[i].setPosition(p.getShips()[i].getPosX()*Constants.TILE_SIZE+sprites[i].getOffset().getX()+1, Constants.START_OF_GRID+p.getShips()[i].getPosY()*Constants.TILE_SIZE+sprites[i].getOffset().getY()+1);
 	}
 	public boolean IsMoveable(int s){
 		return (moveableShip==s || moveableShip==-1);
@@ -41,6 +48,8 @@ public class ShipPlacementState extends State implements TouchListener {
 
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
+		button.draw(canvas, 0, Constants.START_OF_GRID-192);
+		submit.draw(canvas);
 		for(int i=0; i<sprites.length; i++)
 			sprites[i].draw(canvas);
 	}
@@ -59,10 +68,10 @@ public class ShipPlacementState extends State implements TouchListener {
 				moveableShip=i;
 				if(event.getX()>=sprites[i].getOffset().getX() && event.getX()<=Constants.WINDOW_WIDTH-sprites[i].getOffset().getX())
 					x=event.getX();
-				if(event.getY()>=840+sprites[i].getOffset().getY() && event.getY()<=Constants.WINDOW_HEIGHT-sprites[i].getOffset().getY())
+				if(event.getY()>=Constants.START_OF_GRID+sprites[i].getOffset().getY() && event.getY()<=Constants.WINDOW_HEIGHT-sprites[i].getOffset().getY())
 					y=event.getY();
 				sprites[i].setPosition(x, y);
-				p.getShips()[i].placeShip((int)((54+x-sprites[i].getOffset().getX())/108), (int)((54-840+y-sprites[i].getOffset().getY())/108), 
+				p.getShips()[i].placeShip((int)((Constants.TILE_SIZE/2+x-sprites[i].getOffset().getX())/Constants.TILE_SIZE), (int)((Constants.TILE_SIZE/2-Constants.START_OF_GRID+y-sprites[i].getOffset().getY())/108), 
 						Constants.DirectionType.HORIZONTAL);
 				return true;
 			}

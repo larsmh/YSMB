@@ -1,5 +1,6 @@
 package com.tdt4240.yousunkmybattleship;
 
+import android.graphics.Paint;
 import sheep.game.Game;
 
 public class Constants {
@@ -13,8 +14,12 @@ public class Constants {
 	/* Grid properties */
 	public static int GRID_WIDTH = 10;
 	public static int GRID_HEIGHT = 10;
+	public static float TILE_SIZE = 108;
+	public static float START_OF_GRID = 840;
 	
 	public static int NUMBER_SHIPS = 5;
+	
+	public static Paint[] paint;
 	
 	public enum DirectionType {
 		HORIZONTAL, VERTICAL;
