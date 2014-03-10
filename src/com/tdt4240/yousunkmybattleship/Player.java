@@ -1,5 +1,7 @@
 package com.tdt4240.yousunkmybattleship;
 
+import sheep.game.Sprite;
+
 public class Player {
 	private String name;
 	private int bombsPerTurn, totalHits;
@@ -10,11 +12,14 @@ public class Player {
 	private int board[][];
 	private boolean drops[][];
 
+	Ship[] ships;
+
 	public Player(String name) {
 		this.name = name;
 		shipsRemaining = Constants.NUMBER_SHIPS;
 		board = new int[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
 		drops = new boolean[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
+		createShips();
 	}
 
 	public String getName() {
@@ -31,6 +36,21 @@ public class Player {
 		if (shipsRemaining == 0) {
 			// game over
 		}
+	}
+	private void createShips() {
+		ships = new Ship[Constants.NUMBER_SHIPS];
+		ships[0] = new Ship(ShipType.AC_Carrier);
+		ships[1] = new Ship(ShipType.Battleship);
+		ships[2] = new Ship(ShipType.Submarine);
+		ships[3] = new Ship(ShipType.Destroyer);
+		ships[4] = new Ship(ShipType.Boat);
+		
+		for(int i=0; i<ships.length; i++){
+			ships[i].placeShip(0, i*2, Constants.DirectionType.HORIZONTAL);
+		}
+	}
+	public Ship[] getShips(){
+		return ships;
 	}
 
 }

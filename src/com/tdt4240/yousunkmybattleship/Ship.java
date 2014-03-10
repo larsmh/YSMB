@@ -1,5 +1,7 @@
 package com.tdt4240.yousunkmybattleship;
 
+import sheep.game.Sprite;
+
 import com.tdt4240.yousunkmybattleship.Constants.DirectionType;
 
 public class Ship {
@@ -23,6 +25,7 @@ public class Ship {
 		shipSunk = false;
 		direction = DirectionType.HORIZONTAL;
 		placedOnBoard = false;
+		posX=0; posY=0;
 	}
 
 	public boolean isSunk() {
@@ -56,5 +59,8 @@ public class Ship {
 
 	public int getPosY() {
 		return this.posY;
+	}
+	public ShipType getType(){
+		return type;
 	}
 }
