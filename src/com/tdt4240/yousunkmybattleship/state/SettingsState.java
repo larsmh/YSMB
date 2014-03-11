@@ -25,7 +25,10 @@ public class SettingsState extends State implements TouchListener {
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
-		Constants.game.popState();
+		if(backButton.onTouchDown(event)){
+			Constants.game.popState();
+		}
+		
 		return true;
 	}
 }
