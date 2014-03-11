@@ -13,7 +13,7 @@ public class GameOverState extends State implements TouchListener {
 	// Image backGround =
 	TextButton menu;
 	TextButton exit;
-	
+
 	// Change to a simple text
 	TextButton winnerAnnounce;
 
@@ -24,12 +24,13 @@ public class GameOverState extends State implements TouchListener {
 			Constants.paint[i].setColor(Color.WHITE);
 			Constants.paint[i].setTextSize(Constants.WINDOW_WIDTH / 21);
 		}
-		menu = new TextButton(Constants.WINDOW_WIDTH * 0.39f,
-				Constants.WINDOW_HEIGHT * 0.2f, "New Game", Constants.paint);
+		menu = new TextButton(Constants.WINDOW_WIDTH * 0.35f,
+				Constants.WINDOW_HEIGHT * 0.50f, "New Game", Constants.paint);
 		exit = new TextButton(Constants.WINDOW_WIDTH * 0.42f,
-				Constants.WINDOW_HEIGHT * 0.36f, "Settings", Constants.paint);
-		
-		// winnerAnnounce = " wins!";
+				Constants.WINDOW_HEIGHT * 0.65f, "Settings", Constants.paint);
+
+//		winnerAnnounce = new TextButton(Constants.WINDOW_WIDTH * 0.1f,
+//				Constants.WINDOW_HEIGHT * 0.25f, pWinner + " wins!", Constants.paint);
 	}
 
 	public void draw(Canvas canvas) {

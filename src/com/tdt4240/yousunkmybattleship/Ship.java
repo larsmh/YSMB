@@ -1,7 +1,5 @@
 package com.tdt4240.yousunkmybattleship;
 
-import sheep.game.Sprite;
-
 import com.tdt4240.yousunkmybattleship.Constants.DirectionType;
 
 public class Ship {
