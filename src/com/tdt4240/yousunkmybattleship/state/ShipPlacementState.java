@@ -1,5 +1,7 @@
 package com.tdt4240.yousunkmybattleship.state;
 
+import java.util.Calendar;
+
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
@@ -18,7 +20,7 @@ public class ShipPlacementState extends State implements TouchListener {
 	Player p1, p2, p;
 	int moveableShip;
 	TextButton submit;
-	private boolean waitForClick;
+	private long startClickTime;
 
 	public ShipPlacementState() {
 		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
@@ -27,9 +29,7 @@ public class ShipPlacementState extends State implements TouchListener {
 		p2 = new Player("Player2");
 		p = p1;
 		moveableShip = -1;
-		waitForClick = true;
 		createSprites();
-
 	}
 
 	private void createSprites() {
@@ -41,12 +41,10 @@ public class ShipPlacementState extends State implements TouchListener {
 
 	// Places the ship being moved on the tiles closest to it
 	public void placeOnTiles() {
-		for (int i = 0; i < sprites.length; i++)
-			sprites[i].setPosition(p.getShips()[i].getPosX()
-					* Constants.TILE_SIZE + sprites[i].getOffset().getX() + 1,
-					Constants.START_OF_GRID + p.getShips()[i].getPosY()
-							* Constants.TILE_SIZE
-							+ sprites[i].getOffset().getY() + 1);
+		for (int i = 0; i < sprites.length; i++) {
+			sprites[i].setPosition(p.getShips()[i].getPosX() * Constants.TILE_SIZE + sprites[i].getOffset().getX() + 1,
+					Constants.START_OF_GRID + p.getShips()[i].getPosY()	* Constants.TILE_SIZE + sprites[i].getOffset().getY() + 1);
+		}
 	}
 
 	// Makes sure you don't accidentally start moving a different ship when dragging another ship past it
@@ -66,20 +64,41 @@ public class ShipPlacementState extends State implements TouchListener {
 		for (int i = 0; i < sprites.length; i++)
 			sprites[i].update(dt);
 	}
+	public boolean onTouchEvent(MotionEvent event) {
+		int eventAction = event.getAction();
+		
+		switch (eventAction) {
+		case MotionEvent.ACTION_DOWN:
+			// Change direction of ship
+			break;
+		case MotionEvent.ACTION_MOVE:
+			// Do stuff
+			break;
+		case MotionEvent.ACTION_UP:
+			// Place ship
+			break;
+		
+		}
+		return true;
+	}
+	
+	public boolean onTouchDown(MotionEvent event) {
+		startClickTime = Calendar.getInstance().getTimeInMillis();
+		return true;
+	}
 
 	public boolean onTouchMove(MotionEvent event) {
 		for (int i = sprites.length - 1; i >= 0; i--) {
-			float x = sprites[i].getPosition().getX(), y = sprites[i]
-					.getPosition().getY();
-			if (event.getX() >= sprites[i].getX()
-					- sprites[i].getOffset().getX()
-					&& event.getX() <= sprites[i].getX()
-							+ sprites[i].getOffset().getX()
-					&& event.getY() >= sprites[i].getY()
-							- sprites[i].getOffset().getY()
-					&& event.getY() <= sprites[i].getY()
-							+ sprites[i].getOffset().getY() && isMoveable(i)) {
+			float x = sprites[i].getPosition().getX();
+			float y = sprites[i].getPosition().getY();
+			
+			if (event.getX() >= sprites[i].getX() - sprites[i].getOffset().getX()
+					&& event.getX() <= sprites[i].getX() + sprites[i].getOffset().getX()
+					&& event.getY() >= sprites[i].getY() - sprites[i].getOffset().getY()
+					&& event.getY() <= sprites[i].getY() + sprites[i].getOffset().getY() 
+					&& isMoveable(i)) {
 				moveableShip = i;
+				
 				// Checks edges so that ships are not dragged off the board
 				if (event.getX() >= sprites[i].getOffset().getX() 
 						&& event.getX() <= Constants.WINDOW_WIDTH - sprites[i].getOffset().getX()) {
@@ -89,14 +108,12 @@ public class ShipPlacementState extends State implements TouchListener {
 						&& event.getY() <= Constants.WINDOW_HEIGHT - sprites[i].getOffset().getY()) {
 					y = event.getY();
 				}
-				// Move to onTouchUp
+				
+				// Move to onTouchUp?
 				sprites[i].setPosition(x, y);
 				p.getShips()[i].placeShip(
-						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i]
-								.getOffset().getX()) / Constants.TILE_SIZE),
-						(int) ((Constants.TILE_SIZE / 2
-								- Constants.START_OF_GRID + y - sprites[i]
-								.getOffset().getY()) / 108),
+						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i].getOffset().getX()) / Constants.TILE_SIZE),
+						(int) ((Constants.TILE_SIZE / 2	- Constants.START_OF_GRID + y - sprites[i].getOffset().getY()) / 108),
 						Constants.DirectionType.HORIZONTAL);
 				return true;
 			}
@@ -105,6 +122,10 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	public boolean onTouchUp(MotionEvent event) {
+		long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+		if (clickDuration < Constants.MAX_CLICK_DURATION) {
+			// rotate ship
+		}
 		placeOnTiles();
 		moveableShip = -1;
 		return true;
