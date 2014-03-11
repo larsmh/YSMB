@@ -9,7 +9,8 @@ public class Player {
 	// The number of non sunk ships of the player
 	private int shipsRemaining;
 
-	// Represents the player grid. -1 means there is no ships on the case.
+	// Represents the player grid. It is the sprite integer of the ship which is
+	// on the case. -1 means there is no ship on the case.
 	private int board[][];
 
 	// Represents the grid. True means the player dropped a bomb on the case.
