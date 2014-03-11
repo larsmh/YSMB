@@ -19,18 +19,19 @@ public class ShipPlacementState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.gameboard);
 	Image button = new Image(R.drawable.button);
 	Sprite[] sprites;
-	Player p1, p2, p;
+	Player p;
 	int moveableShip;
 	TextButton submit;
 	private long startClickTime;
 
 	public ShipPlacementState() {
-		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
-				Constants.START_OF_GRID - 192 / 2, "Submit", Constants.paint);
-		p1 = new Player("Player1");
-		p2 = new Player("Player2");
-		p = p1;
-		moveableShip = -1;
+		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f, Constants.START_OF_GRID-192/2, 
+				"Submit", Constants.paint);
+		Constants.p1 = new Player("Player1");
+		Constants.p2 = new Player("Player2");
+		p=Constants.p1;
+		moveableShip=-1;
+
 		createSprites();
 	}
 

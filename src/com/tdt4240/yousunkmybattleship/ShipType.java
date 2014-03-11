@@ -23,10 +23,10 @@ public enum ShipType {
 			shipImg = new Image(R.drawable.sub);
 			break;
 		case 1:
-			shipImg = new Image(R.drawable.boat3);
+			shipImg = new Image(R.drawable.destroyer);
 			break;
 		case 0:
-			shipImg = new Image(R.drawable.boat2);
+			shipImg = new Image(R.drawable.boat);
 			break;
 		}
 	}

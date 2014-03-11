@@ -31,6 +31,7 @@ public class Player {
 		drops = new boolean[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
 		for (int i = 0; i < Constants.GRID_HEIGHT; i++) {
 			for (int j = 0; j < Constants.GRID_WIDTH; j++) {
+				board[i][j] = -1;
 				drops[i][j] = false;
 			}
 		}
@@ -75,4 +76,18 @@ public class Player {
 		return ships;
 	}
 
+	public boolean registerDrop(int x, int y) {
+		if (!drops[y][x]) {
+			return (drops[y][x] = true);
+		}
+		return false;
+	}
+
+	public int[][] getBoard() {
+		return board;
+	}
+
+	public boolean[][] getDrops() {
+		return drops;
+	}
 }
