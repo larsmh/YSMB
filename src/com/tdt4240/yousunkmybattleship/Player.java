@@ -1,5 +1,8 @@
 package com.tdt4240.yousunkmybattleship;
 
+import com.tdt4240.yousunkmybattleship.state.GameOverState;
+import com.tdt4240.yousunkmybattleship.state.ShipPlacementState;
+
 public class Player {
 	private String name;
 	private int bombsPerTurn, totalHits;
@@ -32,7 +35,7 @@ public class Player {
 		shipsRemaining -= 1;
 
 		if (shipsRemaining == 0) {
-			// game over
+			Constants.game.pushState(new GameOverState(this.name));
 		}
 	}
 	private void createShips() {
