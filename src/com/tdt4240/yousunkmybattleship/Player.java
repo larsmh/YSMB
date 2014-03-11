@@ -22,6 +22,7 @@ public class Player {
 		shipsRemaining = Constants.NUMBER_SHIPS;
 
 		drops = new boolean[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
+		board = new int[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
 		for (int i = 0; i < Constants.GRID_HEIGHT; i++) {
 			for (int j = 0; j < Constants.GRID_WIDTH; j++) {
 				board[i][j] = -1;
