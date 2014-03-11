@@ -36,6 +36,10 @@ public class Player {
 
 	}
 
+	public void bombDropped(int i, int j) {
+		drops[i][j] = true;
+	}
+	
 	public void shipSunk() {
 		shipsRemaining -= 1;
 
