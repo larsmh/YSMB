@@ -15,15 +15,21 @@ public class GameOverState extends State implements TouchListener {
 	// Image backGround =
 	TextButton menu;
 	TextButton exit;
-	
+
 	String loser;
+	String winner;
 
 	private static final Font WINNER = new Font(255, 255, 255,
 			Constants.WINDOW_WIDTH / 15, Typeface.SANS_SERIF, Typeface.BOLD);
 
 	public GameOverState(String loser) {
 		this.loser = loser;
-		
+		if (loser == Constants.p1.getName()) {
+			this.winner = Constants.p2.getName();
+		} else {
+			this.winner = Constants.p1.getName();
+		}
+
 		Constants.paint = new Paint[2];
 		for (int i = 0; i < Constants.paint.length; i++) {
 			Constants.paint[i] = new Paint();
@@ -31,9 +37,9 @@ public class GameOverState extends State implements TouchListener {
 			Constants.paint[i].setTextSize(Constants.WINDOW_WIDTH / 21);
 		}
 		menu = new TextButton(Constants.WINDOW_WIDTH * 0.35f,
-				Constants.WINDOW_HEIGHT * 0.50f, "Menu", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.60f, "Menu", Constants.paint);
 		exit = new TextButton(Constants.WINDOW_WIDTH * 0.42f,
-				Constants.WINDOW_HEIGHT * 0.65f, "Exit", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.75f, "Exit", Constants.paint);
 	}
 
 	public void draw(Canvas canvas) {
@@ -42,8 +48,9 @@ public class GameOverState extends State implements TouchListener {
 		exit.draw(canvas);
 
 		// Display the name of the loser
-		canvas.drawText(loser + " loses!", Constants.WINDOW_WIDTH * 0.25f,
-				Constants.WINDOW_HEIGHT * 0.1f, WINNER);
+		canvas.drawText(winner + " wins!\n\n" + loser + " loses!",
+				Constants.WINDOW_WIDTH * 0.25f, Constants.WINDOW_HEIGHT * 0.1f,
+				WINNER);
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
