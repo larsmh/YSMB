@@ -1,6 +1,9 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import com.tdt4240.yousunkmybattleship.Constants;
+import com.tdt4240.yousunkmybattleship.Player;
+import com.tdt4240.yousunkmybattleship.R;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,27 +11,30 @@ import android.graphics.Typeface;
 import android.view.MotionEvent;
 import sheep.game.State;
 import sheep.graphics.Font;
+import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
 public class GameOverState extends State implements TouchListener {
-	// Image backGround =
+	Image background =  new Image(R.drawable.water_background);//temporary background, should we use the wat
 	TextButton menu;
 	TextButton exit;
-
-	String loser;
-	String winner;
+	//Player winner; 
+	String looserName;
+	String winnerName;
 
 	private static final Font WINNER = new Font(255, 255, 255,
 			Constants.WINDOW_WIDTH / 15, Typeface.SANS_SERIF, Typeface.BOLD);
 
-	public GameOverState(String loser) {
+	public GameOverState(Player winner) {
+		looserName = Constants.getOther(winner).getName();
+		 /*
 		this.loser = loser;
 		if (loser == Constants.p1.getName()) {
 			this.winner = Constants.p2.getName();
 		} else {
 			this.winner = Constants.p1.getName();
-		}
+		}*/
 
 		Constants.paint = new Paint[2];
 		for (int i = 0; i < Constants.paint.length; i++) {
