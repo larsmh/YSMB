@@ -7,26 +7,31 @@ public enum ShipType {
 			2, 0);
 
 	private int size, sprite;
-	private Image shipImg;
+	private Image shipImgVert, shipImgHor;
 
 	private ShipType(int size, int sprite) {
 		this.size = size;
 		this.sprite = sprite;
 		switch (sprite) {
 		case 4:
-			shipImg = new Image(R.drawable.ac_carrier);
+			shipImgHor = new Image(R.drawable.ac_carrier);
+			shipImgVert = new Image(R.drawable.ac_carrier2);
 			break;
 		case 3:
-			shipImg = new Image(R.drawable.battleship);
+			shipImgHor = new Image(R.drawable.battleship);
+			shipImgVert = new Image(R.drawable.battleship2);
 			break;
 		case 2:
-			shipImg = new Image(R.drawable.sub);
+			shipImgHor = new Image(R.drawable.sub);
+			shipImgVert = new Image(R.drawable.sub2);
 			break;
 		case 1:
-			shipImg = new Image(R.drawable.destroyer);
+			shipImgHor = new Image(R.drawable.destroyer);
+			shipImgVert = new Image(R.drawable.destroyer2);
 			break;
 		case 0:
-			shipImg = new Image(R.drawable.boat);
+			shipImgHor = new Image(R.drawable.boat);
+			shipImgVert = new Image(R.drawable.boat2);
 			break;
 		}
 	}
@@ -39,7 +44,10 @@ public enum ShipType {
 		return sprite;
 	}
 
-	public Image getImg() {
-		return shipImg;
+	public Image getImgVert() {
+		return shipImgVert;
+	}
+	public Image getImgHor() {
+		return shipImgHor;
 	}
 }

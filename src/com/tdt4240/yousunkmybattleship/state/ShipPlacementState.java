@@ -29,8 +29,8 @@ public class ShipPlacementState extends State implements TouchListener {
 				"Submit", Constants.paint);
 		Constants.p1 = new Player("Player1");
 		Constants.p2 = new Player("Player2");
-		p=Constants.p1;
-		moveableShip=-1;
+		p = Constants.p1;
+		moveableShip = -1;
 
 		createSprites();
 	}
@@ -38,8 +38,23 @@ public class ShipPlacementState extends State implements TouchListener {
 	private void createSprites() {
 		sprites = new Sprite[5];
 		for (int i = 0; i < sprites.length; i++)
-			sprites[i] = new Sprite(p.getShips()[i].getType().getImg());
+			sprites[i] = new Sprite(p.getShips()[i].getType().getImgVert());
 		placeOnTiles();
+	}
+	
+	private void changeSprite(int spriteIndex, Ship ship) {
+		if (ship.isVertical()) {
+			sprites[spriteIndex].setView(ship.getType().getImgHor());
+		}
+		else {
+			sprites[spriteIndex].setView(ship.getType().getImgVert());
+		}
+	}
+	
+	public void rotateShip() {
+		Ship ship = p.getShips()[moveableShip];
+		ship.changeDirection();
+		changeSprite(moveableShip, ship);
 	}
 
 	// Places the ship being moved on the tiles closest to it
@@ -130,21 +145,9 @@ public class ShipPlacementState extends State implements TouchListener {
 		
 		if (clickDuration < Constants.MAX_CLICK_DURATION) {
 			rotateShip();
-			Ship temp = p.getShips()[moveableShip];
-			if (temp.isVertical()) {
-				for (int i = 0; i < sprites.length; i++) {
-					
-				}
-			}
-			
 		}
 		placeOnTiles();
 		moveableShip = -1;
 		return true;
-	}
-	
-	public void rotateShip() {
-		Ship ship = p.getShips()[moveableShip];
-		ship.changeDirection();
 	}
 }

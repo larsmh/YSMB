@@ -5,7 +5,7 @@ import sheep.game.Game;
 
 public class Constants {
 	public static Game game;
-	public static Player p1, p2;
+	public static Player p1, p2, p;
 	
 	/* Window sizes */
 	public static float WINDOW_WIDTH = 0;
