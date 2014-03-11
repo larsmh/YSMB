@@ -12,7 +12,10 @@ import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
 public class MainMenuState extends State implements TouchListener {
-	Image bg = new Image(R.drawable.menu_bgtest);
+	//Background with integrated buttonbackgrounds:
+	//Image bg = new Image(R.drawable.menu_bgtest);
+	//Regular background:
+	Image bg = new Image(R.drawable.menu_bg);
 	TextButton newGame;
 	TextButton settings;
 
