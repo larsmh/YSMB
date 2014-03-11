@@ -1,7 +1,5 @@
 package com.tdt4240.yousunkmybattleship;
 
-import sheep.game.Sprite;
-
 import com.tdt4240.yousunkmybattleship.Constants.DirectionType;
 
 public class Ship {
@@ -25,7 +23,8 @@ public class Ship {
 		shipSunk = false;
 		direction = DirectionType.HORIZONTAL;
 		placedOnBoard = false;
-		posX=0; posY=0;
+		posX = 0;
+		posY = 0;
 	}
 
 	public boolean isSunk() {
@@ -36,6 +35,15 @@ public class Ship {
 		hits++;
 		if (hits >= type.getSize())
 			shipSunk = true;
+	}
+	
+	public void changeDirection() {
+		if (this.isVertical()) {
+			this.direction = DirectionType.HORIZONTAL;
+		}
+		else {
+			this.direction = DirectionType.VERTICAL;
+		}
 	}
 
 	public boolean isVertical() {
@@ -60,7 +68,8 @@ public class Ship {
 	public int getPosY() {
 		return this.posY;
 	}
-	public ShipType getType(){
+
+	public ShipType getType() {
 		return type;
 	}
 }

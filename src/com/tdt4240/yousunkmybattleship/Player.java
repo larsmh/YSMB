@@ -1,6 +1,6 @@
 package com.tdt4240.yousunkmybattleship;
 
-import sheep.game.Sprite;
+import com.tdt4240.yousunkmybattleship.state.GameOverState;
 
 public class Player {
 	private String name;
@@ -40,7 +40,7 @@ public class Player {
 		shipsRemaining -= 1;
 
 		if (shipsRemaining == 0) {
-			// game over
+			Constants.game.pushState(new GameOverState(this));
 		}
 	}
 	private void createShips() {
