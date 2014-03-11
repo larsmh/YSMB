@@ -18,6 +18,7 @@ public class ShipPlacementState extends State implements TouchListener {
 	Player p1, p2, p;
 	int moveableShip;
 	TextButton submit;
+	private boolean waitForClick;
 
 	public ShipPlacementState() {
 		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
@@ -26,6 +27,7 @@ public class ShipPlacementState extends State implements TouchListener {
 		p2 = new Player("Player2");
 		p = p1;
 		moveableShip = -1;
+		waitForClick = true;
 		createSprites();
 
 	}
@@ -37,6 +39,7 @@ public class ShipPlacementState extends State implements TouchListener {
 		placeOnTiles();
 	}
 
+	// Places the ship being moved on the tiles closest to it
 	public void placeOnTiles() {
 		for (int i = 0; i < sprites.length; i++)
 			sprites[i].setPosition(p.getShips()[i].getPosX()
@@ -46,7 +49,8 @@ public class ShipPlacementState extends State implements TouchListener {
 							+ sprites[i].getOffset().getY() + 1);
 	}
 
-	public boolean IsMoveable(int s) {
+	// Makes sure you don't accidentally start moving a different ship when dragging another ship past it
+	public boolean isMoveable(int s) {
 		return (moveableShip == s || moveableShip == -1);
 	}
 
@@ -74,17 +78,18 @@ public class ShipPlacementState extends State implements TouchListener {
 					&& event.getY() >= sprites[i].getY()
 							- sprites[i].getOffset().getY()
 					&& event.getY() <= sprites[i].getY()
-							+ sprites[i].getOffset().getY() && IsMoveable(i)) {
+							+ sprites[i].getOffset().getY() && isMoveable(i)) {
 				moveableShip = i;
-				if (event.getX() >= sprites[i].getOffset().getX()
-						&& event.getX() <= Constants.WINDOW_WIDTH
-								- sprites[i].getOffset().getX())
+				// Checks edges so that ships are not dragged off the board
+				if (event.getX() >= sprites[i].getOffset().getX() 
+						&& event.getX() <= Constants.WINDOW_WIDTH - sprites[i].getOffset().getX()) {
 					x = event.getX();
-				if (event.getY() >= Constants.START_OF_GRID
-						+ sprites[i].getOffset().getY()
-						&& event.getY() <= Constants.WINDOW_HEIGHT
-								- sprites[i].getOffset().getY())
+				}
+				if (event.getY() >= Constants.START_OF_GRID	+ sprites[i].getOffset().getY()
+						&& event.getY() <= Constants.WINDOW_HEIGHT - sprites[i].getOffset().getY()) {
 					y = event.getY();
+				}
+				// Move to onTouchUp
 				sprites[i].setPosition(x, y);
 				p.getShips()[i].placeShip(
 						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i]
