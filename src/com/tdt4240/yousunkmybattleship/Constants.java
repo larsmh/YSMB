@@ -26,7 +26,7 @@ public class Constants {
 	}
 	
 
-	public Player getOther(Player p){
+	public static Player getOther(Player p){
 		if(p==p1)
 			return p2;
 		else
