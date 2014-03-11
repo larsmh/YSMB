@@ -38,16 +38,16 @@ public class ShipPlacementState extends State implements TouchListener {
 	private void createSprites() {
 		sprites = new Sprite[5];
 		for (int i = 0; i < sprites.length; i++)
-			sprites[i] = new Sprite(p.getShips()[i].getType().getImg());
+			sprites[i] = new Sprite(p.getShips()[i].getType().getImgVert());
 		placeOnTiles();
 	}
 	
 	private void changeSprite(int spriteIndex, Ship ship) {
 		if (ship.isVertical()) {
-			sprites[spriteIndex].setView(ship.getType().getImg());
+			sprites[spriteIndex].setView(ship.getType().getImgHor());
 		}
 		else {
-			sprites[spriteIndex].setView(ship.getType().getImg());
+			sprites[spriteIndex].setView(ship.getType().getImgVert());
 		}
 	}
 	
