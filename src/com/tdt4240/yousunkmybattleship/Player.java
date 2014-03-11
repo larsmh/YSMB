@@ -5,6 +5,7 @@ import com.tdt4240.yousunkmybattleship.state.GameOverState;
 public class Player {
 	private String name;
 	private int bombsPerTurn, totalHits;
+	private boolean shipsPlaced;
 
 	// The number of non sunk ships of the player
 	private int shipsRemaining;
@@ -21,6 +22,8 @@ public class Player {
 	public Player(String name) {
 		this.name = name;
 		shipsRemaining = Constants.NUMBER_SHIPS;
+		shipsPlaced=false;
+		bombsPerTurn=5;
 
 		drops = new boolean[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
 		board = new int[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
@@ -63,7 +66,7 @@ public class Player {
 		ships[4] = new Ship(ShipType.Boat);
 
 		for (int i = 0; i < ships.length; i++) {
-			ships[i].placeShip(0, i * 2, Constants.DirectionType.HORIZONTAL);
+			ships[i].placeShip(0, i * 2);
 		}
 	}
 
@@ -84,5 +87,18 @@ public class Player {
 
 	public boolean[][] getDrops() {
 		return drops;
+	}
+	public void setReady(){
+		shipsPlaced=true;
+	}
+	public boolean isReady(){
+		return shipsPlaced;
+	}
+	public int getBombsPerTurn(){
+		return bombsPerTurn;
+	}
+	public void reduceBombsPerTurn(){
+		if(bombsPerTurn!=1)
+			bombsPerTurn--;
 	}
 }

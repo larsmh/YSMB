@@ -7,6 +7,7 @@ import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
 import sheep.game.State;
@@ -17,19 +18,16 @@ public class GameState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.gameboard);
 	Image bs = new Image(R.drawable.bomb_site);
 	Image ws = new Image(R.drawable.water_splash);
-	Sprite drop;
-	Player p;
 	int bombsLeft;
-	//ArrayList<Image> drops;
 	
 
 	public GameState() {
-		//drops = new ArrayList<Image>();
+		bombsLeft=Constants.p.getBombsPerTurn();
 	}
 	
 	//try to register bomb drop in model
 	public boolean dropBomb(float x, float y){
-		if(p.registerDrop((int)(x/Constants.TILE_SIZE), (int)(y/Constants.TILE_SIZE))){
+		if(Constants.p.registerDrop((int)(x/Constants.TILE_SIZE), (int)((-Constants.START_OF_GRID+y)/Constants.TILE_SIZE))){
 			bombsLeft--;
 			return true;
 		}
@@ -38,17 +36,20 @@ public class GameState extends State implements TouchListener {
 	
 	//draw all bomb drops registered in model
 	private void drawBombDrops(float dt){
+		ArrayList<Sprite> drops;
+		drops = new ArrayList<Sprite>();
 		for(int i=0; i<Constants.GRID_HEIGHT; i++){
 			for(int j=0; j<Constants.GRID_WIDTH; j++){
-				if(p.getDrops()[i][j]){
-					if(Constants.getOther(p).getBoard()[i][j]!=-1){
-						drop = new Sprite(bs);
+				if(Constants.p.getDrops()[i][j]){
+					if(Constants.getOther().getBoard()[i][j]!=-1){
+						drops.add(new Sprite(bs));
 					}
 					else{
-						drop = new Sprite(ws);
+						drops.add(new Sprite(ws));
 					}
-					drop.setPosition(j*Constants.TILE_SIZE, Constants.START_OF_GRID+i*Constants.TILE_SIZE);
-					drop.update(dt);
+					drops.get(drops.size()-1).setPosition(j*Constants.TILE_SIZE+drops.get(drops.size()-1).getOffset().getX(), 
+							Constants.START_OF_GRID+i*Constants.TILE_SIZE+drops.get(drops.size()-1).getOffset().getY());
+					drops.get(drops.size()-1).update(dt);
 				}
 			}
 		}
@@ -65,8 +66,10 @@ public class GameState extends State implements TouchListener {
 
 	public boolean onTouchDown(MotionEvent event) {
 		//check if all bombs are dropped
-		if(bombsLeft==0)
+		if(bombsLeft==0){
+			//bombsLeft=Constants.getOther().getBombsPerTurn();
 			Constants.game.pushState(new ChangeTurnState());
+		}
 		//try to drop a bomb on selected grid
 		if(event.getY()>Constants.START_OF_GRID){
 			return dropBomb(event.getX(), event.getY());

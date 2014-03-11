@@ -27,7 +27,7 @@ public class GameOverState extends State implements TouchListener {
 
 	public GameOverState(Player looser) {
 		looserName = looser.getName();
-		winnerName = Constants.getOther(looser).getName();
+		winnerName = Constants.getOther().getName();
 
 		menu = new TextButton(Constants.WINDOW_WIDTH * 0.35f,
 				Constants.WINDOW_HEIGHT * 0.60f, "Menu", Constants.paint);

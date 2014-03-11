@@ -8,6 +8,7 @@ import com.tdt4240.yousunkmybattleship.R;
 import com.tdt4240.yousunkmybattleship.Ship;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
 import sheep.game.State;
@@ -19,7 +20,6 @@ public class ShipPlacementState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.gameboard);
 	Image button = new Image(R.drawable.button);
 	Sprite[] sprites;
-	Player p;
 	int moveableShip;
 	TextButton submit;
 	private long startClickTime;
@@ -29,39 +29,45 @@ public class ShipPlacementState extends State implements TouchListener {
 				"Submit", Constants.paint);
 		Constants.p1 = new Player("Player1");
 		Constants.p2 = new Player("Player2");
-		p = Constants.p1;
+		Constants.p = Constants.p1;
 		moveableShip = -1;
 
 		createSprites();
+		//Log.d("!!!!!", Constants.p.getShips()[1].isVertical()+"");
 	}
 
 	private void createSprites() {
 		sprites = new Sprite[5];
 		for (int i = 0; i < sprites.length; i++)
-			sprites[i] = new Sprite(p.getShips()[i].getType().getImgVert());
+			sprites[i] = new Sprite(Constants.p.getShips()[i].getType().getImgHor());
 		placeOnTiles();
 	}
 	
+	//Turning of ships works now
 	private void changeSprite(int spriteIndex, Ship ship) {
 		if (ship.isVertical()) {
-			sprites[spriteIndex].setView(ship.getType().getImgHor());
+			//sprites[spriteIndex].setView(ship.getType().getImgHor());
+			sprites[spriteIndex] = new Sprite(Constants.p.getShips()[spriteIndex].getType().getImgHor());
 		}
 		else {
-			sprites[spriteIndex].setView(ship.getType().getImgVert());
+			//sprites[spriteIndex].setView(ship.getType().getImgVert());
+			sprites[spriteIndex] = new Sprite(Constants.p.getShips()[spriteIndex].getType().getImgVert());
 		}
 	}
 	
 	public void rotateShip() {
-		Ship ship = p.getShips()[moveableShip];
-		ship.changeDirection();
-		changeSprite(moveableShip, ship);
+		if(moveableShip!=-1){
+			Ship ship = Constants.p.getShips()[moveableShip];
+			ship.changeDirection();
+			changeSprite(moveableShip, ship);
+		}
 	}
 
 	// Places the ship being moved on the tiles closest to it
 	public void placeOnTiles() {
 		for (int i = 0; i < sprites.length; i++) {
-			sprites[i].setPosition(p.getShips()[i].getPosX() * Constants.TILE_SIZE + sprites[i].getOffset().getX() + 1,
-					Constants.START_OF_GRID + p.getShips()[i].getPosY()	* Constants.TILE_SIZE + sprites[i].getOffset().getY() + 1);
+			sprites[i].setPosition(Constants.p.getShips()[i].getPosX() * Constants.TILE_SIZE + sprites[i].getOffset().getX() + 1,
+					Constants.START_OF_GRID + Constants.p.getShips()[i].getPosY() * Constants.TILE_SIZE + sprites[i].getOffset().getY() + 1);
 		}
 	}
 
@@ -83,6 +89,7 @@ public class ShipPlacementState extends State implements TouchListener {
 			sprites[i].update(dt);
 	}
 	
+	/* Do we need this method now?
 	public boolean onTouchEvent(MotionEvent event) {
 		int eventAction = event.getAction();
 		
@@ -99,9 +106,22 @@ public class ShipPlacementState extends State implements TouchListener {
 		
 		}
 		return true;
-	}
+	}*/
 	
 	public boolean onTouchDown(MotionEvent event) {
+		if(submit.onTouchDown(event)){
+			for(int i=0; i<sprites.length-1; i++){
+				for(int j=i+1; j<sprites.length; j++){
+					if(sprites[i].collides(sprites[j])){
+						Log.d("!!!!!!", "s"+i+" and s"+j+" collides");
+						return false;
+					}
+				}
+			}
+			Constants.p.setReady();
+			Constants.game.pushState(new ChangeTurnState());
+			return true;
+		}
 		startClickTime = Calendar.getInstance().getTimeInMillis();
 		return true;
 	}
@@ -111,6 +131,7 @@ public class ShipPlacementState extends State implements TouchListener {
 			float x = sprites[i].getPosition().getX();
 			float y = sprites[i].getPosition().getY();
 			
+			//if(sprites[i].getBoundingBox().contains(event.getX(), event.getY()) && isMoveable(i)){
 			if (event.getX() >= sprites[i].getX() - sprites[i].getOffset().getX()
 					&& event.getX() <= sprites[i].getX() + sprites[i].getOffset().getX()
 					&& event.getY() >= sprites[i].getY() - sprites[i].getOffset().getY()
@@ -130,10 +151,9 @@ public class ShipPlacementState extends State implements TouchListener {
 				
 				// Move to onTouchUp?
 				sprites[i].setPosition(x, y);
-				p.getShips()[i].placeShip(
+				Constants.p.getShips()[i].placeShip(
 						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i].getOffset().getX()) / Constants.TILE_SIZE),
-						(int) ((Constants.TILE_SIZE / 2	- Constants.START_OF_GRID + y - sprites[i].getOffset().getY()) / 108),
-						Constants.DirectionType.HORIZONTAL);
+						(int) ((Constants.TILE_SIZE / 2	- Constants.START_OF_GRID + y - sprites[i].getOffset().getY()) / 108));
 				return true;
 			}
 		}

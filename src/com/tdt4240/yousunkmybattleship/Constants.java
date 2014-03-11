@@ -28,10 +28,13 @@ public class Constants {
 	}
 
 
-	public static Player getOther(Player p) {
+	public static Player getOther() {
 		if (p == p1)
 			return p2;
 		else
 			return p1;
+	}
+	public static void changeTurn(){
+		p=getOther();
 	}
 }
