@@ -5,8 +5,6 @@ import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
 import sheep.game.State;
@@ -16,7 +14,9 @@ import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
 public class GameOverState extends State implements TouchListener {
-	Image background =  new Image(R.drawable.water_background);//temporary background, should we use the wat
+	// Temporary background
+	Image background = new Image(R.drawable.water_background);
+
 	TextButton menu;
 	TextButton exit;
 	String looserName;
@@ -28,14 +28,7 @@ public class GameOverState extends State implements TouchListener {
 	public GameOverState(Player looser) {
 		looserName = looser.getName();
 		winnerName = Constants.getOther(looser).getName();
-		 /* I changed this part, I think my solution(see above) is easier, as far as I could see. But I dodn't want to delete the code previous code, if I'm wrong. Thea
-		this.loser = loser;
-		if (loser == Constants.p1.getName()) {
-			this.winner = Constants.p2.getName();
-		} else {
-			this.winner = Constants.p1.getName();
-		}*/
-		
+
 		menu = new TextButton(Constants.WINDOW_WIDTH * 0.35f,
 				Constants.WINDOW_HEIGHT * 0.60f, "Menu", Constants.paint);
 		exit = new TextButton(Constants.WINDOW_WIDTH * 0.42f,
@@ -48,14 +41,14 @@ public class GameOverState extends State implements TouchListener {
 		exit.draw(canvas);
 
 		// Display the name of the winner and the loser
-		//canvas.drawText(winner + " wins!\n\n" + loser + " loses!",
-				//Constants.WINDOW_WIDTH * 0.25f, Constants.WINDOW_HEIGHT * 0.1f,
-				//WINNER);
+		// canvas.drawText(winner + " wins!\n\n" + loser + " loses!",
+		// Constants.WINDOW_WIDTH * 0.25f, Constants.WINDOW_HEIGHT * 0.1f,
+		// WINNER);
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
 		if (menu.onTouchDown(event)) {
-			//should pop back down to main menu, not add another mainmenustate
+			// should pop back down to main menu, not add another mainmenustate
 		} else if (exit.onTouchDown(event)) {
 			// Quit the app
 		}
