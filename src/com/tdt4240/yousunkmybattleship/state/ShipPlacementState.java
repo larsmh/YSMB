@@ -40,6 +40,16 @@ public class ShipPlacementState extends State implements TouchListener {
 			sprites[i] = new Sprite(p.getShips()[i].getType().getImg());
 		placeOnTiles();
 	}
+	
+	private void changeSprite(int spriteIndex, Ship ship) {
+		sprites[spriteIndex].setView(ship.getType().getImg());
+	}
+	
+	public void rotateShip() {
+		Ship ship = p.getShips()[moveableShip];
+		ship.changeDirection();
+		changeSprite(moveableShip, ship);
+	}
 
 	// Places the ship being moved on the tiles closest to it
 	public void placeOnTiles() {
@@ -129,21 +139,9 @@ public class ShipPlacementState extends State implements TouchListener {
 		
 		if (clickDuration < Constants.MAX_CLICK_DURATION) {
 			rotateShip();
-			Ship temp = p.getShips()[moveableShip];
-			if (temp.isVertical()) {
-				for (int i = 0; i < sprites.length; i++) {
-					
-				}
-			}
-			
 		}
 		placeOnTiles();
 		moveableShip = -1;
 		return true;
-	}
-	
-	public void rotateShip() {
-		Ship ship = p.getShips()[moveableShip];
-		ship.changeDirection();
 	}
 }
