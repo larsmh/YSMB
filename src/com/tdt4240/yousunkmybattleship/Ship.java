@@ -36,6 +36,15 @@ public class Ship {
 		if (hits >= type.getSize())
 			shipSunk = true;
 	}
+	
+	public void changeDirection() {
+		if (this.isVertical()) {
+			this.direction = DirectionType.HORIZONTAL;
+		}
+		else {
+			this.direction = DirectionType.VERTICAL;
+		}
+	}
 
 	public boolean isVertical() {
 		if (direction == DirectionType.VERTICAL) {

@@ -5,6 +5,8 @@ import java.util.Calendar;
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
+import com.tdt4240.yousunkmybattleship.Ship;
+
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
@@ -17,18 +19,19 @@ public class ShipPlacementState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.gameboard);
 	Image button = new Image(R.drawable.button);
 	Sprite[] sprites;
-	Player p1, p2, p;
+	Player p;
 	int moveableShip;
 	TextButton submit;
 	private long startClickTime;
 
 	public ShipPlacementState() {
-		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
-				Constants.START_OF_GRID - 192 / 2, "Submit", Constants.paint);
-		p1 = new Player("Player1");
-		p2 = new Player("Player2");
-		p = p1;
-		moveableShip = -1;
+		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f, Constants.START_OF_GRID-192/2, 
+				"Submit", Constants.paint);
+		Constants.p1 = new Player("Player1");
+		Constants.p2 = new Player("Player2");
+		p=Constants.p1;
+		moveableShip=-1;
+
 		createSprites();
 	}
 
@@ -64,6 +67,7 @@ public class ShipPlacementState extends State implements TouchListener {
 		for (int i = 0; i < sprites.length; i++)
 			sprites[i].update(dt);
 	}
+	
 	public boolean onTouchEvent(MotionEvent event) {
 		int eventAction = event.getAction();
 		
@@ -123,11 +127,24 @@ public class ShipPlacementState extends State implements TouchListener {
 
 	public boolean onTouchUp(MotionEvent event) {
 		long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+		
 		if (clickDuration < Constants.MAX_CLICK_DURATION) {
-			// rotate ship
+			rotateShip();
+			Ship temp = p.getShips()[moveableShip];
+			if (temp.isVertical()) {
+				for (int i = 0; i < sprites.length; i++) {
+					
+				}
+			}
+			
 		}
 		placeOnTiles();
 		moveableShip = -1;
 		return true;
+	}
+	
+	public void rotateShip() {
+		Ship ship = p.getShips()[moveableShip];
+		ship.changeDirection();
 	}
 }
