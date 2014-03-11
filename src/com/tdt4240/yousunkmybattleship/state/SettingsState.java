@@ -1,6 +1,7 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import com.tdt4240.yousunkmybattleship.Constants;
+import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -26,8 +27,11 @@ public class SettingsState extends State implements TouchListener {
 
 	public boolean onTouchDown(MotionEvent event) {
 		if(backButton.onTouchDown(event)){
-			Constants.game.popState();
-			//Constants.game.pushState(new GameOverState("));
+			//for testing:
+			//Constants.p1 = new Player("1");
+			//Constants.p2 = new Player("2");
+			//Constants.game.popState();
+			//Constants.game.pushState(new GameOverState(Constants.p1));
 		}
 		
 		return true;

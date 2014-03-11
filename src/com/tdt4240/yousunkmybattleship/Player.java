@@ -9,7 +9,10 @@ public class Player {
 	// The number of non sunk ships of the player
 	private int shipsRemaining;
 
+	// Represents the player grid. -1 means there is no ships on the case.
 	private int board[][];
+
+	// Represents the grid. True means the player dropped a bomb on the case.
 	private boolean drops[][];
 
 	Ship[] ships;
@@ -18,16 +21,6 @@ public class Player {
 		this.name = name;
 		shipsRemaining = Constants.NUMBER_SHIPS;
 
-		// Represents the grid. -1 means that there is no boat.
-		board = new int[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
-		for (int i = 0; i < Constants.GRID_HEIGHT; i++) {
-			for (int j = 0; j < Constants.GRID_WIDTH; j++) {
-				board[i][j] = -1;
-			}
-		}
-
-		// Represents the grid. True indicates that the player drop a bomb on
-		// this case
 		drops = new boolean[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
 		for (int i = 0; i < Constants.GRID_HEIGHT; i++) {
 			for (int j = 0; j < Constants.GRID_WIDTH; j++) {
