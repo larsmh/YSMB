@@ -29,8 +29,8 @@ public class ShipPlacementState extends State implements TouchListener {
 				"Submit", Constants.paint);
 		Constants.p1 = new Player("Player1");
 		Constants.p2 = new Player("Player2");
-		p=Constants.p1;
-		moveableShip=-1;
+		p = Constants.p1;
+		moveableShip = -1;
 
 		createSprites();
 	}
@@ -43,7 +43,12 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 	
 	private void changeSprite(int spriteIndex, Ship ship) {
-		sprites[spriteIndex].setView(ship.getType().getImg());
+		if (ship.isVertical()) {
+			sprites[spriteIndex].setView(ship.getType().getImg());
+		}
+		else {
+			sprites[spriteIndex].setView(ship.getType().getImg());
+		}
 	}
 	
 	public void rotateShip() {
