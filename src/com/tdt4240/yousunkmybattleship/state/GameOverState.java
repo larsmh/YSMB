@@ -47,7 +47,7 @@ public class GameOverState extends State implements TouchListener {
 		menu.draw(canvas);
 		exit.draw(canvas);
 
-		// Display the name of the loser
+		// Display the name of the winner and the loser
 		canvas.drawText(winner + " wins!\n\n" + loser + " loses!",
 				Constants.WINDOW_WIDTH * 0.25f, Constants.WINDOW_HEIGHT * 0.1f,
 				WINNER);
