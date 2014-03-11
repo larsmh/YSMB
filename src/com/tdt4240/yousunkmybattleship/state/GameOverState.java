@@ -4,8 +4,10 @@ import com.tdt4240.yousunkmybattleship.Constants;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import sheep.game.State;
+import sheep.graphics.Font;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
@@ -14,8 +16,8 @@ public class GameOverState extends State implements TouchListener {
 	TextButton menu;
 	TextButton exit;
 
-	// Change to a simple text
-	TextButton winnerAnnounce;
+	private static final Font WHITE_SANS_BOLD_70 = new Font(255, 255, 255,
+			70.0f, Typeface.SANS_SERIF, Typeface.BOLD);
 
 	public GameOverState() {
 		Constants.paint = new Paint[2];
@@ -28,16 +30,14 @@ public class GameOverState extends State implements TouchListener {
 				Constants.WINDOW_HEIGHT * 0.50f, "New Game", Constants.paint);
 		exit = new TextButton(Constants.WINDOW_WIDTH * 0.42f,
 				Constants.WINDOW_HEIGHT * 0.65f, "Settings", Constants.paint);
-
-//		winnerAnnounce = new TextButton(Constants.WINDOW_WIDTH * 0.1f,
-//				Constants.WINDOW_HEIGHT * 0.25f, pWinner + " wins!", Constants.paint);
 	}
 
 	public void draw(Canvas canvas) {
 		// backGround.draw(canvas, 0, 0);
 		menu.draw(canvas);
 		exit.draw(canvas);
-		// winnerAnnounce.draw(canvas);
+		canvas.drawText(" wins!", Constants.WINDOW_WIDTH * 0.25f,
+				Constants.WINDOW_HEIGHT * 0.1f, WHITE_SANS_BOLD_70);
 	}
 
 	public boolean onTouchDown(MotionEvent event) {

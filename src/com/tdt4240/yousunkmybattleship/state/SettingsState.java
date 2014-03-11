@@ -2,8 +2,6 @@ package com.tdt4240.yousunkmybattleship.state;
 
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.R;
-import com.tdt4240.yousunkmybattleship.R.drawable;
-
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.State;
