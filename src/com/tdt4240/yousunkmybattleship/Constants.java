@@ -19,6 +19,8 @@ public class Constants {
 	
 	public static int NUMBER_SHIPS = 5;
 	
+	public static final int MAX_CLICK_DURATION = 200;
+	
 	public static Paint[] paint;
 	
 	public enum DirectionType {
