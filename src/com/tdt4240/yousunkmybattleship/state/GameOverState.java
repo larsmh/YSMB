@@ -37,6 +37,9 @@ public class GameOverState extends State implements TouchListener {
 
 	public void draw(Canvas canvas) {
 		background.draw(canvas, 0, 0);
+		canvas.drawText("The Winner is: " + winnerName, 15f, 30f, Constants.paint[0]);
+		canvas.drawText("and the big, fat looser is: " + looserName, 30f, 30f, Constants.paint[0]);
+
 		menu.draw(canvas);
 		exit.draw(canvas);
 
