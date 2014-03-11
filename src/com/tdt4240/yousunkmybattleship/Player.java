@@ -1,7 +1,5 @@
 package com.tdt4240.yousunkmybattleship;
 
-import sheep.game.Sprite;
-
 public class Player {
 	private String name;
 	private int bombsPerTurn, totalHits;

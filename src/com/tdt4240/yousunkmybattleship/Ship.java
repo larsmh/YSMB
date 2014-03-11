@@ -25,7 +25,8 @@ public class Ship {
 		shipSunk = false;
 		direction = DirectionType.HORIZONTAL;
 		placedOnBoard = false;
-		posX=0; posY=0;
+		posX = 0;
+		posY = 0;
 	}
 
 	public boolean isSunk() {
@@ -60,7 +61,8 @@ public class Ship {
 	public int getPosY() {
 		return this.posY;
 	}
-	public ShipType getType(){
+
+	public ShipType getType() {
 		return type;
 	}
 }
