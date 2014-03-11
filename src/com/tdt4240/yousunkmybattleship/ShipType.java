@@ -12,14 +12,14 @@ public enum ShipType {
 	private ShipType(int size, int sprite) {
 		this.size = size;
 		this.sprite = sprite;
-		switch(sprite){
-		case 4:	
+		switch (sprite) {
+		case 4:
 			shipImg = new Image(R.drawable.ac_carrier);
 			break;
 		case 3:
 			shipImg = new Image(R.drawable.battleship);
 			break;
-		case 2:	
+		case 2:
 			shipImg = new Image(R.drawable.sub);
 			break;
 		case 1:
@@ -38,7 +38,8 @@ public enum ShipType {
 	public int getSprite() {
 		return sprite;
 	}
-	public Image getImg(){
+
+	public Image getImg() {
 		return shipImg;
 	}
 }
