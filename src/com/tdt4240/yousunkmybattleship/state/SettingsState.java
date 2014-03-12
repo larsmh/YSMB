@@ -10,6 +10,12 @@ import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
+/**
+ * This is the settings menu where users are allowed to choose between different
+ * settings.
+ * 
+ */
+
 public class SettingsState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.menu_bg);
 	TextButton backButton;

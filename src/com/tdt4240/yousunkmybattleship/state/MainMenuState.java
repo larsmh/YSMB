@@ -11,6 +11,13 @@ import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
+/**
+ * This is the first screen that appears when one starts the application.
+ * 
+ * The user can either start the game or go to the settings menu.
+ * 
+ */
+
 public class MainMenuState extends State implements TouchListener {
 
 	// Background with integrated buttonbackgrounds:

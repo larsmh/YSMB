@@ -12,6 +12,11 @@ import sheep.game.State;
 import sheep.graphics.Image;
 import sheep.input.TouchListener;
 
+/**
+ * It is the screen that shows the game play.
+ * 
+ */
+
 public class GameState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.gameboard);
 	Image bs = new Image(R.drawable.bomb_site);

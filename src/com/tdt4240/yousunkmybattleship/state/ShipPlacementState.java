@@ -16,6 +16,16 @@ import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
+/**
+ * On this screen, the players can to place ships on their grids before the game
+ * starts.
+ * 
+ * When the ship placement is done the ChangePlayerState is pushed and the other
+ * player places his ships on the same type of screen. When both players have
+ * placed their ships they start the game in the GameState.
+ * 
+ */
+
 public class ShipPlacementState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.gameboard);
 	Image button = new Image(R.drawable.button);
@@ -44,7 +54,15 @@ public class ShipPlacementState extends State implements TouchListener {
 		placeOnTiles();
 	}
 
-	// Turning of ships works now
+	/**
+	 * Turns the sprite (from vertical to horizontal or vice versa)
+	 * 
+	 * @param spriteIndex
+	 *            the index of the sprite to turn
+	 * @param ship
+	 *            the ship to turn
+	 * 
+	 */
 	private void changeSprite(int spriteIndex, Ship ship) {
 		if (ship.isVertical()) {
 			// sprites[spriteIndex].setView(ship.getType().getImgHor());
@@ -65,7 +83,11 @@ public class ShipPlacementState extends State implements TouchListener {
 		}
 	}
 
-	// Places the ship being moved on the tiles closest to it
+	/**
+	 * Places the ship being moved on the tiles closest to it and add the ships
+	 * on the player's board
+	 * 
+	 */
 	public void placeOnTiles() {
 		for (int i = 0; i < sprites.length; i++) {
 			sprites[i].setPosition(
@@ -80,8 +102,14 @@ public class ShipPlacementState extends State implements TouchListener {
 		markOnPlayerBoard();
 	}
 
-	// Makes sure you don't accidentally start moving a different ship when
-	// dragging another ship past it
+	/**
+	 * Allows to make sure the player do not accidentally start moving a
+	 * different ship when dragging another ship past it
+	 * 
+	 * @param s
+	 *            the index of the ship to move
+	 * 
+	 */
 	public boolean isMoveable(int s) {
 		return (moveableShip == s || moveableShip == -1);
 	}
@@ -184,6 +212,12 @@ public class ShipPlacementState extends State implements TouchListener {
 		return true;
 	}
 
+	/**
+	 * Add the player's ships on his board. The integer correspond to the ship
+	 * sprite: 4 is an AC_Carrier, 3 is a Battleship, 2 is a Submarine, 1 is a
+	 * Destroyer and 0 is a Boat.
+	 * 
+	 */
 	public void markOnPlayerBoard() {
 		Ship[] ships = Constants.p.getShips();
 

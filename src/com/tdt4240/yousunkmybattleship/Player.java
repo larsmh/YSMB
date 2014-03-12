@@ -7,14 +7,23 @@ public class Player {
 	private int bombsPerTurn, totalHits;
 	private boolean shipsPlaced;
 
-	// The number of non sunk ships of the player
+	/**
+	 * The number of non sunk ships of the player
+	 * 
+	 */
 	private int shipsRemaining;
 
-	// Represents the player grid. It is the sprite integer of the ship which is
-	// on the case. -1 means there is no ship on the case.
+	/**
+	 * Represents the player grid. It is the sprite integer of the ship which is
+	 * on the case. -1 means there is no ship on the case
+	 * 
+	 */
 	private int board[][];
 
-	// Represents the grid. True means the player dropped a bomb on the case.
+	/**
+	 * Represents the grid. True means the player dropped a bomb on the case.
+	 * 
+	 */
 	private boolean drops[][];
 
 	Ship[] ships;
@@ -41,17 +50,13 @@ public class Player {
 		return this.name;
 	}
 
-	public void changePlayerState() {
-
-	}
-
 	public void bombDropped(int i, int j) {
 		drops[i][j] = true;
 	}
 
 	public void shipPlaced(int i, int j, Ship ship) {
 		board[i][j] = ship.getType().getSprite();
-		
+
 		ship.placeShip(i, j);
 	}
 
@@ -110,5 +115,9 @@ public class Player {
 	public void reduceBombsPerTurn() {
 		if (bombsPerTurn != 1)
 			bombsPerTurn--;
+	}
+
+	public void changePlayerState() {
+
 	}
 }
