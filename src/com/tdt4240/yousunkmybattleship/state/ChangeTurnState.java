@@ -15,7 +15,7 @@ import sheep.input.TouchListener;
  * This screen appears when the players change turns.
  * 
  * It indicates that it is to the next one to play, and the current player has
- * to click on “continue” before the game screen appears.It prevents from
+ * to click on continue before the game screen appears.It prevents from
  * cheating.
  * 
  */
@@ -41,6 +41,13 @@ public class ChangeTurnState extends State implements TouchListener {
 				Constants.game.pushState(new GameState());
 				return true;
 			} else {
+				try {
+	                synchronized(this){
+	                    wait(1000);
+	                }
+	            }
+	            catch(InterruptedException ex){                    
+	            }
 				Constants.game.popState();
 				return true;
 			}

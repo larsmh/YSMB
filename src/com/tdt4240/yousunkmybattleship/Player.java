@@ -1,5 +1,7 @@
 package com.tdt4240.yousunkmybattleship;
 
+import android.util.Log;
+
 import com.tdt4240.yousunkmybattleship.state.GameOverState;
 
 /**
@@ -110,6 +112,22 @@ public class Player {
 
 	public void setReady() {
 		shipsPlaced = true;
+		for(Ship s: ships){
+			if(s.isVertical()){
+				for(int j=0; j<s.getType().getSize(); j++)
+					board[s.getPosY()+j][s.getPosX()]=s.getType().getSprite();
+				
+			}
+			else{
+				for(int j=0; j<s.getType().getSize(); j++)
+					board[s.getPosY()][s.getPosX()+j]=s.getType().getSprite();
+			}
+			Log.d("!!!", s.isVertical()+"");
+		}
+		/*for(int i=0; i<board.length; i++){
+			Log.d("!!!", board[i][0]+" "+board[i][1]+" "+board[i][2]+" "+board[i][3]+" "+board[i][4]+" "+
+					board[i][5]+" "+board[i][6]+" "+board[i][7]+" "+board[i][8]+" "+board[i][9]+" ");
+		}*/
 	}
 
 	public boolean isReady() {

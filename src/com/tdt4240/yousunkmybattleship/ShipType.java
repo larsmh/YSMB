@@ -11,8 +11,8 @@ import sheep.graphics.Image;
  */
 
 public enum ShipType {
-	AC_Carrier(5, 4), Battleship(4, 3), Submarine(3, 2), Destroyer(3, 1), Boat(
-			2, 0);
+	AC_Carrier(5, 0), Battleship(4, 1), Submarine(3, 2), Destroyer(3, 3), Boat(
+			2, 4);
 
 	/**
 	 * The size attribute is the ship length which depends on the ship type.
@@ -31,23 +31,23 @@ public enum ShipType {
 		this.size = size;
 		this.sprite = sprite;
 		switch (sprite) {
-		case 4:
+		case 0:
 			shipImgHor = new Image(R.drawable.ac_carrier);
 			shipImgVert = new Image(R.drawable.ac_carrier2);
 			break;
-		case 3:
-			shipImgHor = new Image(R.drawable.battleship2);
-			shipImgVert = new Image(R.drawable.battleship);
+		case 1:
+			shipImgHor = new Image(R.drawable.battleship);
+			shipImgVert = new Image(R.drawable.battleship2);
 			break;
 		case 2:
-			shipImgHor = new Image(R.drawable.sub2);
-			shipImgVert = new Image(R.drawable.sub);
+			shipImgHor = new Image(R.drawable.sub);
+			shipImgVert = new Image(R.drawable.sub2);
 			break;
-		case 1:
+		case 3:
 			shipImgHor = new Image(R.drawable.destroyer);
 			shipImgVert = new Image(R.drawable.destroyer2);
 			break;
-		case 0:
+		case 4:
 			shipImgHor = new Image(R.drawable.boat);
 			shipImgVert = new Image(R.drawable.boat2);
 			break;

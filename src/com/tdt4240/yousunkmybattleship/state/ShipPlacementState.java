@@ -78,8 +78,8 @@ public class ShipPlacementState extends State implements TouchListener {
 	public void rotateShip() {
 		if (moveableShip != -1) {
 			Ship ship = Constants.p.getShips()[moveableShip];
-			ship.changeDirection();
 			changeSprite(moveableShip, ship);
+			ship.changeDirection();
 		}
 	}
 
@@ -99,7 +99,7 @@ public class ShipPlacementState extends State implements TouchListener {
 							+ sprites[i].getOffset().getY() + 1);
 		}
 
-		markOnPlayerBoard();
+		//markOnPlayerBoard();
 	}
 
 	/**
@@ -143,12 +143,15 @@ public class ShipPlacementState extends State implements TouchListener {
 			for (int i = 0; i < sprites.length - 1; i++) {
 				for (int j = i + 1; j < sprites.length; j++) {
 					if (sprites[i].collides(sprites[j])) {
-						Log.d("!!!!!!", "s" + i + " and s" + j + " collides");
 						return false;
 					}
 				}
 			}
 			Constants.p.setReady();
+			for(int i=0; i<Constants.p.getShips().length; i++){
+				if(Constants.p.getShips()[i].isVertical())
+					changeSprite(i, Constants.p.getShips()[i]);
+			}
 			Constants.game.pushState(new ChangeTurnState());
 			return true;
 		}
@@ -218,6 +221,7 @@ public class ShipPlacementState extends State implements TouchListener {
 	 * Destroyer and 0 is a Boat.
 	 * 
 	 */
+	/* This method is not working properly, and is not needed
 	public void markOnPlayerBoard() {
 		Ship[] ships = Constants.p.getShips();
 
@@ -234,5 +238,5 @@ public class ShipPlacementState extends State implements TouchListener {
 				}
 			}
 		}
-	}
+	}*/
 }
