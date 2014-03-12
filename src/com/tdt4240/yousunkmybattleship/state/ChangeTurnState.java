@@ -41,13 +41,6 @@ public class ChangeTurnState extends State implements TouchListener {
 				Constants.game.pushState(new GameState());
 				return true;
 			} else {
-				try {
-	                synchronized(this){
-	                    wait(1000);
-	                }
-	            }
-	            catch(InterruptedException ex){                    
-	            }
 				Constants.game.popState();
 				return true;
 			}

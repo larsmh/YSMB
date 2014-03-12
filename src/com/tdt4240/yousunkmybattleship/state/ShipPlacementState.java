@@ -43,7 +43,6 @@ public class ShipPlacementState extends State implements TouchListener {
 		moveableShip = -1;
 
 		createSprites();
-		// Log.d("!!!!!", Constants.p.getShips()[1].isVertical()+"");
 	}
 
 	private void createSprites() {
@@ -98,8 +97,6 @@ public class ShipPlacementState extends State implements TouchListener {
 							* Constants.TILE_SIZE
 							+ sprites[i].getOffset().getY() + 1);
 		}
-
-		//markOnPlayerBoard();
 	}
 
 	/**
@@ -118,25 +115,15 @@ public class ShipPlacementState extends State implements TouchListener {
 		bg.draw(canvas, 0, 0);
 		button.draw(canvas, 0, Constants.START_OF_GRID - 192);
 		submit.draw(canvas);
-		for (int i = 0; i < sprites.length; i++)
-			sprites[i].draw(canvas);
+		for (Sprite s: sprites)
+			s.draw(canvas);
 	}
 
 	public void update(float dt) {
-		for (int i = 0; i < sprites.length; i++)
-			sprites[i].update(dt);
+		for (Sprite s: sprites)
+			s.update(dt);
 	}
 
-	/*
-	 * Do we need this method now? public boolean onTouchEvent(MotionEvent
-	 * event) { int eventAction = event.getAction();
-	 * 
-	 * switch (eventAction) { case MotionEvent.ACTION_DOWN: // Change direction
-	 * of ship break; case MotionEvent.ACTION_MOVE: // Do stuff break; case
-	 * MotionEvent.ACTION_UP: // Place ship break;
-	 * 
-	 * } return true; }
-	 */
 
 	public boolean onTouchDown(MotionEvent event) {
 		if (submit.onTouchDown(event)) {
@@ -221,7 +208,7 @@ public class ShipPlacementState extends State implements TouchListener {
 	 * Destroyer and 0 is a Boat.
 	 * 
 	 */
-	/* This method is not working properly, and is not needed
+	/* This method is not working properly, and is not needed any longer
 	public void markOnPlayerBoard() {
 		Ship[] ships = Constants.p.getShips();
 

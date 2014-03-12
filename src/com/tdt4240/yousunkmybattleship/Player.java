@@ -122,12 +122,7 @@ public class Player {
 				for(int j=0; j<s.getType().getSize(); j++)
 					board[s.getPosY()][s.getPosX()+j]=s.getType().getSprite();
 			}
-			Log.d("!!!", s.isVertical()+"");
 		}
-		/*for(int i=0; i<board.length; i++){
-			Log.d("!!!", board[i][0]+" "+board[i][1]+" "+board[i][2]+" "+board[i][3]+" "+board[i][4]+" "+
-					board[i][5]+" "+board[i][6]+" "+board[i][7]+" "+board[i][8]+" "+board[i][9]+" ");
-		}*/
 	}
 
 	public boolean isReady() {
@@ -141,6 +136,15 @@ public class Player {
 	public void reduceBombsPerTurn() {
 		if (bombsPerTurn != 1)
 			bombsPerTurn--;
+	}
+	
+	public boolean shipIsHit(int x, int y){
+		if(board[y][x]==-1)
+			return false;
+		if(ships[board[y][x]].shipHit()){
+			Constants.p.reduceBombsPerTurn();
+		}
+		return true;
 	}
 
 	public void changePlayerState() {

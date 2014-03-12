@@ -59,10 +59,12 @@ public class Ship {
 		return this.shipSunk;
 	}
 
-	public void shipHit() {
+	public boolean shipHit() {
 		hits++;
-		if (hits >= type.getSize())
-			shipSunk = true;
+		if (hits == type.getSize()){
+			return (shipSunk=true);
+		}
+		return false;
 	}
 
 	public void changeDirection() {
