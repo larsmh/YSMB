@@ -47,6 +47,7 @@ public enum ShipType {
 	public Image getImgVert() {
 		return shipImgVert;
 	}
+
 	public Image getImgHor() {
 		return shipImgHor;
 	}

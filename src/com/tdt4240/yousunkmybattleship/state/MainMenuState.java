@@ -13,9 +13,9 @@ import sheep.input.TouchListener;
 
 public class MainMenuState extends State implements TouchListener {
 
-	//Background with integrated buttonbackgrounds:
-	//Image bg = new Image(R.drawable.menu_bgtest);
-	//Regular background:
+	// Background with integrated buttonbackgrounds:
+	// Image bg = new Image(R.drawable.menu_bgtest);
+	// Regular background:
 	Image bg = new Image(R.drawable.menu_bg);
 	TextButton newGame;
 	TextButton settings;
@@ -44,7 +44,7 @@ public class MainMenuState extends State implements TouchListener {
 	 * 
 	 * }
 	 */
-	
+
 	public boolean onTouchDown(MotionEvent event) {
 		if (newGame.onTouchDown(event))
 			Constants.game.pushState(new ShipPlacementState());

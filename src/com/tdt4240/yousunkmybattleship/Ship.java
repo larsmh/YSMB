@@ -36,7 +36,7 @@ public class Ship {
 		if (hits >= type.getSize())
 			shipSunk = true;
 	}
-	
+
 	public void changeDirection() {
 		if (isVertical())
 			direction = DirectionType.HORIZONTAL;
@@ -45,7 +45,7 @@ public class Ship {
 	}
 
 	public boolean isVertical() {
-		return(direction == DirectionType.VERTICAL);
+		return (direction == DirectionType.VERTICAL);
 	}
 
 	public void placeShip(int posX, int posY) {
@@ -65,4 +65,5 @@ public class Ship {
 	public ShipType getType() {
 		return type;
 	}
+
 }

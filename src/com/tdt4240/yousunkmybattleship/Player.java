@@ -22,8 +22,8 @@ public class Player {
 	public Player(String name) {
 		this.name = name;
 		shipsRemaining = Constants.NUMBER_SHIPS;
-		shipsPlaced=false;
-		bombsPerTurn=5;
+		shipsPlaced = false;
+		bombsPerTurn = 5;
 
 		drops = new boolean[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
 		board = new int[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
@@ -47,6 +47,12 @@ public class Player {
 
 	public void bombDropped(int i, int j) {
 		drops[i][j] = true;
+	}
+
+	public void shipPlaced(int i, int j, Ship ship) {
+		board[i][j] = ship.getType().getSprite();
+		
+		ship.placeShip(i, j);
 	}
 
 	public void shipSunk() {
@@ -88,17 +94,21 @@ public class Player {
 	public boolean[][] getDrops() {
 		return drops;
 	}
-	public void setReady(){
-		shipsPlaced=true;
+
+	public void setReady() {
+		shipsPlaced = true;
 	}
-	public boolean isReady(){
+
+	public boolean isReady() {
 		return shipsPlaced;
 	}
-	public int getBombsPerTurn(){
+
+	public int getBombsPerTurn() {
 		return bombsPerTurn;
 	}
-	public void reduceBombsPerTurn(){
-		if(bombsPerTurn!=1)
+
+	public void reduceBombsPerTurn() {
+		if (bombsPerTurn != 1)
 			bombsPerTurn--;
 	}
 }

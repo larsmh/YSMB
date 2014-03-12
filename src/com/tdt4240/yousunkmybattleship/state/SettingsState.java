@@ -17,7 +17,6 @@ public class SettingsState extends State implements TouchListener {
 	public SettingsState() {
 		backButton = new TextButton(Constants.WINDOW_WIDTH * 0.39f,
 				Constants.WINDOW_HEIGHT * 0.2f, "back to main", Constants.paint);
-
 	}
 
 	public void draw(Canvas canvas) {
@@ -26,14 +25,13 @@ public class SettingsState extends State implements TouchListener {
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
-		if(backButton.onTouchDown(event)){
-			//for testing:
+		if (backButton.onTouchDown(event)) {
+			// for testing:
 			Constants.p1 = new Player("1");
 			Constants.p2 = new Player("2");
-			//Constants.game.popState();
+			// Constants.game.popState();
 			Constants.game.pushState(new GameOverState(Constants.p1));
 		}
-		
 		return true;
 	}
 }
