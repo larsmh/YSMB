@@ -31,7 +31,6 @@ public class GameOverState extends State implements TouchListener {
 	public GameOverState(Player looser) {
 		looserName = looser.getName();
 		winnerName = Constants.getOther().getName();
-
 		menu = new TextButton(Constants.WINDOW_WIDTH * 0.1f,
 				Constants.WINDOW_HEIGHT * 0.9f, "Menu", Constants.paint);
 		exit = new TextButton(Constants.WINDOW_WIDTH * 0.9f,
@@ -42,9 +41,8 @@ public class GameOverState extends State implements TouchListener {
 		background.draw(canvas, 0, 0);
 		canvas.drawText("The Winner is: " + winnerName, Constants.WINDOW_WIDTH * 0.39f,
 				Constants.WINDOW_HEIGHT * 0.2f,	Constants.paint[0]);
-		canvas.drawText("and the big, fat looser is: " + looserName, Constants.WINDOW_WIDTH * 0.35f, Constants.WINDOW_HEIGHT *0.36f,
+		canvas.drawText("and the big, fat looser is: " + looserName, Constants.WINDOW_WIDTH * 0.30f, Constants.WINDOW_HEIGHT *0.36f,
 				Constants.paint[0]);
-
 		menu.draw(canvas);
 		exit.draw(canvas);
 	}

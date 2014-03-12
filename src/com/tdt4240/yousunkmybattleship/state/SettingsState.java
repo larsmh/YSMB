@@ -24,7 +24,7 @@ public class SettingsState extends State implements TouchListener {
 	public SettingsState() {
 		backButton = new TextButton(Constants.WINDOW_WIDTH * 0.39f,
 				Constants.WINDOW_HEIGHT * 0.2f, "back to main", Constants.paint);
-		gameOverTestScreen = new TextButton(Constants.WINDOW_WIDTH * 0.42f,
+		gameOverTestScreen = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
 				Constants.WINDOW_HEIGHT * 0.36f, "Game Over test screen", Constants.paint);
 	}
 
