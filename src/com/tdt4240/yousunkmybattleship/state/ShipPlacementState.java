@@ -8,7 +8,6 @@ import com.tdt4240.yousunkmybattleship.R;
 import com.tdt4240.yousunkmybattleship.Ship;
 
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
 import sheep.game.State;
@@ -98,8 +97,6 @@ public class ShipPlacementState extends State implements TouchListener {
 							* Constants.TILE_SIZE
 							+ sprites[i].getOffset().getY() + 1);
 		}
-
-		//markOnPlayerBoard();
 	}
 
 	/**
