@@ -11,6 +11,14 @@ import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
+/**
+ * This screen appears when one of the two players win.
+ * 
+ * It indicates who are the winner and the loser, and allows the players to go
+ * back to the main menu or quit the app.
+ * 
+ */
+
 public class GameOverState extends State implements TouchListener {
 	// Temporary background
 	Image background = new Image(R.drawable.water_background);

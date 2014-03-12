@@ -11,6 +11,15 @@ import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
+/**
+ * This screen appears when the players change turns.
+ * 
+ * It indicates that it is to the next one to play, and the current player has
+ * to click on “continue” before the game screen appears.It prevents from
+ * cheating.
+ * 
+ */
+
 public class ChangeTurnState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.menu_bg);
 	TextButton progress;
