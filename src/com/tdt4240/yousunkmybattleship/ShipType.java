@@ -2,11 +2,29 @@ package com.tdt4240.yousunkmybattleship;
 
 import sheep.graphics.Image;
 
+/**
+ * Contains the different types of ships.
+ * 
+ * It restricts the ships that can be created to existing ships. Each type of
+ * ship has a number to be identify on the players' boards.
+ * 
+ */
+
 public enum ShipType {
 	AC_Carrier(5, 4), Battleship(4, 3), Submarine(3, 2), Destroyer(3, 1), Boat(
 			2, 0);
 
+	/**
+	 * The size attribute is the ship length which depends on the ship type.
+	 * The sprite attribute is an integer that indicates the ship type.
+	 * 
+	 */
 	private int size, sprite;
+
+	/**
+	 * The vertical and horizontal images for each ship.
+	 * 
+	 */
 	private Image shipImgVert, shipImgHor;
 
 	private ShipType(int size, int sprite) {

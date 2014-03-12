@@ -2,6 +2,14 @@ package com.tdt4240.yousunkmybattleship;
 
 import com.tdt4240.yousunkmybattleship.state.GameOverState;
 
+/**
+ * Contains the relevant methods and attributes linked to the players.
+ * 
+ * Each player is represented by an object of this class and has a name, ships,
+ * a board with his ships, a number of bombs per turn, etc.
+ * 
+ */
+
 public class Player {
 	private String name;
 	private int bombsPerTurn, totalHits;
