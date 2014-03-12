@@ -22,10 +22,8 @@ public class InstructionsState extends State implements TouchListener {
 
 	public InstructionsState() {
 		backButton = new TextButton(Constants.WINDOW_WIDTH * 0.8f,
-				Constants.WINDOW_HEIGHT * 0.9f, "Next");
+				Constants.WINDOW_HEIGHT * 0.9f, "Back");
 		addTouchListener(backButton);
-		backButton = new TextButton(Constants.WINDOW_WIDTH * 0.39f,
-				Constants.WINDOW_HEIGHT * 0.2f, "Back", Constants.paint);
 	}
 
 	public void draw(Canvas canvas) {

@@ -27,11 +27,14 @@ public class SettingsState extends State implements TouchListener {
 		backButton = new TextButton(Constants.WINDOW_WIDTH * 0.39f,
 				Constants.WINDOW_HEIGHT * 0.2f, "back to main", Constants.paint);
 		gameOverTestScreen = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
-				Constants.WINDOW_HEIGHT * 0.36f, "Game Over Test screen", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.36f, "Game Over Test screen",
+				Constants.paint);
 		gameStateTest = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
-				Constants.WINDOW_HEIGHT * 0.52f, "Game State Test Screen", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.52f, "Game State Test Screen",
+				Constants.paint);
 		changeTurnStateTest = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
-				Constants.WINDOW_HEIGHT * 0.78f, "Change Turn State Test screen", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.78f,
+				"Change Turn State Test screen", Constants.paint);
 	}
 
 	public void draw(Canvas canvas) {
@@ -45,15 +48,18 @@ public class SettingsState extends State implements TouchListener {
 	public boolean onTouchDown(MotionEvent event) {
 		if (backButton.onTouchDown(event)) {
 			Constants.game.popState();
-		}if (gameOverTestScreen.onTouchDown(event)){
+		}
+		if (gameOverTestScreen.onTouchDown(event)) {
 			// for testing:
 			Constants.p1 = new Player("1");
 			Constants.p2 = new Player("2");
 			Constants.p = Constants.p1;
 			Constants.game.pushState(new GameOverState(Constants.p1));
-		}if (gameStateTest.onTouchDown(event)){
+		}
+		if (gameStateTest.onTouchDown(event)) {
 			Constants.game.pushState(new GameState());
-		}if (changeTurnStateTest.onTouchDown(event)){
+		}
+		if (changeTurnStateTest.onTouchDown(event)) {
 			Constants.game.pushState(new ChangeTurnState());
 		}
 		return true;
