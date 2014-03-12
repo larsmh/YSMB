@@ -5,10 +5,8 @@ import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
 
 import android.graphics.Canvas;
-import android.graphics.Typeface;
 import android.view.MotionEvent;
 import sheep.game.State;
-import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
@@ -22,12 +20,9 @@ public class GameOverState extends State implements TouchListener {
 	String looserName;
 	String winnerName;
 
-	private static final Font WINNER = new Font(255, 255, 255,
-			Constants.WINDOW_WIDTH / 15, Typeface.SANS_SERIF, Typeface.BOLD);
-
 	public GameOverState(Player looser) {
 		looserName = looser.getName();
-		winnerName = Constants.getOther(looser).getName();
+		winnerName = Constants.getOther().getName();
 
 		menu = new TextButton(Constants.WINDOW_WIDTH * 0.35f,
 				Constants.WINDOW_HEIGHT * 0.60f, "Menu", Constants.paint);
@@ -37,16 +32,13 @@ public class GameOverState extends State implements TouchListener {
 
 	public void draw(Canvas canvas) {
 		background.draw(canvas, 0, 0);
-		canvas.drawText("The Winner is: " + winnerName, 15f, 30f, Constants.paint[0]);
-		canvas.drawText("and the big, fat looser is: " + looserName, 30f, 30f, Constants.paint[0]);
+		canvas.drawText("The Winner is: " + winnerName, 30f, 15f,
+				Constants.paint[0]);
+		canvas.drawText("and the big, fat looser is: " + looserName, 30f, 30f,
+				Constants.paint[0]);
 
 		menu.draw(canvas);
 		exit.draw(canvas);
-
-		// Display the name of the winner and the loser
-		// canvas.drawText(winner + " wins!\n\n" + loser + " loses!",
-		// Constants.WINDOW_WIDTH * 0.25f, Constants.WINDOW_HEIGHT * 0.1f,
-		// WINNER);
 	}
 
 	public boolean onTouchDown(MotionEvent event) {

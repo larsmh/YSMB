@@ -6,7 +6,7 @@ import sheep.game.Game;
 public class Constants {
 	public static Game game;
 	public static Player p1, p2, p;
-	
+
 	/* Window sizes */
 	public static float WINDOW_WIDTH = 0;
 	public static float WINDOW_HEIGHT = 0;
@@ -20,18 +20,21 @@ public class Constants {
 	public static int NUMBER_SHIPS = 5;
 
 	public static final int MAX_CLICK_DURATION = 200;
-	
+
 	public static Paint[] paint;
 
 	public enum DirectionType {
 		HORIZONTAL, VERTICAL;
 	}
 
-
-	public static Player getOther(Player p) {
+	public static Player getOther() {
 		if (p == p1)
 			return p2;
 		else
 			return p1;
+	}
+
+	public static void changeTurn() {
+		p = getOther();
 	}
 }

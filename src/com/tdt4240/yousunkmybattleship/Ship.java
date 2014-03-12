@@ -36,28 +36,21 @@ public class Ship {
 		if (hits >= type.getSize())
 			shipSunk = true;
 	}
-	
+
 	public void changeDirection() {
-		if (this.isVertical()) {
-			this.direction = DirectionType.HORIZONTAL;
-		}
-		else {
-			this.direction = DirectionType.VERTICAL;
-		}
+		if (isVertical())
+			direction = DirectionType.HORIZONTAL;
+		else
+			direction = DirectionType.VERTICAL;
 	}
 
 	public boolean isVertical() {
-		if (direction == DirectionType.VERTICAL) {
-			return true;
-		} else {
-			return false;
-		}
+		return (direction == DirectionType.VERTICAL);
 	}
 
-	public void placeShip(int posX, int posY, DirectionType direction) {
+	public void placeShip(int posX, int posY) {
 		this.posX = posX;
 		this.posY = posY;
-		this.direction = direction;
 		placedOnBoard = true;
 	}
 
@@ -72,4 +65,5 @@ public class Ship {
 	public ShipType getType() {
 		return type;
 	}
+
 }

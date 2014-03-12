@@ -18,12 +18,12 @@ public enum ShipType {
 			shipImgVert = new Image(R.drawable.ac_carrier2);
 			break;
 		case 3:
-			shipImgHor = new Image(R.drawable.battleship);
-			shipImgVert = new Image(R.drawable.battleship2);
+			shipImgHor = new Image(R.drawable.battleship2);
+			shipImgVert = new Image(R.drawable.battleship);
 			break;
 		case 2:
-			shipImgHor = new Image(R.drawable.sub);
-			shipImgVert = new Image(R.drawable.sub2);
+			shipImgHor = new Image(R.drawable.sub2);
+			shipImgVert = new Image(R.drawable.sub);
 			break;
 		case 1:
 			shipImgHor = new Image(R.drawable.destroyer);
@@ -47,6 +47,7 @@ public enum ShipType {
 	public Image getImgVert() {
 		return shipImgVert;
 	}
+
 	public Image getImgHor() {
 		return shipImgHor;
 	}
