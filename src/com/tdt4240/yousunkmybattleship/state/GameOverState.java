@@ -21,7 +21,7 @@ import sheep.input.TouchListener;
 
 public class GameOverState extends State implements TouchListener {
 	// Temporary background
-	Image background = new Image(R.drawable.water_background);
+	Image background = new Image(R.drawable.gameboard);
 
 	TextButton menu;
 	TextButton exit;
@@ -32,17 +32,17 @@ public class GameOverState extends State implements TouchListener {
 		looserName = looser.getName();
 		winnerName = Constants.getOther().getName();
 
-		menu = new TextButton(Constants.WINDOW_WIDTH * 0.35f,
-				Constants.WINDOW_HEIGHT * 0.60f, "Menu", Constants.paint);
-		exit = new TextButton(Constants.WINDOW_WIDTH * 0.42f,
-				Constants.WINDOW_HEIGHT * 0.75f, "Exit", Constants.paint);
+		menu = new TextButton(Constants.WINDOW_WIDTH * 0.1f,
+				Constants.WINDOW_HEIGHT * 0.9f, "Menu", Constants.paint);
+		exit = new TextButton(Constants.WINDOW_WIDTH * 0.9f,
+				Constants.WINDOW_HEIGHT * 0.9f, "Exit", Constants.paint);
 	}
 
 	public void draw(Canvas canvas) {
 		background.draw(canvas, 0, 0);
-		canvas.drawText("The Winner is: " + winnerName, 30f, 15f,
-				Constants.paint[0]);
-		canvas.drawText("and the big, fat looser is: " + looserName, 30f, 30f,
+		canvas.drawText("The Winner is: " + winnerName, Constants.WINDOW_WIDTH * 0.39f,
+				Constants.WINDOW_HEIGHT * 0.2f,	Constants.paint[0]);
+		canvas.drawText("and the big, fat looser is: " + looserName, Constants.WINDOW_WIDTH * 0.35f, Constants.WINDOW_HEIGHT *0.36f,
 				Constants.paint[0]);
 
 		menu.draw(canvas);
@@ -51,9 +51,10 @@ public class GameOverState extends State implements TouchListener {
 
 	public boolean onTouchDown(MotionEvent event) {
 		if (menu.onTouchDown(event)) {
-			// should pop back down to main menu, not add another mainmenustate
+			// should pop back down to main menu, not add another mainmenustate, when moved to the right order, should pop more than 2 states.
+			Constants.game.popState(2);
 		} else if (exit.onTouchDown(event)) {
-			// Quit the app
+			//quit game
 		}
 		return true;
 	}
