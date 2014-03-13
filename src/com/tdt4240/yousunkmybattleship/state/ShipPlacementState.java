@@ -26,11 +26,11 @@ import sheep.input.TouchListener;
  */
 
 public class ShipPlacementState extends State implements TouchListener {
-	Image bg = new Image(R.drawable.gameboard);
-	Image button = new Image(R.drawable.button);
-	Sprite[] sprites;
-	int moveableShip;
-	TextButton submit;
+	private Image bg = new Image(R.drawable.gameboard);
+	private Image button = new Image(R.drawable.button);
+	private Sprite[] sprites;
+	private int moveableShip;
+	private TextButton submit;
 	private long startClickTime;
 
 	public ShipPlacementState() {
@@ -45,40 +45,39 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	private void createSprites() {
-		sprites = new Sprite[5];
+		sprites = new Sprite[Constants.NUMBER_SHIPS];
 		for (int i = 0; i < sprites.length; i++)
-			sprites[i] = new Sprite(Constants.p.getShips()[i].getType()
-					.getImgHor());
+			sprites[i] = new Sprite(Constants.p.getShips()[i].getType().getImgHor());
 		placeOnTiles();
 	}
 
 	/**
-	 * Turns the sprite (from vertical to horizontal or vice versa)
+	 * Changes the sprite (from vertical to horizontal or vice versa)
 	 * 
 	 * @param spriteIndex
-	 *            the index of the sprite to turn
+	 *            the index of the sprite to change
 	 * @param ship
-	 *            the ship to turn
+	 *            the ship to change
 	 * 
 	 */
 	private void changeSprite(int spriteIndex, Ship ship) {
 		if (ship.isVertical()) {
-			// sprites[spriteIndex].setView(ship.getType().getImgHor());
-			sprites[spriteIndex] = new Sprite(
-					Constants.p.getShips()[spriteIndex].getType().getImgHor());
+			sprites[spriteIndex] = new Sprite(ship.getType().getImgHor());
 		} else {
-			// sprites[spriteIndex].setView(ship.getType().getImgVert());
-			sprites[spriteIndex] = new Sprite(
-					Constants.p.getShips()[spriteIndex].getType().getImgVert());
+			sprites[spriteIndex] = new Sprite(ship.getType().getImgVert());
 		}
 	}
 
-	public void rotateShip() {
-		if (moveableShip != -1) {
-			Ship ship = Constants.p.getShips()[moveableShip];
-			changeSprite(moveableShip, ship);
-			ship.changeDirection();
-		}
+	/**
+	 * Rotates the ship
+	 * 
+	 * @param index
+	 * 			the index of the ship to rotate
+	 */
+	public void rotateShip(int index) {
+		Ship ship = Constants.p.getShips()[moveableShip];
+		changeSprite(moveableShip, ship);
+		ship.changeDirection();
 	}
 
 	/**
@@ -134,7 +133,7 @@ public class ShipPlacementState extends State implements TouchListener {
 				}
 			}
 			Constants.p.setReady();
-			for(int i=0; i<Constants.p.getShips().length; i++){
+			for(int i = 0; i < Constants.p.getShips().length; i++){
 				if(Constants.p.getShips()[i].isVertical())
 					changeSprite(i, Constants.p.getShips()[i]);
 			}
@@ -175,14 +174,14 @@ public class ShipPlacementState extends State implements TouchListener {
 					y = event.getY();
 				}
 
-				// Move to onTouchUp?
 				sprites[i].setPosition(x, y);
-				Constants.p.getShips()[i].placeShip(
+				// Moved to onTouchUp
+				/*Constants.p.getShips()[i].placeShip(
 						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i]
 								.getOffset().getX()) / Constants.TILE_SIZE),
 						(int) ((Constants.TILE_SIZE / 2
 								- Constants.START_OF_GRID + y - sprites[i]
-								.getOffset().getY()) / 108));
+								.getOffset().getY()) / 108));*/
 				return true;
 			}
 		}
@@ -190,12 +189,21 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	public boolean onTouchUp(MotionEvent event) {
-		long clickDuration = Calendar.getInstance().getTimeInMillis()
-				- startClickTime;
+		long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
 
-		if (clickDuration < Constants.MAX_CLICK_DURATION) {
-			rotateShip();
+		if (moveableShip != -1) {
+			if (clickDuration < Constants.MAX_CLICK_DURATION) {
+				rotateShip(moveableShip);
+			}
+			
+			Constants.p.getShips()[moveableShip].placeShip(
+					(int) ((Constants.TILE_SIZE / 2 + sprites[moveableShip].getX() - sprites[moveableShip]
+							.getOffset().getX()) / Constants.TILE_SIZE),
+					(int) ((Constants.TILE_SIZE / 2
+							- Constants.START_OF_GRID + sprites[moveableShip].getY() - sprites[moveableShip]
+							.getOffset().getY()) / 108));
 		}
+		
 		placeOnTiles();
 		moveableShip = -1;
 		return true;
