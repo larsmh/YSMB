@@ -52,12 +52,12 @@ public class GameState extends State implements TouchListener {
 				x
 						* Constants.TILE_SIZE
 						+ drops.get(drops.size() - 1).getOffset()
-								.getX(),
+								.getX()+1,
 				Constants.START_OF_GRID
 						+ y
 						* Constants.TILE_SIZE
 						+ drops.get(drops.size() - 1).getOffset()
-								.getY());
+								.getY()+1);
 	}
 	
 	// draw all bomb drops registered in model
