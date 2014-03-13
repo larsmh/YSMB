@@ -20,8 +20,6 @@ public class SettingsState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.menu_bg);
 	TextButton backButton;
 	TextButton gameOverTestScreen;
-	TextButton gameStateTest;
-	TextButton changeTurnStateTest;
 
 	public SettingsState() {
 		backButton = new TextButton(Constants.WINDOW_WIDTH * 0.39f,
@@ -29,20 +27,14 @@ public class SettingsState extends State implements TouchListener {
 		gameOverTestScreen = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
 				Constants.WINDOW_HEIGHT * 0.36f, "Game Over Test screen",
 				Constants.paint);
-		gameStateTest = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
-				Constants.WINDOW_HEIGHT * 0.52f, "Game State Test Screen",
-				Constants.paint);
-		changeTurnStateTest = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
-				Constants.WINDOW_HEIGHT * 0.78f,
-				"Change Turn State Test screen", Constants.paint);
+
 	}
 
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
 		backButton.draw(canvas);
 		gameOverTestScreen.draw(canvas);
-		gameStateTest.draw(canvas);
-		changeTurnStateTest.draw(canvas);
+
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
@@ -56,12 +48,7 @@ public class SettingsState extends State implements TouchListener {
 			Constants.p = Constants.p1;
 			Constants.game.pushState(new GameOverState(Constants.p1));
 		}
-		if (gameStateTest.onTouchDown(event)) {
-			Constants.game.pushState(new GameState());
-		}
-		if (changeTurnStateTest.onTouchDown(event)) {
-			Constants.game.pushState(new ChangeTurnState());
-		}
+
 		return true;
 	}
 }

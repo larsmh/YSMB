@@ -11,6 +11,7 @@ import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
+
 /**
  * This screen appears when one of the two players win.
  * 
@@ -52,7 +53,11 @@ public class GameOverState extends State implements TouchListener {
 			// should pop back down to main menu, not add another mainmenustate, when moved to the right order, should pop more than 2 states.
 			Constants.game.popState(2);
 		} else if (exit.onTouchDown(event)) {
-			//quit game
+			//quit game, we really can't find how to quit the game
+			//Constants.game.
+			//super.onStop();
+			//GameOverState.kill();
+			//finish();
 		}
 		return true;
 	}
