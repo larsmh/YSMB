@@ -32,6 +32,7 @@ public class ShipPlacementState extends State implements TouchListener {
 	Sprite[] sprites;
 	int moveableShip;
 	TextButton submit;
+
 	private long startClickTime;
 
 	public ShipPlacementState() {
@@ -54,26 +55,30 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	/**
-	 * Turns the sprite (from vertical to horizontal or vice versa)
+	 * Changes the sprite (from vertical to horizontal or vice versa)
 	 * 
 	 * @param spriteIndex
-	 *            the index of the sprite to turn
+	 *            the index of the sprite to change
 	 * @param ship
-	 *            the ship to turn
+	 *            the ship whose sprite is being changed
 	 * 
 	 */
 	private void changeSprite(int spriteIndex, Ship ship) {
 		if (ship.isVertical()) {
-			// sprites[spriteIndex].setView(ship.getType().getImgHor());
 			sprites[spriteIndex] = new Sprite(
-					Constants.p.getShips()[spriteIndex].getType().getImgHor());
+					ship.getType().getImgHor());
 		} else {
-			// sprites[spriteIndex].setView(ship.getType().getImgVert());
 			sprites[spriteIndex] = new Sprite(
-					Constants.p.getShips()[spriteIndex].getType().getImgVert());
+					ship.getType().getImgVert());
 		}
 	}
-
+	
+	/**
+	 * Rotates the ship (from vertical to horizontal or vice versa)
+	 * 
+	 * @param index
+	 * 			index of the ship to rotate
+	 */
 	public void rotateShip() {
 		if (moveableShip != -1) {
 			Ship ship = Constants.p.getShips()[moveableShip];
@@ -87,7 +92,7 @@ public class ShipPlacementState extends State implements TouchListener {
 	 * on the player's board
 	 * 
 	 */
-	public void placeOnTiles() {
+	private void placeOnTiles() {
 		for (int i = 0; i < sprites.length; i++) {
 			sprites[i].setPosition(
 					Constants.p.getShips()[i].getPosX() * Constants.TILE_SIZE
@@ -107,7 +112,7 @@ public class ShipPlacementState extends State implements TouchListener {
 	 *            the index of the ship to move
 	 * 
 	 */
-	public boolean isMoveable(int s) {
+	private boolean isMoveable(int s) {
 		return (moveableShip == s || moveableShip == -1);
 	}
 
@@ -124,7 +129,6 @@ public class ShipPlacementState extends State implements TouchListener {
 		for (Sprite s: sprites)
 			s.update(dt);
 	}
-
 
 	public boolean onTouchDown(MotionEvent event) {
 		if (submit.onTouchDown(event)) {
@@ -201,11 +205,4 @@ public class ShipPlacementState extends State implements TouchListener {
 		moveableShip = -1;
 		return true;
 	}
-
-	/**
-	 * Add the player's ships on his board. The integer correspond to the ship
-	 * sprite: 4 is an AC_Carrier, 3 is a Battleship, 2 is a Submarine, 1 is a
-	 * Destroyer and 0 is a Boat.
-	 * 
-	 */
 }
