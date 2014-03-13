@@ -149,8 +149,6 @@ public class ShipPlacementState extends State implements TouchListener {
 			float x = sprites[i].getPosition().getX();
 			float y = sprites[i].getPosition().getY();
 
-			// if(sprites[i].getBoundingBox().contains(event.getX(),
-			// event.getY()) && isMoveable(i)){
 			if (event.getX() >= sprites[i].getX()
 					- sprites[i].getOffset().getX()
 					&& event.getX() <= sprites[i].getX()
