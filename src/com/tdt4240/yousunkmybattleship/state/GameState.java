@@ -8,6 +8,7 @@ import com.tdt4240.yousunkmybattleship.R;
 import com.tdt4240.yousunkmybattleship.Ship;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
 import sheep.game.State;
@@ -20,7 +21,8 @@ import sheep.input.TouchListener;
  */
 
 public class GameState extends State implements TouchListener {
-	Image bg = new Image(R.drawable.gameboard);
+	Image bg = new Image(R.drawable.menu_bg);
+	Image board = new Image(R.drawable.board);
 	Image bs = new Image(R.drawable.bomb_site);
 	Image ws = new Image(R.drawable.water_splash);
 	int bombsLeft;
@@ -49,15 +51,9 @@ public class GameState extends State implements TouchListener {
 			drops.add(new Sprite(ws));
 		}
 		drops.get(drops.size()-1).setPosition(
-				x
-						* Constants.TILE_SIZE
-						+ drops.get(drops.size() - 1).getOffset()
-								.getX()+1,
-				Constants.START_OF_GRID
-						+ y
-						* Constants.TILE_SIZE
-						+ drops.get(drops.size() - 1).getOffset()
-								.getY()+1);
+				x * Constants.TILE_SIZE + drops.get(drops.size() - 1).getOffset().getX()+1,
+				Constants.START_OF_GRID + y * Constants.TILE_SIZE + 
+				drops.get(drops.size() - 1).getOffset().getY()+1);
 	}
 	
 	// draw all bomb drops registered in model
@@ -73,6 +69,7 @@ public class GameState extends State implements TouchListener {
 
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
+		board.draw(canvas, 0, Constants.START_OF_GRID);
 		try{
 			for(Sprite s: drops){
 				s.draw(canvas);
