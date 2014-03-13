@@ -1,5 +1,7 @@
 package com.tdt4240.yousunkmybattleship;
 
+import android.util.Log;
+
 import com.tdt4240.yousunkmybattleship.state.GameOverState;
 
 /**
