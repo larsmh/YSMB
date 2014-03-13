@@ -5,6 +5,7 @@ import com.tdt4240.yousunkmybattleship.R;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import sheep.game.State;
 import sheep.graphics.Image;
@@ -28,6 +29,8 @@ public class MainMenuState extends State implements TouchListener {
 	TextButton settings;
 
 	public MainMenuState() {
+		Log.d("!!!!", Constants.WINDOW_HEIGHT+" "+Constants.WINDOW_WIDTH+" "+Constants.TILE_SIZE+
+				" "+Constants.START_OF_GRID);
 		Constants.paint = new Paint[2];
 		for (int i = 0; i < Constants.paint.length; i++) {
 			Constants.paint[i] = new Paint();

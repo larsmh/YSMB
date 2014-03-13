@@ -26,11 +26,13 @@ import sheep.input.TouchListener;
  */
 
 public class ShipPlacementState extends State implements TouchListener {
-	private Image bg = new Image(R.drawable.gameboard);
-	private Image button = new Image(R.drawable.button);
-	private Sprite[] sprites;
-	private int moveableShip;
-	private TextButton submit;
+	Image bg = new Image(R.drawable.menu_bg);
+	Image board = new Image (R.drawable.board);
+	Image button = new Image(R.drawable.button);
+	Sprite[] sprites;
+	int moveableShip;
+	TextButton submit;
+
 	private long startClickTime;
 
 	public ShipPlacementState() {
@@ -113,6 +115,7 @@ public class ShipPlacementState extends State implements TouchListener {
 
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
+		board.draw(canvas, 0, Constants.START_OF_GRID);
 		button.draw(canvas, 0, Constants.START_OF_GRID - 192);
 		submit.draw(canvas);
 		for (Sprite s: sprites)
@@ -174,8 +177,7 @@ public class ShipPlacementState extends State implements TouchListener {
 								- sprites[i].getOffset().getY()) {
 					y = event.getY();
 				}
-				
-				// Sets position for the selected ship. Also allows smooth dragging
+
 				sprites[i].setPosition(x, y);
 				Constants.p.getShips()[i].placeShip(
 						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i]
