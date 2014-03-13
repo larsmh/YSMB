@@ -8,14 +8,14 @@ public class Constants {
 	public static Player p1, p2, p;
 
 	/* Window sizes */
-	public static float WINDOW_WIDTH = 0;
-	public static float WINDOW_HEIGHT = 0;
+	public static float WINDOW_WIDTH;
+	public static float WINDOW_HEIGHT;
 
 	/* Grid properties */
 	public static int GRID_WIDTH = 10;
 	public static int GRID_HEIGHT = 10;
-	public static float TILE_SIZE = 108;
-	public static float START_OF_GRID = 840;
+	public static float TILE_SIZE;
+	public static float START_OF_GRID;
 
 	public static int NUMBER_SHIPS = 5;
 
@@ -36,5 +36,9 @@ public class Constants {
 
 	public static void changeTurn() {
 		p = getOther();
+	}
+	public static void setDimensions(){
+		TILE_SIZE = WINDOW_WIDTH/GRID_WIDTH;
+		START_OF_GRID = WINDOW_HEIGHT-(TILE_SIZE*GRID_HEIGHT);
 	}
 }

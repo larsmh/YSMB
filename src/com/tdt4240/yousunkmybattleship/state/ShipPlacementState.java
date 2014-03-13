@@ -26,7 +26,8 @@ import sheep.input.TouchListener;
  */
 
 public class ShipPlacementState extends State implements TouchListener {
-	Image bg = new Image(R.drawable.gameboard);
+	Image bg = new Image(R.drawable.menu_bg);
+	Image board = new Image (R.drawable.board);
 	Image button = new Image(R.drawable.button);
 	Sprite[] sprites;
 	int moveableShip;
@@ -112,6 +113,7 @@ public class ShipPlacementState extends State implements TouchListener {
 
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
+		board.draw(canvas, 0, Constants.START_OF_GRID);
 		button.draw(canvas, 0, Constants.START_OF_GRID - 192);
 		submit.draw(canvas);
 		for (Sprite s: sprites)

@@ -6,6 +6,7 @@ import sheep.game.Game;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 
 public class MainActivity extends Activity {
@@ -19,6 +20,7 @@ public class MainActivity extends Activity {
 
 		Constants.WINDOW_HEIGHT = dm.heightPixels;
 		Constants.WINDOW_WIDTH = dm.widthPixels;
+		Constants.setDimensions();
 
 		Game game = new Game(this, null);
 
