@@ -186,7 +186,7 @@ public class ShipPlacementState extends State implements TouchListener {
 								.getOffset().getX()) / Constants.TILE_SIZE),
 						(int) ((Constants.TILE_SIZE / 2
 								- Constants.START_OF_GRID + y - sprites[i]
-								.getOffset().getY()) / 108));
+								.getOffset().getY()) / Constants.TILE_SIZE));
 				return true;
 			}
 		}
