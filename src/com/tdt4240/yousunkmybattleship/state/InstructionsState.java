@@ -16,24 +16,45 @@ import sheep.input.TouchListener;
  */
 
 public class InstructionsState extends State implements TouchListener {
-	// Temporary background
-	private Image background = new Image(R.drawable.menu_bg);
-	private TextButton backButton;
+	private Image instruction1 = new Image(R.drawable.instruction1);
+	private Image instruction2 = new Image(R.drawable.instruction2);
+
+	private TextButton nextButton;
+
+	/**
+	 * Indicates how many times the user clicked on the "Next" button. The first
+	 * time, the second instructions' page appears. The second time, the main
+	 * menu appears.
+	 * 
+	 */
+	private int clickNext;
 
 	public InstructionsState() {
-		backButton = new TextButton(Constants.WINDOW_WIDTH * 0.8f,
+		clickNext = 0;
+
+		nextButton = new TextButton(Constants.WINDOW_WIDTH * 0.8f,
 				Constants.WINDOW_HEIGHT * 0.9f, "Back");
-		addTouchListener(backButton);
+		addTouchListener(nextButton);
 	}
 
 	public void draw(Canvas canvas) {
-		background.draw(canvas, 0, 0);
-		backButton.draw(canvas);
+		if (clickNext == 0) {
+			instruction1.draw(canvas, 0, 0);
+		} else {
+			instruction2.draw(canvas, 0, 0);
+		}
+
+		nextButton.draw(canvas);
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
-		if (backButton.onTouchDown(event))
-			Constants.game.popState();
+		if (nextButton.onTouchDown(event)) {
+			if (clickNext == 0) {
+				clickNext++;
+			} else {
+				Constants.game.popState();
+			}
+		}
 		return true;
 	}
 
