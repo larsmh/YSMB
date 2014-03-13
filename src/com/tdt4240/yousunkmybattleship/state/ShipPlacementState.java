@@ -26,11 +26,13 @@ import sheep.input.TouchListener;
  */
 
 public class ShipPlacementState extends State implements TouchListener {
-	Image bg = new Image(R.drawable.gameboard);
+	Image bg = new Image(R.drawable.menu_bg);
+	Image board = new Image (R.drawable.board);
 	Image button = new Image(R.drawable.button);
 	Sprite[] sprites;
 	int moveableShip;
 	TextButton submit;
+
 	private long startClickTime;
 
 	public ShipPlacementState() {
@@ -53,32 +55,33 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	/**
-	 * Turns the sprite (from vertical to horizontal or vice versa)
+	 * Changes the sprite (from vertical to horizontal or vice versa)
 	 * 
 	 * @param spriteIndex
-	 *            the index of the sprite to turn
+	 *            the index of the sprite to change
 	 * @param ship
-	 *            the ship to turn
+	 *            the ship whose sprite is being changed
 	 * 
 	 */
 	private void changeSprite(int spriteIndex, Ship ship) {
 		if (ship.isVertical()) {
-			// sprites[spriteIndex].setView(ship.getType().getImgHor());
 			sprites[spriteIndex] = new Sprite(
-					Constants.p.getShips()[spriteIndex].getType().getImgHor());
+					ship.getType().getImgHor());
 		} else {
-			// sprites[spriteIndex].setView(ship.getType().getImgVert());
 			sprites[spriteIndex] = new Sprite(
-					Constants.p.getShips()[spriteIndex].getType().getImgVert());
+					ship.getType().getImgVert());
 		}
 	}
-
-	public void rotateShip() {
-		if (moveableShip != -1) {
-			Ship ship = Constants.p.getShips()[moveableShip];
-			changeSprite(moveableShip, ship);
-			ship.changeDirection();
-		}
+	
+	/**
+	 * Rotates the ship (from vertical to horizontal or vice versa)
+	 * 
+	 * @param index
+	 * 			index of the ship to rotate
+	 */
+	private void rotateShip(int index, Ship ship) {
+		changeSprite(index, ship);
+		ship.changeDirection();
 	}
 
 	/**
@@ -86,7 +89,7 @@ public class ShipPlacementState extends State implements TouchListener {
 	 * on the player's board
 	 * 
 	 */
-	public void placeOnTiles() {
+	private void placeOnTiles() {
 		for (int i = 0; i < sprites.length; i++) {
 			sprites[i].setPosition(
 					Constants.p.getShips()[i].getPosX() * Constants.TILE_SIZE
@@ -106,12 +109,13 @@ public class ShipPlacementState extends State implements TouchListener {
 	 *            the index of the ship to move
 	 * 
 	 */
-	public boolean isMoveable(int s) {
+	private boolean isMoveable(int s) {
 		return (moveableShip == s || moveableShip == -1);
 	}
 
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
+		board.draw(canvas, 0, Constants.START_OF_GRID);
 		button.draw(canvas, 0, Constants.START_OF_GRID - 192);
 		submit.draw(canvas);
 		for (Sprite s: sprites)
@@ -123,8 +127,8 @@ public class ShipPlacementState extends State implements TouchListener {
 			s.update(dt);
 	}
 
-
 	public boolean onTouchDown(MotionEvent event) {
+		// Logic check for submit button
 		if (submit.onTouchDown(event)) {
 			for (int i = 0; i < sprites.length - 1; i++) {
 				for (int j = i + 1; j < sprites.length; j++) {
@@ -134,13 +138,14 @@ public class ShipPlacementState extends State implements TouchListener {
 				}
 			}
 			Constants.p.setReady();
-			for(int i=0; i<Constants.p.getShips().length; i++){
+			for(int i = 0; i < Constants.p.getShips().length; i++){
 				if(Constants.p.getShips()[i].isVertical())
 					changeSprite(i, Constants.p.getShips()[i]);
 			}
 			Constants.game.pushState(new ChangeTurnState());
 			return true;
 		}
+		// Used to register a click
 		startClickTime = Calendar.getInstance().getTimeInMillis();
 		return true;
 	}
@@ -181,7 +186,7 @@ public class ShipPlacementState extends State implements TouchListener {
 								.getOffset().getX()) / Constants.TILE_SIZE),
 						(int) ((Constants.TILE_SIZE / 2
 								- Constants.START_OF_GRID + y - sprites[i]
-								.getOffset().getY()) / 108));
+								.getOffset().getY()) / Constants.TILE_SIZE));
 				return true;
 			}
 		}
@@ -189,21 +194,16 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	public boolean onTouchUp(MotionEvent event) {
-		long clickDuration = Calendar.getInstance().getTimeInMillis()
-				- startClickTime;
+		long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
 
-		if (clickDuration < Constants.MAX_CLICK_DURATION) {
-			rotateShip();
+		// If a click is registered on a ship, initiate rotating process
+		if (clickDuration < Constants.MAX_CLICK_DURATION && moveableShip != -1) {
+			Ship ship = Constants.p.getShips()[moveableShip];
+			rotateShip(moveableShip, ship);
 		}
+		
 		placeOnTiles();
 		moveableShip = -1;
 		return true;
 	}
-
-	/**
-	 * Add the player's ships on his board. The integer correspond to the ship
-	 * sprite: 4 is an AC_Carrier, 3 is a Battleship, 2 is a Submarine, 1 is a
-	 * Destroyer and 0 is a Boat.
-	 * 
-	 */
 }
