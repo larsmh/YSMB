@@ -45,19 +45,19 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	private void createSprites() {
-		sprites = new Sprite[5];
+		sprites = new Sprite[Constants.NUMBER_SHIPS];
 		for (int i = 0; i < sprites.length; i++)
 			sprites[i] = new Sprite(Constants.p.getShips()[i].getType().getImgHor());
 		placeOnTiles();
 	}
 
 	/**
-	 * Turns the sprite (from vertical to horizontal or vice versa)
+	 * Changes the sprite (from vertical to horizontal or vice versa)
 	 * 
 	 * @param spriteIndex
-	 *            the index of the sprite to turn
+	 *            the index of the sprite to change
 	 * @param ship
-	 *            the ship to turn
+	 *            the ship to change
 	 * 
 	 */
 	private void changeSprite(int spriteIndex, Ship ship) {
@@ -68,12 +68,16 @@ public class ShipPlacementState extends State implements TouchListener {
 		}
 	}
 
-	public void rotateShip() {
-		if (moveableShip != -1) {
-			Ship ship = Constants.p.getShips()[moveableShip];
-			changeSprite(moveableShip, ship);
-			ship.changeDirection();
-		}
+	/**
+	 * Rotates the ship
+	 * 
+	 * @param index
+	 * 			the index of the ship to rotate
+	 */
+	public void rotateShip(int index) {
+		Ship ship = Constants.p.getShips()[moveableShip];
+		changeSprite(moveableShip, ship);
+		ship.changeDirection();
 	}
 
 	/**
@@ -170,14 +174,14 @@ public class ShipPlacementState extends State implements TouchListener {
 					y = event.getY();
 				}
 
-				// Move to onTouchUp?
 				sprites[i].setPosition(x, y);
-				Constants.p.getShips()[i].placeShip(
+				// Moved to onTouchUp
+				/*Constants.p.getShips()[i].placeShip(
 						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i]
 								.getOffset().getX()) / Constants.TILE_SIZE),
 						(int) ((Constants.TILE_SIZE / 2
 								- Constants.START_OF_GRID + y - sprites[i]
-								.getOffset().getY()) / 108));
+								.getOffset().getY()) / 108));*/
 				return true;
 			}
 		}
@@ -187,9 +191,19 @@ public class ShipPlacementState extends State implements TouchListener {
 	public boolean onTouchUp(MotionEvent event) {
 		long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
 
-		if (clickDuration < Constants.MAX_CLICK_DURATION) {
-			rotateShip();
+		if (moveableShip != -1) {
+			if (clickDuration < Constants.MAX_CLICK_DURATION) {
+				rotateShip(moveableShip);
+			}
+			
+			Constants.p.getShips()[moveableShip].placeShip(
+					(int) ((Constants.TILE_SIZE / 2 + sprites[moveableShip].getX() - sprites[moveableShip]
+							.getOffset().getX()) / Constants.TILE_SIZE),
+					(int) ((Constants.TILE_SIZE / 2
+							- Constants.START_OF_GRID + sprites[moveableShip].getY() - sprites[moveableShip]
+							.getOffset().getY()) / 108));
 		}
+		
 		placeOnTiles();
 		moveableShip = -1;
 		return true;
