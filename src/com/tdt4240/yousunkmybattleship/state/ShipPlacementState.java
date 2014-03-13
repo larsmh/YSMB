@@ -26,12 +26,13 @@ import sheep.input.TouchListener;
  */
 
 public class ShipPlacementState extends State implements TouchListener {
-	Image bg = new Image(R.drawable.menu_bg);
-	Image board = new Image (R.drawable.board);
-	Image button = new Image(R.drawable.button);
-	Sprite[] sprites;
-	int moveableShip;
-	TextButton submit;
+	private Image bg = new Image(R.drawable.menu_bg);
+	private Image board = new Image (R.drawable.board);
+	private Image button = new Image(R.drawable.button);
+	
+	private Sprite[] sprites;
+	private int moveableShip;
+	private TextButton submit;
 
 	private long startClickTime;
 
