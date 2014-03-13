@@ -29,11 +29,25 @@ public class MainActivity extends Activity {
 		setContentView(game);
 	}
 
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}*/
+	
+	@Override
+	public void onBackPressed() {
 	}
+	@Override
+    protected void onPause() {
+		onStop();
+    }
+	
+	@Override
+    protected void onStop() {
+		android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
+    }
 
 }
