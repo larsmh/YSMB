@@ -79,12 +79,9 @@ public class ShipPlacementState extends State implements TouchListener {
 	 * @param index
 	 * 			index of the ship to rotate
 	 */
-	public void rotateShip() {
-		if (moveableShip != -1) {
-			Ship ship = Constants.p.getShips()[moveableShip];
-			changeSprite(moveableShip, ship);
-			ship.changeDirection();
-		}
+	private void rotateShip(int index, Ship ship) {
+		changeSprite(index, ship);
+		ship.changeDirection();
 	}
 
 	/**
@@ -131,6 +128,7 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
+		// Logic check for submit button
 		if (submit.onTouchDown(event)) {
 			for (int i = 0; i < sprites.length - 1; i++) {
 				for (int j = i + 1; j < sprites.length; j++) {
@@ -140,13 +138,14 @@ public class ShipPlacementState extends State implements TouchListener {
 				}
 			}
 			Constants.p.setReady();
-			for(int i=0; i<Constants.p.getShips().length; i++){
+			for(int i = 0; i < Constants.p.getShips().length; i++){
 				if(Constants.p.getShips()[i].isVertical())
 					changeSprite(i, Constants.p.getShips()[i]);
 			}
 			Constants.game.pushState(new ChangeTurnState());
 			return true;
 		}
+		// Used to register a click
 		startClickTime = Calendar.getInstance().getTimeInMillis();
 		return true;
 	}
@@ -195,12 +194,14 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	public boolean onTouchUp(MotionEvent event) {
-		long clickDuration = Calendar.getInstance().getTimeInMillis()
-				- startClickTime;
+		long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
 
-		if (clickDuration < Constants.MAX_CLICK_DURATION) {
-			rotateShip();
+		// If a click is registered on a ship, initiate rotating process
+		if (clickDuration < Constants.MAX_CLICK_DURATION && moveableShip != -1) {
+			Ship ship = Constants.p.getShips()[moveableShip];
+			rotateShip(moveableShip, ship);
 		}
+		
 		placeOnTiles();
 		moveableShip = -1;
 		return true;
