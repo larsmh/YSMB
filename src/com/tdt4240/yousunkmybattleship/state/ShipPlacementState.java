@@ -148,40 +148,41 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	public boolean onTouchMove(MotionEvent event) {
-		float x, y, 
-			event_x, event_y, 
-			sprite_x, sprite_y,
-			offset_x, offset_y;
 		for (int i = sprites.length - 1; i >= 0; i--) {
-			x = sprites[i].getPosition().getX();
-			y = sprites[i].getPosition().getY();
-			event_x = event.getX();
-			event_y = event.getY();
-			sprite_x = sprites[i].getX();
-			sprite_y = sprites[i].getY();
-			offset_x = sprites[i].getOffset().getX();
-			offset_y = sprites[i].getOffset().getY();
+			float x = sprites[i].getPosition().getX();
+			float y = sprites[i].getPosition().getY();
 
-			if (event_x >= sprite_x	- offset_x
-					&& event_x <= sprite_x	+ offset_x
-					&& event_y >= sprite_y	- offset_y
-					&& event_y <= sprite_y	+ offset_y 
-					&& isMoveable(i)) {
+			if (event.getX() >= sprites[i].getX()
+					- sprites[i].getOffset().getX()
+					&& event.getX() <= sprites[i].getX()
+							+ sprites[i].getOffset().getX()
+					&& event.getY() >= sprites[i].getY()
+							- sprites[i].getOffset().getY()
+					&& event.getY() <= sprites[i].getY()
+							+ sprites[i].getOffset().getY() && isMoveable(i)) {
 				moveableShip = i;
 
 				// Checks edges so that ships are not dragged off the board
-				if (event_x >= offset_x	&& event_x <= Constants.WINDOW_WIDTH - offset_x) {
-					x = event_x;
+				if (event.getX() >= sprites[i].getOffset().getX()
+						&& event.getX() <= Constants.WINDOW_WIDTH
+								- sprites[i].getOffset().getX()) {
+					x = event.getX();
 				}
-				if (event_y >= Constants.START_OF_GRID + offset_y && event_y <= Constants.WINDOW_HEIGHT	- offset_y) {
-					y = event_y;
+				if (event.getY() >= Constants.START_OF_GRID
+						+ sprites[i].getOffset().getY()
+						&& event.getY() <= Constants.WINDOW_HEIGHT
+								- sprites[i].getOffset().getY()) {
+					y = event.getY();
 				}
 				
 				// Sets position for the selected ship. Also allows smooth dragging
 				sprites[i].setPosition(x, y);
 				Constants.p.getShips()[i].placeShip(
-						(int) ((Constants.TILE_SIZE / 2 + x - offset_x / Constants.TILE_SIZE)),
-						(int) ((Constants.TILE_SIZE / 2	- Constants.START_OF_GRID + y - offset_y) / 108));
+						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i]
+								.getOffset().getX()) / Constants.TILE_SIZE),
+						(int) ((Constants.TILE_SIZE / 2
+								- Constants.START_OF_GRID + y - sprites[i]
+								.getOffset().getY()) / 108));
 				return true;
 			}
 		}
