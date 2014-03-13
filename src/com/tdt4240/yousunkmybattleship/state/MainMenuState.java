@@ -11,11 +11,18 @@ import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
+/**
+ * This is the first screen that appears when one starts the application.
+ * 
+ * The user can either start the game or go to the settings menu.
+ * 
+ */
+
 public class MainMenuState extends State implements TouchListener {
 
-	//Background with integrated buttonbackgrounds:
-	//Image bg = new Image(R.drawable.menu_bgtest);
-	//Regular background:
+	// Background with integrated buttonbackgrounds:
+	// Image bg = new Image(R.drawable.menu_bgtest);
+	// Regular background:
 	Image bg = new Image(R.drawable.menu_bg);
 	TextButton newGame;
 	TextButton settings;
@@ -44,7 +51,7 @@ public class MainMenuState extends State implements TouchListener {
 	 * 
 	 * }
 	 */
-	
+
 	public boolean onTouchDown(MotionEvent event) {
 		if (newGame.onTouchDown(event))
 			Constants.game.pushState(new ShipPlacementState());

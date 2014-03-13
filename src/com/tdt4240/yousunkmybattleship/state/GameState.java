@@ -1,10 +1,11 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import com.tdt4240.yousunkmybattleship.Constants;
-import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
+import com.tdt4240.yousunkmybattleship.Ship;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -13,39 +14,58 @@ import sheep.game.State;
 import sheep.graphics.Image;
 import sheep.input.TouchListener;
 
+/**
+ * It is the screen that shows the game play.
+ * 
+ */
+
 public class GameState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.gameboard);
 	Image bs = new Image(R.drawable.bomb_site);
 	Image ws = new Image(R.drawable.water_splash);
-	Sprite drop;
-	Player p;
 	int bombsLeft;
-	//ArrayList<Image> drops;
-	
+	ArrayList<Sprite> drops;
 
 	public GameState() {
-		//drops = new ArrayList<Image>();
+		bombsLeft = Constants.p.getBombsPerTurn();
+		drops = new ArrayList<Sprite>();
+		drawBombDrops();
+	}
+
+	// try to register bomb drop in model
+	public void dropBomb(float x1, float y1) {
+		int x = (int)(x1 / Constants.TILE_SIZE);
+		int y = (int) ((-Constants.START_OF_GRID + y1) / Constants.TILE_SIZE);
+		if (Constants.p.registerDrop(x, y)) {
+			if(!Constants.getOther().shipIsHit(x, y))
+				bombsLeft--;
+			drawBombDrop(x, y);
+		}
+	}
+	private void drawBombDrop(int x, int y){
+		if (Constants.getOther().getBoard()[y][x] != -1) {
+			drops.add(new Sprite(bs));
+		} else {
+			drops.add(new Sprite(ws));
+		}
+		drops.get(drops.size()-1).setPosition(
+				x
+						* Constants.TILE_SIZE
+						+ drops.get(drops.size() - 1).getOffset()
+								.getX(),
+				Constants.START_OF_GRID
+						+ y
+						* Constants.TILE_SIZE
+						+ drops.get(drops.size() - 1).getOffset()
+								.getY());
 	}
 	
-	public boolean dropBomb(float x, float y){
-		if(p.registerDrop((int)(x/Constants.TILE_SIZE), (int)(y/Constants.TILE_SIZE))){
-			bombsLeft--;
-			return true;
-		}
-		return false;
-	}
-	private void drawBombDrops(float dt){
-		for(int i=0; i<Constants.GRID_HEIGHT; i++){
-			for(int j=0; j<Constants.GRID_WIDTH; j++){
-				if(p.getDrops()[i][j]){
-					if(Constants.getOther(p).getBoard()[i][j]!=-1){
-						drop = new Sprite(bs);
-					}
-					else{
-						drop = new Sprite(ws);
-					}
-					drop.setPosition(j*Constants.TILE_SIZE, Constants.START_OF_GRID+i*Constants.TILE_SIZE);
-					drop.update(dt);
+	// draw all bomb drops registered in model
+	private void drawBombDrops() {
+		for (int i = 0; i < Constants.GRID_HEIGHT; i++) {
+			for (int j = 0; j < Constants.GRID_WIDTH; j++) {
+				if (Constants.p.getDrops()[i][j]) {
+					drawBombDrop(j,i);
 				}
 			}
 		}
@@ -53,18 +73,45 @@ public class GameState extends State implements TouchListener {
 
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
+		try{
+			for(Sprite s: drops){
+				s.draw(canvas);
+			}
+		}catch (ConcurrentModificationException e){
+			e.printStackTrace();
+		}
 	}
 
 	public void update(float dt) {
-		drawBombDrops(dt);
-		
+		try{
+			for(Sprite s: drops){
+				s.update(dt);
+			}
+		}catch (ConcurrentModificationException e){
+			e.printStackTrace();
+		}
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
-		if(event.getY()>Constants.START_OF_GRID){
-			return dropBomb(event.getX(), event.getY());
+		// check if all bombs are dropped
+		if (bombsLeft == 0) {
+			Constants.game.popState();
+			return true;
+		}
+		// try to drop a bomb on selected grid
+		if (event.getY() > Constants.START_OF_GRID) {
+			dropBomb(event.getX(), event.getY());
+			if(isWinner())
+				Constants.game.pushState(new GameOverState(Constants.getOther()));
 		}
 		return false;
+	}
+	private boolean isWinner(){
+		for(Ship s: Constants.getOther().getShips()){
+			if(!s.isSunk())
+				return false;
+		}
+		return true;
 	}
 
 }
