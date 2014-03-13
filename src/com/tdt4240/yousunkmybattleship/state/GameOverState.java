@@ -51,7 +51,7 @@ public class GameOverState extends State implements TouchListener {
 	public boolean onTouchDown(MotionEvent event) {
 		if (menu.onTouchDown(event)) {
 			// should pop back down to main menu, not add another mainmenustate, when moved to the right order, should pop more than 2 states.
-			Constants.game.popState(2);
+			Constants.game.popState(4);
 		} else if (exit.onTouchDown(event)) {
 			//quit game, we really can't find how to quit the game
 			//Constants.game.
