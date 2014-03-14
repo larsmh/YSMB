@@ -27,10 +27,11 @@ public class MainMenuState extends State implements TouchListener {
 	Image bg = new Image(R.drawable.menu_bg);
 	TextButton newGame;
 	TextButton settings;
+	TextButton instructions;
 
 	public MainMenuState() {
-		Log.d("!!!!", Constants.WINDOW_HEIGHT+" "+Constants.WINDOW_WIDTH+" "+Constants.TILE_SIZE+
-				" "+Constants.START_OF_GRID);
+		Log.d("!!!!", Constants.WINDOW_HEIGHT + " " + Constants.WINDOW_WIDTH
+				+ " " + Constants.TILE_SIZE + " " + Constants.START_OF_GRID);
 		Constants.paint = new Paint[2];
 		for (int i = 0; i < Constants.paint.length; i++) {
 			Constants.paint[i] = new Paint();
@@ -41,19 +42,17 @@ public class MainMenuState extends State implements TouchListener {
 				Constants.WINDOW_HEIGHT * 0.2f, "New Game", Constants.paint);
 		settings = new TextButton(Constants.WINDOW_WIDTH * 0.42f,
 				Constants.WINDOW_HEIGHT * 0.36f, "Settings", Constants.paint);
+		instructions = new TextButton(Constants.WINDOW_WIDTH * 0.38f,
+				Constants.WINDOW_HEIGHT * 0.52f, "Instructions",
+				Constants.paint);
 	}
 
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
 		newGame.draw(canvas);
 		settings.draw(canvas);
+		instructions.draw(canvas);
 	}
-
-	/*
-	 * public void update(float dt) {
-	 * 
-	 * }
-	 */
 
 	public boolean onTouchDown(MotionEvent event) {
 		if (newGame.onTouchDown(event))

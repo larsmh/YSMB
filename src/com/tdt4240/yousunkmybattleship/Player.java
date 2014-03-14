@@ -1,7 +1,5 @@
 package com.tdt4240.yousunkmybattleship;
 
-import android.util.Log;
-
 import com.tdt4240.yousunkmybattleship.state.GameOverState;
 
 /**
@@ -112,15 +110,16 @@ public class Player {
 
 	public void setReady() {
 		shipsPlaced = true;
-		for(Ship s: ships){
-			if(s.isVertical()){
-				for(int j=0; j<s.getType().getSize(); j++)
-					board[s.getPosY()+j][s.getPosX()]=s.getType().getSprite();
-				
-			}
-			else{
-				for(int j=0; j<s.getType().getSize(); j++)
-					board[s.getPosY()][s.getPosX()+j]=s.getType().getSprite();
+		for (Ship s : ships) {
+			if (s.isVertical()) {
+				for (int j = 0; j < s.getType().getSize(); j++)
+					board[s.getPosY() + j][s.getPosX()] = s.getType()
+							.getSprite();
+
+			} else {
+				for (int j = 0; j < s.getType().getSize(); j++)
+					board[s.getPosY()][s.getPosX() + j] = s.getType()
+							.getSprite();
 			}
 		}
 	}
@@ -137,11 +136,11 @@ public class Player {
 		if (bombsPerTurn != 1)
 			bombsPerTurn--;
 	}
-	
-	public boolean shipIsHit(int x, int y){
-		if(board[y][x]==-1)
+
+	public boolean shipIsHit(int x, int y) {
+		if (board[y][x] == -1)
 			return false;
-		if(ships[board[y][x]].shipHit()){
+		if (ships[board[y][x]].shipHit()) {
 			Constants.p.reduceBombsPerTurn();
 		}
 		return true;
