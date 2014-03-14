@@ -4,7 +4,6 @@ import java.util.Calendar;
 
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
-import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.Ship;
 
 import android.graphics.Canvas;
