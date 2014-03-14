@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
 import com.tdt4240.yousunkmybattleship.Constants;
-import com.tdt4240.yousunkmybattleship.R;
+import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.Ship;
 
 import android.graphics.Canvas;
@@ -20,10 +20,10 @@ import sheep.input.TouchListener;
  */
 
 public class GameState extends State implements TouchListener {
-	Image bg = new Image(R.drawable.menu_bg);
-	Image board = new Image(R.drawable.board);
-	Image bs = new Image(R.drawable.bomb_site);
-	Image ws = new Image(R.drawable.water_splash);
+	Image bg = Graphics.bg;
+	Image board = Graphics.board;
+	Image bs = Graphics.bomb_site;
+	Image ws = Graphics.water_splash;
 	int bombsLeft;
 	ArrayList<Sprite> drops;
 

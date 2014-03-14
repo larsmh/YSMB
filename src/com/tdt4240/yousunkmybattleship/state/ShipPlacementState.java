@@ -3,8 +3,8 @@ package com.tdt4240.yousunkmybattleship.state;
 import java.util.Calendar;
 
 import com.tdt4240.yousunkmybattleship.Constants;
+import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.Player;
-import com.tdt4240.yousunkmybattleship.R;
 import com.tdt4240.yousunkmybattleship.Ship;
 
 import android.graphics.Canvas;
@@ -26,9 +26,9 @@ import sheep.input.TouchListener;
  */
 
 public class ShipPlacementState extends State implements TouchListener {
-	private Image bg = new Image(R.drawable.menu_bg);
-	private Image board = new Image(R.drawable.board);
-	private Image button = new Image(R.drawable.button);
+	private Image bg = Graphics.bg;
+	private Image board = Graphics.board;
+	private Image button = Graphics.button;
 
 	private Sprite[] sprites;
 	private int moveableShip;

@@ -2,10 +2,8 @@ package com.tdt4240.yousunkmybattleship.state;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
-
 import com.tdt4240.yousunkmybattleship.Constants;
-import com.tdt4240.yousunkmybattleship.R;
-
+import com.tdt4240.yousunkmybattleship.Graphics;
 import sheep.game.State;
 import sheep.graphics.Image;
 import sheep.gui.TextButton;
@@ -21,7 +19,7 @@ import sheep.input.TouchListener;
  */
 
 public class ChangeTurnState extends State implements TouchListener {
-	Image bg = new Image(R.drawable.menu_bg);
+	Image bg = Graphics.bg;
 	TextButton progress;
 
 	public ChangeTurnState() {

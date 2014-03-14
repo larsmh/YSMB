@@ -1,7 +1,7 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import com.tdt4240.yousunkmybattleship.Constants;
-import com.tdt4240.yousunkmybattleship.R;
+import com.tdt4240.yousunkmybattleship.Graphics;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -22,9 +22,9 @@ import sheep.input.TouchListener;
 public class MainMenuState extends State implements TouchListener {
 
 	// Background with integrated buttonbackgrounds:
-	// Image bg = new Image(R.drawable.menu_bgtest);
+	// Image bg = Graphics.bgTest;
 	// Regular background:
-	Image bg = new Image(R.drawable.menu_bg);
+	Image bg = Graphics.bg;
 	TextButton newGame;
 	TextButton settings;
 	TextButton instructions;
