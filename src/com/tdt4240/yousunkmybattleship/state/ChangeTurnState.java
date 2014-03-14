@@ -6,11 +6,6 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
-<<<<<<< HEAD
-import com.tdt4240.yousunkmybattleship.R;
-
-=======
->>>>>>> 73baf2de5884d4505f20125b7ad271865a838847
 import sheep.game.State;
 import sheep.graphics.Image;
 import sheep.gui.TextButton;
