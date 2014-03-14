@@ -1,6 +1,7 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import com.tdt4240.yousunkmybattleship.Constants;
+import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
 
@@ -22,16 +23,12 @@ import sheep.input.TouchListener;
 
 public class GameOverState extends State implements TouchListener {
 	// Temporary background
-	Image background = new Image(R.drawable.gameboard);
+	Image background = new Image(R.drawable.menu_bg);
 
 	TextButton menu;
 	TextButton exit;
-	String looserName;
-	String winnerName;
 
-	public GameOverState(Player looser) {
-		looserName = looser.getName();
-		winnerName = Constants.getOther().getName();
+	public GameOverState() {
 		menu = new TextButton(Constants.WINDOW_WIDTH * 0.1f,
 				Constants.WINDOW_HEIGHT * 0.9f, "Menu", Constants.paint);
 		exit = new TextButton(Constants.WINDOW_WIDTH * 0.9f,
@@ -40,24 +37,20 @@ public class GameOverState extends State implements TouchListener {
 
 	public void draw(Canvas canvas) {
 		background.draw(canvas, 0, 0);
-		canvas.drawText("The Winner is: " + winnerName, Constants.WINDOW_WIDTH * 0.39f,
-				Constants.WINDOW_HEIGHT * 0.2f,	Constants.paint[0]);
-		canvas.drawText("and the big, fat looser is: " + looserName, Constants.WINDOW_WIDTH * 0.30f, Constants.WINDOW_HEIGHT *0.36f,
-				Constants.paint[0]);
+		canvas.drawText(Constants.p.getName(), Constants.WINDOW_WIDTH * 0.25f,
+				Constants.WINDOW_HEIGHT * 0.25f,	Graphics.paint);
+		canvas.drawText("is the winner", Constants.WINDOW_WIDTH * 0.05f,
+				Constants.WINDOW_HEIGHT * 0.35f,	Graphics.paint);
 		menu.draw(canvas);
 		exit.draw(canvas);
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
 		if (menu.onTouchDown(event)) {
-			// should pop back down to main menu, not add another mainmenustate, when moved to the right order, should pop more than 2 states.
-			Constants.game.popState(4);
+			Constants.game.popState(3);
 		} else if (exit.onTouchDown(event)) {
-			//quit game, we really can't find how to quit the game
-			//Constants.game.
-			//super.onStop();
-			//GameOverState.kill();
-			//finish();
+			android.os.Process.killProcess(android.os.Process.myPid());
+	        System.exit(1);
 		}
 		return true;
 	}

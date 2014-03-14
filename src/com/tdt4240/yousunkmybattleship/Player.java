@@ -53,6 +53,19 @@ public class Player {
 
 		createShips();
 	}
+	
+	private void createShips() {
+		ships = new Ship[Constants.NUMBER_SHIPS];
+		ships[0] = new Ship(ShipType.AC_Carrier);
+		ships[1] = new Ship(ShipType.Battleship);
+		ships[2] = new Ship(ShipType.Submarine);
+		ships[3] = new Ship(ShipType.Destroyer);
+		ships[4] = new Ship(ShipType.Boat);
+		
+		for (int i = 0; i < ships.length; i++) {
+			ships[i].placeShip(0, i * 2);
+		}
+	}
 
 	public String getName() {
 		return this.name;
@@ -63,31 +76,14 @@ public class Player {
 	}
 
 	public void shipPlaced(int i, int j, Ship ship) {
-		board[i][j] = ship.getType().getSprite();
-
+		board[i][j] = ship.getType().getID();
 		ship.placeShip(i, j);
 	}
 
 	public void shipSunk() {
 		shipsRemaining -= 1;
-
-		if (shipsRemaining == 0) {
-			Constants.game.pushState(new GameOverState(this));
-		}
 	}
 
-	private void createShips() {
-		ships = new Ship[Constants.NUMBER_SHIPS];
-		ships[0] = new Ship(ShipType.AC_Carrier);
-		ships[1] = new Ship(ShipType.Battleship);
-		ships[2] = new Ship(ShipType.Submarine);
-		ships[3] = new Ship(ShipType.Destroyer);
-		ships[4] = new Ship(ShipType.Boat);
-
-		for (int i = 0; i < ships.length; i++) {
-			ships[i].placeShip(0, i * 2);
-		}
-	}
 
 	public Ship[] getShips() {
 		return ships;
@@ -114,12 +110,12 @@ public class Player {
 			if (s.isVertical()) {
 				for (int j = 0; j < s.getType().getSize(); j++)
 					board[s.getPosY() + j][s.getPosX()] = s.getType()
-							.getSprite();
+							.getID();
 
 			} else {
 				for (int j = 0; j < s.getType().getSize(); j++)
 					board[s.getPosY()][s.getPosX() + j] = s.getType()
-							.getSprite();
+							.getID();
 			}
 		}
 	}

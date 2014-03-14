@@ -47,7 +47,7 @@ public class SettingsState extends State implements TouchListener {
 			Constants.p1 = new Player("1");
 			Constants.p2 = new Player("2");
 			Constants.p = Constants.p1;
-			Constants.game.pushState(new GameOverState(Constants.p1));
+			//Constants.game.pushState(new GameOverState(Constants.p1));
 		}
 
 		return true;

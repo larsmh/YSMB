@@ -1,9 +1,12 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.tdt4240.yousunkmybattleship.Constants;
+import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.R;
 
 import sheep.game.State;
@@ -26,24 +29,26 @@ public class ChangeTurnState extends State implements TouchListener {
 
 	public ChangeTurnState() {
 		progress = new TextButton(Constants.WINDOW_WIDTH * 0.4f,
-				Constants.WINDOW_HEIGHT * 0.5f, "Continue", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.35f, "Continue", Constants.paint);
 	}
 
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
+		Graphics.paint.setColor(Color.WHITE);
+		Graphics.paint.setTextSize(Constants.WINDOW_WIDTH/6.5f);
+		canvas.drawText(Constants.p.getName()+"'s turn", Constants.WINDOW_WIDTH*0.02f, 
+				Constants.WINDOW_HEIGHT*0.2f, Graphics.paint);
 		progress.draw(canvas);
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
 		if (progress.onTouchDown(event)) {
-			Constants.changeTurn();
-			if (Constants.p2.isReady()) {
+			//Constants.changeTurn();
+			if (Constants.p2.isReady())
 				Constants.game.pushState(new GameState());
-				return true;
-			} else {
-				Constants.game.popState();
-				return true;
-			}
+			else
+				Constants.game.pushState(new ShipPlacementState());
+			return true;
 		}
 		return false;
 	}

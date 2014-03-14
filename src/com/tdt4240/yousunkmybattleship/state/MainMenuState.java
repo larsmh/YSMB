@@ -1,6 +1,7 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import com.tdt4240.yousunkmybattleship.Constants;
+import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -20,10 +21,6 @@ import sheep.input.TouchListener;
  */
 
 public class MainMenuState extends State implements TouchListener {
-
-	// Background with integrated buttonbackgrounds:
-	// Image bg = new Image(R.drawable.menu_bgtest);
-	// Regular background:
 	Image bg = new Image(R.drawable.menu_bg);
 	TextButton newGame;
 	TextButton settings;
@@ -36,13 +33,13 @@ public class MainMenuState extends State implements TouchListener {
 		for (int i = 0; i < Constants.paint.length; i++) {
 			Constants.paint[i] = new Paint();
 			Constants.paint[i].setColor(Color.WHITE);
-			Constants.paint[i].setTextSize(Constants.WINDOW_WIDTH / 21);
+			Constants.paint[i].setTextSize(Constants.WINDOW_WIDTH / 18);
 		}
-		newGame = new TextButton(Constants.WINDOW_WIDTH * 0.39f,
+		newGame = new TextButton(Constants.WINDOW_WIDTH * 0.37f,
 				Constants.WINDOW_HEIGHT * 0.2f, "New Game", Constants.paint);
-		settings = new TextButton(Constants.WINDOW_WIDTH * 0.42f,
+		settings = new TextButton(Constants.WINDOW_WIDTH * 0.4f,
 				Constants.WINDOW_HEIGHT * 0.36f, "Settings", Constants.paint);
-		instructions = new TextButton(Constants.WINDOW_WIDTH * 0.38f,
+		instructions = new TextButton(Constants.WINDOW_WIDTH * 0.36f,
 				Constants.WINDOW_HEIGHT * 0.52f, "Instructions",
 				Constants.paint);
 	}
@@ -55,8 +52,12 @@ public class MainMenuState extends State implements TouchListener {
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
-		if (newGame.onTouchDown(event))
-			Constants.game.pushState(new ShipPlacementState());
+		if (newGame.onTouchDown(event)){
+			Constants.p1 = new Player("Player1");
+			Constants.p2 = new Player("Player2");
+			Constants.p = Constants.p1;
+			Constants.game.pushState(new ChangeTurnState());
+		}
 		else if (settings.onTouchDown(event))
 			Constants.game.pushState(new SettingsState());
 		else if (instructions.onTouchDown(event))

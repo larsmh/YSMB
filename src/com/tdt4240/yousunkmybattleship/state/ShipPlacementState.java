@@ -3,6 +3,7 @@ package com.tdt4240.yousunkmybattleship.state;
 import java.util.Calendar;
 
 import com.tdt4240.yousunkmybattleship.Constants;
+import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.Player;
 import com.tdt4240.yousunkmybattleship.R;
 import com.tdt4240.yousunkmybattleship.Ship;
@@ -28,7 +29,7 @@ import sheep.input.TouchListener;
 public class ShipPlacementState extends State implements TouchListener {
 	private Image bg = new Image(R.drawable.menu_bg);
 	private Image board = new Image(R.drawable.board);
-	private Image button = new Image(R.drawable.button);
+	//private Image button = new Image(R.drawable.button);
 
 	private Sprite[] sprites;
 	private int moveableShip;
@@ -38,20 +39,15 @@ public class ShipPlacementState extends State implements TouchListener {
 
 	public ShipPlacementState() {
 		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
-				Constants.START_OF_GRID - 192 / 2, "Submit", Constants.paint);
-		Constants.p1 = new Player("Player1");
-		Constants.p2 = new Player("Player2");
-		Constants.p = Constants.p1;
+				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.05f, "Submit", Constants.paint);
 		moveableShip = -1;
-
 		createSprites();
 	}
 
 	private void createSprites() {
 		sprites = new Sprite[5];
 		for (int i = 0; i < sprites.length; i++)
-			sprites[i] = new Sprite(Constants.p.getShips()[i].getType()
-					.getImgHor());
+			sprites[i] = new Sprite(Constants.p.getShips()[i].getType().getImgHor());
 		placeOnTiles();
 	}
 
@@ -115,7 +111,8 @@ public class ShipPlacementState extends State implements TouchListener {
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
 		board.draw(canvas, 0, Constants.START_OF_GRID);
-		button.draw(canvas, 0, Constants.START_OF_GRID - 192);
+		canvas.drawText(Constants.p.getName()+"'s turn", Constants.WINDOW_WIDTH*0.02f, 
+				Constants.WINDOW_HEIGHT*0.2f, Graphics.paint);
 		submit.draw(canvas);
 		for (Sprite s : sprites)
 			s.draw(canvas);
@@ -137,11 +134,8 @@ public class ShipPlacementState extends State implements TouchListener {
 				}
 			}
 			Constants.p.setReady();
-			for (int i = 0; i < Constants.p.getShips().length; i++) {
-				if (Constants.p.getShips()[i].isVertical())
-					changeSprite(i, Constants.p.getShips()[i]);
-			}
-			Constants.game.pushState(new ChangeTurnState());
+			Constants.game.popState();
+			Constants.changeTurn();
 			return true;
 		}
 		// Used to register a click

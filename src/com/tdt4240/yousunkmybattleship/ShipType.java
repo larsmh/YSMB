@@ -19,7 +19,7 @@ public enum ShipType {
 	 * The sprite attribute is an integer that indicates the ship type.
 	 * 
 	 */
-	private int size, sprite;
+	private int size, id;
 
 	/**
 	 * The vertical and horizontal images for each ship.
@@ -29,7 +29,7 @@ public enum ShipType {
 
 	private ShipType(int size, int sprite) {
 		this.size = size;
-		this.sprite = sprite;
+		this.id = sprite;
 		switch (sprite) {
 		case 0:
 			shipImgHor = new Image(R.drawable.ac_carrier);
@@ -58,8 +58,8 @@ public enum ShipType {
 		return size;
 	}
 
-	public int getSprite() {
-		return sprite;
+	public int getID() {
+		return id;
 	}
 
 	public Image getImgVert() {

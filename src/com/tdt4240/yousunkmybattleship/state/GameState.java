@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
 import com.tdt4240.yousunkmybattleship.Constants;
+import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.R;
 import com.tdt4240.yousunkmybattleship.Ship;
 
@@ -71,6 +72,8 @@ public class GameState extends State implements TouchListener {
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
 		board.draw(canvas, 0, Constants.START_OF_GRID);
+		canvas.drawText(Constants.p.getName()+"'s turn", Constants.WINDOW_WIDTH*0.02f, 
+				Constants.WINDOW_HEIGHT*0.2f, Graphics.paint);
 		try {
 			for (Sprite s : drops) {
 				s.draw(canvas);
@@ -94,14 +97,14 @@ public class GameState extends State implements TouchListener {
 		// check if all bombs are dropped
 		if (bombsLeft == 0) {
 			Constants.game.popState();
+			Constants.changeTurn();
 			return true;
 		}
 		// try to drop a bomb on selected grid
 		if (event.getY() > Constants.START_OF_GRID) {
 			dropBomb(event.getX(), event.getY());
 			if (isWinner())
-				Constants.game
-						.pushState(new GameOverState(Constants.getOther()));
+				Constants.game.pushState(new GameOverState());
 		}
 		return false;
 	}
