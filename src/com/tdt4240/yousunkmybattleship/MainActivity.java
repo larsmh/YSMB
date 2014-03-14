@@ -6,8 +6,6 @@ import sheep.game.Game;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Menu;
 
 public class MainActivity extends Activity {
 

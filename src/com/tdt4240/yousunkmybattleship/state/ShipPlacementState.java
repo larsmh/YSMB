@@ -27,9 +27,9 @@ import sheep.input.TouchListener;
 
 public class ShipPlacementState extends State implements TouchListener {
 	private Image bg = new Image(R.drawable.menu_bg);
-	private Image board = new Image (R.drawable.board);
+	private Image board = new Image(R.drawable.board);
 	private Image button = new Image(R.drawable.button);
-	
+
 	private Sprite[] sprites;
 	private int moveableShip;
 	private TextButton submit;
@@ -66,19 +66,17 @@ public class ShipPlacementState extends State implements TouchListener {
 	 */
 	private void changeSprite(int spriteIndex, Ship ship) {
 		if (ship.isVertical()) {
-			sprites[spriteIndex] = new Sprite(
-					ship.getType().getImgHor());
+			sprites[spriteIndex] = new Sprite(ship.getType().getImgHor());
 		} else {
-			sprites[spriteIndex] = new Sprite(
-					ship.getType().getImgVert());
+			sprites[spriteIndex] = new Sprite(ship.getType().getImgVert());
 		}
 	}
-	
+
 	/**
 	 * Rotates the ship (from vertical to horizontal or vice versa)
 	 * 
 	 * @param index
-	 * 			index of the ship to rotate
+	 *            index of the ship to rotate
 	 */
 	private void rotateShip(int index, Ship ship) {
 		changeSprite(index, ship);
@@ -119,12 +117,12 @@ public class ShipPlacementState extends State implements TouchListener {
 		board.draw(canvas, 0, Constants.START_OF_GRID);
 		button.draw(canvas, 0, Constants.START_OF_GRID - 192);
 		submit.draw(canvas);
-		for (Sprite s: sprites)
+		for (Sprite s : sprites)
 			s.draw(canvas);
 	}
 
 	public void update(float dt) {
-		for (Sprite s: sprites)
+		for (Sprite s : sprites)
 			s.update(dt);
 	}
 
@@ -139,8 +137,8 @@ public class ShipPlacementState extends State implements TouchListener {
 				}
 			}
 			Constants.p.setReady();
-			for(int i = 0; i < Constants.p.getShips().length; i++){
-				if(Constants.p.getShips()[i].isVertical())
+			for (int i = 0; i < Constants.p.getShips().length; i++) {
+				if (Constants.p.getShips()[i].isVertical())
 					changeSprite(i, Constants.p.getShips()[i]);
 			}
 			Constants.game.pushState(new ChangeTurnState());
@@ -193,14 +191,15 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	public boolean onTouchUp(MotionEvent event) {
-		long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+		long clickDuration = Calendar.getInstance().getTimeInMillis()
+				- startClickTime;
 
 		// If a click is registered on a ship, initiate rotating process
 		if (clickDuration < Constants.MAX_CLICK_DURATION && moveableShip != -1) {
 			Ship ship = Constants.p.getShips()[moveableShip];
 			rotateShip(moveableShip, ship);
 		}
-		
+
 		placeOnTiles();
 		moveableShip = -1;
 		return true;

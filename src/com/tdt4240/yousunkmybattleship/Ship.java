@@ -1,7 +1,5 @@
 package com.tdt4240.yousunkmybattleship;
 
-import android.util.Log;
-
 import com.tdt4240.yousunkmybattleship.Constants.DirectionType;
 
 /**
@@ -61,25 +59,24 @@ public class Ship {
 
 	public boolean shipHit() {
 		hits++;
-		if (hits == type.getSize()){
-			return (shipSunk=true);
+		if (hits == type.getSize()) {
+			return (shipSunk = true);
 		}
 		return false;
 	}
 
 	public void changeDirection() {
 		int adjustment;
-		if (isVertical()){
+		if (isVertical()) {
 			direction = DirectionType.HORIZONTAL;
-			adjustment = posX+getType().getSize()-Constants.GRID_WIDTH;
-			if(adjustment>0)
-				posX-=adjustment;
-		}
-		else{
+			adjustment = posX + getType().getSize() - Constants.GRID_WIDTH;
+			if (adjustment > 0)
+				posX -= adjustment;
+		} else {
 			direction = DirectionType.VERTICAL;
-			adjustment = posY+getType().getSize()-Constants.GRID_HEIGHT;
-			if(adjustment>0)
-				posY-=adjustment;
+			adjustment = posY + getType().getSize() - Constants.GRID_HEIGHT;
+			if (adjustment > 0)
+				posY -= adjustment;
 		}
 	}
 
