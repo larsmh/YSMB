@@ -59,6 +59,8 @@ public class MainMenuState extends State implements TouchListener {
 			Constants.game.pushState(new ShipPlacementState());
 		else if (settings.onTouchDown(event))
 			Constants.game.pushState(new SettingsState());
+		else if (instructions.onTouchDown(event))
+			Constants.game.pushState(new InstructionsState());
 		return true;
 	}
 
