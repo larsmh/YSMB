@@ -1,7 +1,5 @@
 package com.tdt4240.yousunkmybattleship;
 
-import com.tdt4240.yousunkmybattleship.state.GameOverState;
-
 /**
  * Contains the relevant methods and attributes linked to the players.
  * 
@@ -34,8 +32,19 @@ public class Player {
 	 */
 	private boolean drops[][];
 
+	/**
+	 * List of the player's ships.
+	 * 
+	 */
 	Ship[] ships;
 
+	/**
+	 * Constructor of the Player class.
+	 * 
+	 * @param name
+	 *            the name of the new player
+	 * 
+	 */
 	public Player(String name) {
 		this.name = name;
 		shipsRemaining = Constants.NUMBER_SHIPS;
@@ -53,7 +62,12 @@ public class Player {
 
 		createShips();
 	}
-	
+
+	/**
+	 * Creates the player's ships: one ship of each type, and place them on the
+	 * board to a default location.
+	 * 
+	 */
 	private void createShips() {
 		ships = new Ship[Constants.NUMBER_SHIPS];
 		ships[0] = new Ship(ShipType.AC_Carrier);
@@ -61,30 +75,61 @@ public class Player {
 		ships[2] = new Ship(ShipType.Submarine);
 		ships[3] = new Ship(ShipType.Destroyer);
 		ships[4] = new Ship(ShipType.Boat);
-		
+
 		for (int i = 0; i < ships.length; i++) {
 			ships[i].placeShip(0, i * 2);
 		}
 	}
 
+	/**
+	 * Getter of the property name
+	 * 
+	 * @return Returns the player's name
+	 */
 	public String getName() {
 		return this.name;
 	}
 
+	/**
+	 * Notifies where a new bomb has been dropped on the drops list
+	 * 
+	 * @param i
+	 *            the x-coordinate of the dropped bomb
+	 * @param j
+	 *            the y-coordinate of the dropped bomb
+	 */
 	public void bombDropped(int i, int j) {
 		drops[i][j] = true;
 	}
 
+	/**
+	 * Saves the ships' place on the board list
+	 * 
+	 * @param i
+	 *            the x-coordinate of the moved ship
+	 * @param j
+	 *            the y-coordinate of the moved ship
+	 * @param ship
+	 *            the moved ship
+	 */
 	public void shipPlaced(int i, int j, Ship ship) {
 		board[i][j] = ship.getType().getID();
 		ship.placeShip(i, j);
 	}
 
+	/**
+	 * Updates the number of remaining ships when one of them has been sunk
+	 * 
+	 */
 	public void shipSunk() {
 		shipsRemaining -= 1;
 	}
 
-
+	/**
+	 * Getter of the property ships
+	 * 
+	 * @return Returns the player's ships
+	 */
 	public Ship[] getShips() {
 		return ships;
 	}
@@ -96,10 +141,20 @@ public class Player {
 		return false;
 	}
 
+	/**
+	 * Getter of the property board
+	 * 
+	 * @return Returns the player's board
+	 */
 	public int[][] getBoard() {
 		return board;
 	}
 
+	/**
+	 * Getter of the property drops
+	 * 
+	 * @return Returns the drops
+	 */
 	public boolean[][] getDrops() {
 		return drops;
 	}
@@ -109,13 +164,11 @@ public class Player {
 		for (Ship s : ships) {
 			if (s.isVertical()) {
 				for (int j = 0; j < s.getType().getSize(); j++)
-					board[s.getPosY() + j][s.getPosX()] = s.getType()
-							.getID();
+					board[s.getPosY() + j][s.getPosX()] = s.getType().getID();
 
 			} else {
 				for (int j = 0; j < s.getType().getSize(); j++)
-					board[s.getPosY()][s.getPosX() + j] = s.getType()
-							.getID();
+					board[s.getPosY()][s.getPosX() + j] = s.getType().getID();
 			}
 		}
 	}
@@ -124,6 +177,11 @@ public class Player {
 		return shipsPlaced;
 	}
 
+	/**
+	 * Getter of the property bombsPerTurn
+	 * 
+	 * @return Returns the number of bombs per turn
+	 */
 	public int getBombsPerTurn() {
 		return bombsPerTurn;
 	}
