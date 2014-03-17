@@ -4,13 +4,11 @@ import android.graphics.Paint;
 import sheep.graphics.Image;
 
 public class Graphics {
+	public static Paint[] buttonPaint = new Paint[2];
 	public static Paint paint = new Paint();
+	public static Paint warningPaint = new Paint();
 	
-	public static Image gb = new Image(R.drawable.gameboard);
 	public static Image board = new Image(R.drawable.board);
-	public static Image button = new Image(R.drawable.button);
-
-	public static Image bgTest = new Image(R.drawable.menu_bgtest);
 	public static Image bg = new Image(R.drawable.menu_bg);
 
 	public static Image instruction1 = new Image(R.drawable.instruction1);

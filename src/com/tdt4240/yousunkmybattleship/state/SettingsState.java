@@ -2,7 +2,8 @@ package com.tdt4240.yousunkmybattleship.state;
 
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
-import com.tdt4240.yousunkmybattleship.Player;
+import com.tdt4240.yousunkmybattleship.model.Player;
+
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.State;
@@ -24,10 +25,10 @@ public class SettingsState extends State implements TouchListener {
 	public SettingsState() {
 		backButton = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
 				Constants.WINDOW_HEIGHT * 0.2f, "Back to the menu",
-				Constants.paint);
+				Graphics.buttonPaint);
 		gameOverTestScreen = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
 				Constants.WINDOW_HEIGHT * 0.36f, "Game Over Test screen",
-				Constants.paint);
+				Graphics.buttonPaint);
 
 	}
 

@@ -25,7 +25,7 @@ public class ChangeTurnState extends State implements TouchListener {
 
 	public ChangeTurnState() {
 		progress = new TextButton(Constants.WINDOW_WIDTH * 0.4f,
-				Constants.WINDOW_HEIGHT * 0.35f, "Continue", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.35f, "Continue", Graphics.buttonPaint);
 	}
 
 	public void draw(Canvas canvas) {

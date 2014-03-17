@@ -32,7 +32,7 @@ public class InstructionsState extends State implements TouchListener {
 		clickNext = 0;
 
 		nextButton = new TextButton(Constants.WINDOW_WIDTH * 0.85f,
-				Constants.WINDOW_HEIGHT * 0.98f, "Next", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.98f, "Next", Graphics.buttonPaint);
 		addTouchListener(nextButton);
 	}
 

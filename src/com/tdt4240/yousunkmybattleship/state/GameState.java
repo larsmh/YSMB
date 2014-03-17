@@ -5,7 +5,7 @@ import java.util.ConcurrentModificationException;
 
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
-import com.tdt4240.yousunkmybattleship.Ship;
+import com.tdt4240.yousunkmybattleship.model.Ship;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;

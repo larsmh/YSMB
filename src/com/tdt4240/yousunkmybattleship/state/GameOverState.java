@@ -27,9 +27,9 @@ public class GameOverState extends State implements TouchListener {
 
 	public GameOverState() {
 		menu = new TextButton(Constants.WINDOW_WIDTH * 0.1f,
-				Constants.WINDOW_HEIGHT * 0.9f, "Menu", Constants.paint);
-		exit = new TextButton(Constants.WINDOW_WIDTH * 0.9f,
-				Constants.WINDOW_HEIGHT * 0.9f, "Exit", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.9f, "Menu", Graphics.buttonPaint);
+		exit = new TextButton(Constants.WINDOW_WIDTH * 0.8f,
+				Constants.WINDOW_HEIGHT * 0.9f, "Exit", Graphics.buttonPaint);
 	}
 
 	public void draw(Canvas canvas) {

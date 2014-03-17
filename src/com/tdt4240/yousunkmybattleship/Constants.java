@@ -1,5 +1,8 @@
 package com.tdt4240.yousunkmybattleship;
 
+import com.tdt4240.yousunkmybattleship.model.Player;
+
+import android.content.Context;
 import android.graphics.Paint;
 import sheep.game.Game;
 
@@ -21,7 +24,6 @@ public class Constants {
 
 	public static final int MAX_CLICK_DURATION = 200;
 
-	public static Paint[] paint;
 
 	public enum DirectionType {
 		HORIZONTAL, VERTICAL;

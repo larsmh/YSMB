@@ -2,7 +2,7 @@ package com.tdt4240.yousunkmybattleship.state;
 
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
-import com.tdt4240.yousunkmybattleship.Player;
+import com.tdt4240.yousunkmybattleship.model.Player;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -30,19 +30,20 @@ public class MainMenuState extends State implements TouchListener {
 	public MainMenuState() {
 		Log.d("!!!!", Constants.WINDOW_HEIGHT + " " + Constants.WINDOW_WIDTH
 				+ " " + Constants.TILE_SIZE + " " + Constants.START_OF_GRID);
-		Constants.paint = new Paint[2];
-		for (int i = 0; i < Constants.paint.length; i++) {
-			Constants.paint[i] = new Paint();
-			Constants.paint[i].setColor(Color.WHITE);
-			Constants.paint[i].setTextSize(Constants.WINDOW_WIDTH / 18);
+		for (int i = 0; i < Graphics.buttonPaint.length; i++) {
+			Graphics.buttonPaint[i] = new Paint();
+			Graphics.buttonPaint[i].setColor(Color.WHITE);
+			Graphics.buttonPaint[i].setTextSize(Constants.WINDOW_WIDTH / 18);
 		}
+		Graphics.warningPaint.setTextSize(Constants.WINDOW_WIDTH/18);
+		Graphics.warningPaint.setColor(Color.RED);
 		newGame = new TextButton(Constants.WINDOW_WIDTH * 0.37f,
-				Constants.WINDOW_HEIGHT * 0.2f, "New Game", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.2f, "New Game", Graphics.buttonPaint);
 		settings = new TextButton(Constants.WINDOW_WIDTH * 0.4f,
-				Constants.WINDOW_HEIGHT * 0.36f, "Settings", Constants.paint);
+				Constants.WINDOW_HEIGHT * 0.36f, "Settings", Graphics.buttonPaint);
 		instructions = new TextButton(Constants.WINDOW_WIDTH * 0.36f,
 				Constants.WINDOW_HEIGHT * 0.52f, "Instructions",
-				Constants.paint);
+				Graphics.buttonPaint);
 	}
 
 	public void draw(Canvas canvas) {
