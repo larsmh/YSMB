@@ -1,8 +1,7 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import com.tdt4240.yousunkmybattleship.Constants;
-import com.tdt4240.yousunkmybattleship.R;
-
+import com.tdt4240.yousunkmybattleship.Graphics;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.State;
@@ -16,8 +15,8 @@ import sheep.input.TouchListener;
  */
 
 public class InstructionsState extends State implements TouchListener {
-	private Image instruction1 = new Image(R.drawable.instruction1);
-	private Image instruction2 = new Image(R.drawable.instruction2);
+	private Image instruction1 = Graphics.instruction1;
+	private Image instruction2 = Graphics.instruction2;
 
 	private TextButton nextButton;
 
@@ -32,8 +31,8 @@ public class InstructionsState extends State implements TouchListener {
 	public InstructionsState() {
 		clickNext = 0;
 
-		nextButton = new TextButton(Constants.WINDOW_WIDTH * 0.8f,
-				Constants.WINDOW_HEIGHT * 0.9f, "Back");
+		nextButton = new TextButton(Constants.WINDOW_WIDTH * 0.85f,
+				Constants.WINDOW_HEIGHT * 0.98f, "Next", Graphics.buttonPaint);
 		addTouchListener(nextButton);
 	}
 

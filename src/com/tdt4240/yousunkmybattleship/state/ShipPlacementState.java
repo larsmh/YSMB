@@ -3,11 +3,12 @@ package com.tdt4240.yousunkmybattleship.state;
 import java.util.Calendar;
 
 import com.tdt4240.yousunkmybattleship.Constants;
-import com.tdt4240.yousunkmybattleship.Player;
-import com.tdt4240.yousunkmybattleship.R;
-import com.tdt4240.yousunkmybattleship.Ship;
+import com.tdt4240.yousunkmybattleship.Graphics;
+import com.tdt4240.yousunkmybattleship.model.Ship;
 
+import android.app.AlertDialog;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
 import sheep.game.State;
@@ -26,32 +27,28 @@ import sheep.input.TouchListener;
  */
 
 public class ShipPlacementState extends State implements TouchListener {
-	private Image bg = new Image(R.drawable.menu_bg);
-	private Image board = new Image (R.drawable.board);
-	private Image button = new Image(R.drawable.button);
-	
+
+	private Image bg = Graphics.bg;
+	private Image board = Graphics.board;
+
 	private Sprite[] sprites;
 	private int moveableShip;
 	private TextButton submit;
 
 	private long startClickTime;
+	private boolean legal;
 
 	public ShipPlacementState() {
 		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
-				Constants.START_OF_GRID - 192 / 2, "Submit", Constants.paint);
-		Constants.p1 = new Player("Player1");
-		Constants.p2 = new Player("Player2");
-		Constants.p = Constants.p1;
+				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.05f, "Submit", Graphics.buttonPaint);
 		moveableShip = -1;
-
 		createSprites();
 	}
 
 	private void createSprites() {
 		sprites = new Sprite[5];
 		for (int i = 0; i < sprites.length; i++)
-			sprites[i] = new Sprite(Constants.p.getShips()[i].getType()
-					.getImgHor());
+			sprites[i] = new Sprite(Constants.p.getShips()[i].getType().getImgHor());
 		placeOnTiles();
 	}
 
@@ -66,23 +63,21 @@ public class ShipPlacementState extends State implements TouchListener {
 	 */
 	private void changeSprite(int spriteIndex, Ship ship) {
 		if (ship.isVertical()) {
-			sprites[spriteIndex] = new Sprite(
-					ship.getType().getImgHor());
+			sprites[spriteIndex] = new Sprite(ship.getType().getImgVert());
 		} else {
-			sprites[spriteIndex] = new Sprite(
-					ship.getType().getImgVert());
+			sprites[spriteIndex] = new Sprite(ship.getType().getImgHor());
 		}
 	}
-	
+
 	/**
 	 * Rotates the ship (from vertical to horizontal or vice versa)
 	 * 
 	 * @param index
-	 * 			index of the ship to rotate
+	 *            index of the ship to rotate
 	 */
 	private void rotateShip(int index, Ship ship) {
-		changeSprite(index, ship);
 		ship.changeDirection();
+		changeSprite(index, ship);
 	}
 
 	/**
@@ -100,6 +95,26 @@ public class ShipPlacementState extends State implements TouchListener {
 							* Constants.TILE_SIZE
 							+ sprites[i].getOffset().getY() + 1);
 		}
+		synchronized(this){
+			try {
+				wait(25);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		legal=checkLegal();
+	}
+	
+	private boolean checkLegal(){
+		for (int i = 0; i < sprites.length - 1; i++) {
+			for (int j = i + 1; j < sprites.length; j++) {
+				if (sprites[i].collides(sprites[j])) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -117,33 +132,30 @@ public class ShipPlacementState extends State implements TouchListener {
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
 		board.draw(canvas, 0, Constants.START_OF_GRID);
-		button.draw(canvas, 0, Constants.START_OF_GRID - 192);
-		submit.draw(canvas);
-		for (Sprite s: sprites)
+		canvas.drawText(Constants.p.getName()+"'s turn", Constants.WINDOW_WIDTH*0.02f, 
+				Constants.WINDOW_HEIGHT*0.2f, Graphics.paint);
+		if(legal)
+			submit.draw(canvas);
+		else
+			canvas.drawText("Illegal placement", Constants.WINDOW_WIDTH*0.05f, 
+					Constants.START_OF_GRID-Constants.WINDOW_HEIGHT*0.05f, Graphics.warningPaint);
+		for (Sprite s : sprites)
 			s.draw(canvas);
 	}
 
 	public void update(float dt) {
-		for (Sprite s: sprites)
+		for (Sprite s : sprites)
 			s.update(dt);
 	}
 
 	public boolean onTouchDown(MotionEvent event) {
 		// Logic check for submit button
 		if (submit.onTouchDown(event)) {
-			for (int i = 0; i < sprites.length - 1; i++) {
-				for (int j = i + 1; j < sprites.length; j++) {
-					if (sprites[i].collides(sprites[j])) {
-						return false;
-					}
-				}
-			}
+			if(!checkLegal())
+				return false;
 			Constants.p.setReady();
-			for(int i = 0; i < Constants.p.getShips().length; i++){
-				if(Constants.p.getShips()[i].isVertical())
-					changeSprite(i, Constants.p.getShips()[i]);
-			}
-			Constants.game.pushState(new ChangeTurnState());
+			Constants.game.popState();
+			Constants.changeTurn();
 			return true;
 		}
 		// Used to register a click
@@ -193,14 +205,15 @@ public class ShipPlacementState extends State implements TouchListener {
 	}
 
 	public boolean onTouchUp(MotionEvent event) {
-		long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+		long clickDuration = Calendar.getInstance().getTimeInMillis()
+				- startClickTime;
 
 		// If a click is registered on a ship, initiate rotating process
 		if (clickDuration < Constants.MAX_CLICK_DURATION && moveableShip != -1) {
 			Ship ship = Constants.p.getShips()[moveableShip];
 			rotateShip(moveableShip, ship);
 		}
-		
+
 		placeOnTiles();
 		moveableShip = -1;
 		return true;

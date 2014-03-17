@@ -1,4 +1,7 @@
-package com.tdt4240.yousunkmybattleship;
+package com.tdt4240.yousunkmybattleship.model;
+
+import com.tdt4240.yousunkmybattleship.R;
+import com.tdt4240.yousunkmybattleship.R.drawable;
 
 import sheep.graphics.Image;
 

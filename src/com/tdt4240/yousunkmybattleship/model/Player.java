@@ -1,4 +1,6 @@
-package com.tdt4240.yousunkmybattleship;
+package com.tdt4240.yousunkmybattleship.model;
+
+import com.tdt4240.yousunkmybattleship.Constants;
 
 /**
  * Contains the relevant methods and attributes linked to the players.
@@ -49,7 +51,7 @@ public class Player {
 		this.name = name;
 		shipsRemaining = Constants.NUMBER_SHIPS;
 		shipsPlaced = false;
-		bombsPerTurn = 5;
+		bombsPerTurn = 4;
 
 		drops = new boolean[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
 		board = new int[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];

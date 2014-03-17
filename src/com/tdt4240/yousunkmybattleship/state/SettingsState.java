@@ -1,8 +1,9 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import com.tdt4240.yousunkmybattleship.Constants;
-import com.tdt4240.yousunkmybattleship.Player;
-import com.tdt4240.yousunkmybattleship.R;
+import com.tdt4240.yousunkmybattleship.Graphics;
+import com.tdt4240.yousunkmybattleship.model.Player;
+
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.State;
@@ -17,16 +18,17 @@ import sheep.input.TouchListener;
  */
 
 public class SettingsState extends State implements TouchListener {
-	Image bg = new Image(R.drawable.menu_bg);
+	Image bg = Graphics.bg;
 	TextButton backButton;
 	TextButton gameOverTestScreen;
 
 	public SettingsState() {
-		backButton = new TextButton(Constants.WINDOW_WIDTH * 0.39f,
-				Constants.WINDOW_HEIGHT * 0.2f, "back to main", Constants.paint);
+		backButton = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
+				Constants.WINDOW_HEIGHT * 0.2f, "Back to the menu",
+				Graphics.buttonPaint);
 		gameOverTestScreen = new TextButton(Constants.WINDOW_WIDTH * 0.30f,
 				Constants.WINDOW_HEIGHT * 0.36f, "Game Over Test screen",
-				Constants.paint);
+				Graphics.buttonPaint);
 
 	}
 
@@ -46,7 +48,7 @@ public class SettingsState extends State implements TouchListener {
 			Constants.p1 = new Player("1");
 			Constants.p2 = new Player("2");
 			Constants.p = Constants.p1;
-			Constants.game.pushState(new GameOverState(Constants.p1));
+			//Constants.game.pushState(new GameOverState(Constants.p1));
 		}
 
 		return true;
