@@ -42,7 +42,7 @@ public class Player {
 	 * List of the player's ships.
 	 * 
 	 */
-	Ship[] ships;
+	private Ship[] ships;
 
 	/**
 	 * Constructor of the Player class.
@@ -55,7 +55,7 @@ public class Player {
 		this.name = name;
 		shipsRemaining = Constants.NUMBER_SHIPS;
 		shipsPlaced = false;
-		bombsPerTurn = 4;
+		bombsPerTurn = Constants.NUMBER_BOMBS;
 		pcs = new PropertyChangeSupport(this);
 
 		drops = new boolean[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
@@ -106,6 +106,7 @@ public class Player {
 	 *            the y-coordinate of the dropped bomb
 	 */
 	public void bombDropped(int i, int j) {
+		boolean old = drops[i][j];
 		drops[i][j] = true;
 	}
 
@@ -210,16 +211,17 @@ public class Player {
 	public void changePlayerState() {
 
 	}
-	
+
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
+		pcs.addPropertyChangeListener(listener);
+	}
 
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(listener);
-    }
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		pcs.removePropertyChangeListener(listener);
+	}
 
-    protected void firePropertyChangeEvent(String propertyName, Object oldValue, Object newValue) {
-        pcs.firePropertyChange(propertyName, oldValue, newValue);
-    }
+	protected void firePropertyChangeEvent(String propertyName,
+			Object oldValue, Object newValue) {
+		pcs.firePropertyChange(propertyName, oldValue, newValue);
+	}
 }
