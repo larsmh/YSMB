@@ -1,5 +1,8 @@
 package com.tdt4240.yousunkmybattleship.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import com.tdt4240.yousunkmybattleship.Constants;
 
 /**
@@ -14,6 +17,7 @@ public class Player {
 	private String name;
 	private int bombsPerTurn, totalHits;
 	private boolean shipsPlaced;
+	protected PropertyChangeSupport pcs;
 
 	/**
 	 * The number of non sunk ships of the player
@@ -52,6 +56,7 @@ public class Player {
 		shipsRemaining = Constants.NUMBER_SHIPS;
 		shipsPlaced = false;
 		bombsPerTurn = 4;
+		pcs = new PropertyChangeSupport(this);
 
 		drops = new boolean[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
 		board = new int[Constants.GRID_HEIGHT][Constants.GRID_WIDTH];
@@ -205,4 +210,16 @@ public class Player {
 	public void changePlayerState() {
 
 	}
+	
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChangeEvent(String propertyName, Object oldValue, Object newValue) {
+        pcs.firePropertyChange(propertyName, oldValue, newValue);
+    }
 }
