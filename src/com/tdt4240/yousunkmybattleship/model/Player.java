@@ -108,6 +108,7 @@ public class Player {
 	public void bombDropped(int i, int j) {
 		boolean old = drops[i][j];
 		drops[i][j] = true;
+		
 		pcs.firePropertyChange("BOMB_DROPPED", old, drops[i][j]);
 	}
 
