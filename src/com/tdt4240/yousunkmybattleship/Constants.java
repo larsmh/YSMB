@@ -25,7 +25,9 @@ public class Constants {
 
 	public static final int MAX_CLICK_DURATION = 200;
 
-
+	/* Fire property change name properties*/
+	public static final String CHANGE_DIRECTION = "CHANGE_DIRECTION";
+	
 	public enum DirectionType {
 		HORIZONTAL, VERTICAL;
 	}

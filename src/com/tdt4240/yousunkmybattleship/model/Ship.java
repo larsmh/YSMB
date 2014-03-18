@@ -1,5 +1,8 @@
 package com.tdt4240.yousunkmybattleship.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Constants.DirectionType;
 
@@ -12,6 +15,7 @@ import com.tdt4240.yousunkmybattleship.Constants.DirectionType;
  */
 
 public class Ship {
+	protected PropertyChangeSupport pcs;
 	private ShipType type;
 
 	/**
@@ -52,6 +56,8 @@ public class Ship {
 		placedOnBoard = false;
 		posX = 0;
 		posY = 0;
+		
+		pcs = new PropertyChangeSupport(this);
 	}
 
 	public boolean isSunk() {
@@ -68,17 +74,22 @@ public class Ship {
 
 	public void changeDirection() {
 		int adjustment;
+		DirectionType oldDirection;
+		
 		if (isVertical()) {
+			oldDirection = DirectionType.VERTICAL;
 			direction = DirectionType.HORIZONTAL;
 			adjustment = posX + getType().getSize() - Constants.GRID_WIDTH;
 			if (adjustment > 0)
 				posX -= adjustment;
 		} else {
 			direction = DirectionType.VERTICAL;
+			oldDirection = DirectionType.HORIZONTAL;
 			adjustment = posY + getType().getSize() - Constants.GRID_HEIGHT;
 			if (adjustment > 0)
 				posY -= adjustment;
 		}
+		pcs.firePropertyChange(Constants.CHANGE_DIRECTION, oldDirection, direction);
 	}
 
 	public boolean isVertical() {
@@ -102,5 +113,17 @@ public class Ship {
 	public ShipType getType() {
 		return type;
 	}
+	
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChangeEvent(String propertyName, Object oldValue, Object newValue) {
+        pcs.firePropertyChange(propertyName, oldValue, newValue);
+    }
 
 }

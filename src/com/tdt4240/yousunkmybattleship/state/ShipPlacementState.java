@@ -1,5 +1,7 @@
 package com.tdt4240.yousunkmybattleship.state;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 
 import com.tdt4240.yousunkmybattleship.Constants;
@@ -26,14 +28,16 @@ import sheep.input.TouchListener;
  * 
  */
 
-public class ShipPlacementState extends State implements TouchListener {
+public class ShipPlacementState extends State implements TouchListener, PropertyChangeListener {
 
 	private Image bg = Graphics.bg;
 	private Image board = Graphics.board;
 
+	private Ship[] ships;
 	private Sprite[] sprites;
 	private int moveableShip;
 	private TextButton submit;
+	private TextButton check;
 
 	private long startClickTime;
 	private boolean legal;
@@ -41,7 +45,13 @@ public class ShipPlacementState extends State implements TouchListener {
 	public ShipPlacementState() {
 		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
 				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.05f, "Submit", Graphics.buttonPaint);
+		check = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
+				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.25f, "Heihei", Graphics.buttonPaint);
 		moveableShip = -1;
+		ships = Constants.p.getShips();
+		for (int i = 0; i < ships.length; i++) {
+			ships[i].addPropertyChangeListener(this);
+		}
 		createSprites();
 	}
 
@@ -76,8 +86,10 @@ public class ShipPlacementState extends State implements TouchListener {
 	 *            index of the ship to rotate
 	 */
 	private void rotateShip(int index, Ship ship) {
+		check.setLabel("Changing direction");
 		ship.changeDirection();
-		changeSprite(index, ship);
+		
+		//changeSprite(index, ship);
 	}
 
 	/**
@@ -106,6 +118,7 @@ public class ShipPlacementState extends State implements TouchListener {
 		legal=checkLegal();
 	}
 	
+	// Fix this. Requires pixel perfect positions. Doesn't work with the images we use, they overlap sometimes
 	private boolean checkLegal(){
 		for (int i = 0; i < sprites.length - 1; i++) {
 			for (int j = i + 1; j < sprites.length; j++) {
@@ -134,6 +147,7 @@ public class ShipPlacementState extends State implements TouchListener {
 		board.draw(canvas, 0, Constants.START_OF_GRID);
 		canvas.drawText(Constants.p.getName()+"'s turn", Constants.WINDOW_WIDTH*0.02f, 
 				Constants.WINDOW_HEIGHT*0.2f, Graphics.paint);
+		check.draw(canvas);
 		if(legal)
 			submit.draw(canvas);
 		else
@@ -217,5 +231,15 @@ public class ShipPlacementState extends State implements TouchListener {
 		placeOnTiles();
 		moveableShip = -1;
 		return true;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		//check.setLabel("PROPERTCHANGE MADAFAKKA");
+		if (event.getPropertyName() == Constants.CHANGE_DIRECTION) {
+			Ship ship = Constants.p.getShips()[moveableShip];
+			changeSprite(moveableShip, ship);
+		}
+		
 	}
 }
