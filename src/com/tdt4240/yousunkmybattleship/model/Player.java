@@ -142,14 +142,6 @@ public class Player {
 		return ships;
 	}
 
-	public Ship getAShip(int x, int y) {
-		if (board[y][x] == -1) {
-			return null;
-		} else {
-			return ships[board[y][x]];
-		}
-	}
-
 	public boolean registerDrop(int x, int y) {
 		if (!drops[y][x]) {
 			return (drops[y][x] = true);

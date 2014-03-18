@@ -41,10 +41,6 @@ public class GameState extends State implements TouchListener {
 			if (!Constants.getOther().shipIsHit(x, y))
 				bombsLeft--;
 			drawBombDrop(x, y);
-
-			if (Constants.getOther().getAShip(x, y).isSunk()) {
-				// "You sunk a Constants.getOther().getAShip(x, y).getType() of your opponent!"
-			}
 		}
 	}
 
@@ -87,7 +83,7 @@ public class GameState extends State implements TouchListener {
 		}
 
 		canvas.drawText("You have: " + bombsLeft + " bombs left!",
-				Constants.WINDOW_WIDTH * 0.2f, Constants.WINDOW_HEIGHT * 0.3f,
+				Constants.WINDOW_WIDTH * 0.18f, Constants.WINDOW_HEIGHT * 0.3f,
 				Graphics.buttonPaint[1]);
 	}
 
