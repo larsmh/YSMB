@@ -2,8 +2,6 @@ package com.tdt4240.yousunkmybattleship;
 
 import com.tdt4240.yousunkmybattleship.model.Player;
 
-import android.content.Context;
-import android.graphics.Paint;
 import sheep.game.Game;
 
 public class Constants {
@@ -21,10 +19,13 @@ public class Constants {
 	public static float START_OF_GRID;
 
 	public static int NUMBER_SHIPS = 5;
+	public static int NUMBER_BOMBS = 4;
 
 	public static final int MAX_CLICK_DURATION = 200;
 
-
+	/* Fire property change name properties*/
+	public static final String CHANGE_DIRECTION = "CHANGE_DIRECTION";
+	
 	public enum DirectionType {
 		HORIZONTAL, VERTICAL;
 	}
