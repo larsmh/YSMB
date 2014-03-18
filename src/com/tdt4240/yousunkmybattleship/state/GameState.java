@@ -71,8 +71,9 @@ public class GameState extends State implements TouchListener {
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
 		board.draw(canvas, 0, Constants.START_OF_GRID);
-		canvas.drawText(Constants.p.getName()+"'s turn", Constants.WINDOW_WIDTH*0.02f, 
-				Constants.WINDOW_HEIGHT*0.2f, Graphics.paint);
+		canvas.drawText(Constants.p.getName() + "'s turn",
+				Constants.WINDOW_WIDTH * 0.02f, Constants.WINDOW_HEIGHT * 0.2f,
+				Graphics.paint);
 		try {
 			for (Sprite s : drops) {
 				s.draw(canvas);
@@ -80,6 +81,10 @@ public class GameState extends State implements TouchListener {
 		} catch (ConcurrentModificationException e) {
 			e.printStackTrace();
 		}
+
+		canvas.drawText("You have: " + bombsLeft + " bombs left!",
+				Constants.WINDOW_WIDTH * 0.2f, Constants.WINDOW_HEIGHT * 0.3f,
+				Graphics.buttonPaint[1]);
 	}
 
 	public void update(float dt) {
