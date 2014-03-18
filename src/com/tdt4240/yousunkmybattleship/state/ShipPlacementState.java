@@ -8,9 +8,7 @@ import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.model.Ship;
 
-import android.app.AlertDialog;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
 import sheep.game.State;

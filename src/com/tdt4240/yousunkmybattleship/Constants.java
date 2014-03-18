@@ -2,8 +2,6 @@ package com.tdt4240.yousunkmybattleship;
 
 import com.tdt4240.yousunkmybattleship.model.Player;
 
-import android.content.Context;
-import android.graphics.Paint;
 import sheep.game.Game;
 
 public class Constants {
