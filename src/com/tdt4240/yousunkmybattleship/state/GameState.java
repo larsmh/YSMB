@@ -41,6 +41,10 @@ public class GameState extends State implements TouchListener {
 			if (!Constants.getOther().shipIsHit(x, y))
 				bombsLeft--;
 			drawBombDrop(x, y);
+
+			if (Constants.getOther().getAShip(x, y).isSunk()) {
+				// "You sunk a Constants.getOther().getAShip(x, y).getType() of your opponent!"
+			}
 		}
 	}
 

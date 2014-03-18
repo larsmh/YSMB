@@ -142,6 +142,14 @@ public class Player {
 		return ships;
 	}
 
+	public Ship getAShip(int x, int y) {
+		if (board[y][x] == -1) {
+			return null;
+		} else {
+			return ships[board[y][x]];
+		}
+	}
+
 	public boolean registerDrop(int x, int y) {
 		if (!drops[y][x]) {
 			return (drops[y][x] = true);
@@ -211,16 +219,17 @@ public class Player {
 	public void changePlayerState() {
 
 	}
-	
+
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
+		pcs.addPropertyChangeListener(listener);
+	}
 
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(listener);
-    }
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		pcs.removePropertyChangeListener(listener);
+	}
 
-    protected void firePropertyChangeEvent(String propertyName, Object oldValue, Object newValue) {
-        pcs.firePropertyChange(propertyName, oldValue, newValue);
-    }
+	protected void firePropertyChangeEvent(String propertyName,
+			Object oldValue, Object newValue) {
+		pcs.firePropertyChange(propertyName, oldValue, newValue);
+	}
 }
