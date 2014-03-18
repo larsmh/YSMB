@@ -21,6 +21,7 @@ public class Constants {
 	public static float START_OF_GRID;
 
 	public static int NUMBER_SHIPS = 5;
+	public static int NUMBER_BOMBS = 4;
 
 	public static final int MAX_CLICK_DURATION = 200;
 
