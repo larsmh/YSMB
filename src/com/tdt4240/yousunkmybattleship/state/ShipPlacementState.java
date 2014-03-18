@@ -37,7 +37,7 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	private Sprite[] sprites;
 	private int moveableShip;
 	private TextButton submit;
-	private TextButton check;
+	private TextButton check; // Testing purposes
 
 	private long startClickTime;
 	private boolean legal;
@@ -46,7 +46,7 @@ public class ShipPlacementState extends State implements TouchListener, Property
 		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
 				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.05f, "Submit", Graphics.buttonPaint);
 		check = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
-				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.25f, "Heihei", Graphics.buttonPaint);
+				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.15f, "Heihei", Graphics.buttonPaint);
 		moveableShip = -1;
 		ships = Constants.p.getShips();
 		for (int i = 0; i < ships.length; i++) {
@@ -58,7 +58,7 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	private void createSprites() {
 		sprites = new Sprite[5];
 		for (int i = 0; i < sprites.length; i++)
-			sprites[i] = new Sprite(Constants.p.getShips()[i].getType().getImgHor());
+			sprites[i] = new Sprite(ships[i].getType().getImgHor());
 		placeOnTiles();
 	}
 
@@ -85,11 +85,9 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	 * @param index
 	 *            index of the ship to rotate
 	 */
-	private void rotateShip(int index, Ship ship) {
+	private void rotateShip(Ship ship) {
 		check.setLabel("Changing direction");
 		ship.changeDirection();
-		
-		//changeSprite(index, ship);
 	}
 
 	/**
@@ -100,10 +98,10 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	private void placeOnTiles() {
 		for (int i = 0; i < sprites.length; i++) {
 			sprites[i].setPosition(
-					Constants.p.getShips()[i].getPosX() * Constants.TILE_SIZE
+					ships[i].getPosX() * Constants.TILE_SIZE
 							+ sprites[i].getOffset().getX() + 1,
 					Constants.START_OF_GRID
-							+ Constants.p.getShips()[i].getPosY()
+							+ ships[i].getPosY()
 							* Constants.TILE_SIZE
 							+ sprites[i].getOffset().getY() + 1);
 		}
@@ -167,6 +165,9 @@ public class ShipPlacementState extends State implements TouchListener, Property
 		if (submit.onTouchDown(event)) {
 			if(!checkLegal())
 				return false;
+			for (int i = 0; i < ships.length; i++){
+				ships[i].removePropertyChangeListener(this);
+			}
 			Constants.p.setReady();
 			Constants.game.popState();
 			Constants.changeTurn();
@@ -206,7 +207,7 @@ public class ShipPlacementState extends State implements TouchListener, Property
 				}
 
 				sprites[i].setPosition(x, y);
-				Constants.p.getShips()[i].placeShip(
+				ships[i].placeShip(
 						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i]
 								.getOffset().getX()) / Constants.TILE_SIZE),
 						(int) ((Constants.TILE_SIZE / 2
@@ -219,13 +220,11 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	}
 
 	public boolean onTouchUp(MotionEvent event) {
-		long clickDuration = Calendar.getInstance().getTimeInMillis()
-				- startClickTime;
+		long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
 
 		// If a click is registered on a ship, initiate rotating process
 		if (clickDuration < Constants.MAX_CLICK_DURATION && moveableShip != -1) {
-			Ship ship = Constants.p.getShips()[moveableShip];
-			rotateShip(moveableShip, ship);
+			rotateShip(ships[moveableShip]);
 		}
 
 		placeOnTiles();
@@ -236,9 +235,8 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		//check.setLabel("PROPERTCHANGE MADAFAKKA");
-		if (event.getPropertyName() == Constants.CHANGE_DIRECTION) {
-			Ship ship = Constants.p.getShips()[moveableShip];
-			changeSprite(moveableShip, ship);
+		if (event.getPropertyName() == Constants.CHANGE_DIRECTION && moveableShip != -1) {
+			changeSprite(moveableShip, ships[moveableShip]);
 		}
 		
 	}
