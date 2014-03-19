@@ -115,9 +115,6 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
-		canvas.drawText(Constants.p.getName()+"'s turn", Constants.WINDOW_WIDTH*0.02f, 
-				Constants.WINDOW_HEIGHT*0.2f, Graphics.paint);
-		check.draw(canvas);
 		if(legal)
 			submit.draw(canvas);
 		else

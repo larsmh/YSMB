@@ -41,9 +41,6 @@ public class DropState extends GameState implements TouchListener {
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 		myBoardButton.draw(canvas);
-		canvas.drawText(Constants.p.getName() + "'s turn",
-				Constants.WINDOW_WIDTH * 0.02f, Constants.WINDOW_HEIGHT * 0.2f,
-				Graphics.paint);
 		try {
 			for (Sprite s : drops) {
 				s.draw(canvas);

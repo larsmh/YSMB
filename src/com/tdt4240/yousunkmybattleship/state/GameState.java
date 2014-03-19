@@ -51,8 +51,8 @@ public abstract class GameState extends State {
 	}
 	
 	protected void drawBombDrop(int x, int y, Player p) {
-		if(p==Constants.p1) p=Constants.p2;
-		else p=Constants.p1;
+		if(p==Constants.p) p=Constants.getOther();
+		else p=Constants.p;
 		if (p.getBoard()[y][x] != -1) {
 			drops.add(new Sprite(bs));
 		} else {
@@ -80,5 +80,8 @@ public abstract class GameState extends State {
 	public void draw(Canvas canvas){
 		bg.draw(canvas, 0, 0);
 		board.draw(canvas, 0, Constants.START_OF_GRID);
+		canvas.drawText(Constants.p.getName() + "'s turn",
+				Constants.WINDOW_WIDTH * 0.02f, Constants.WINDOW_HEIGHT * 0.2f,
+				Graphics.paint);
 	}
 }
