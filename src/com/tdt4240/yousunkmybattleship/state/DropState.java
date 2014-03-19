@@ -1,16 +1,12 @@
 package com.tdt4240.yousunkmybattleship.state;
 
-import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.model.Ship;
-
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
-import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
@@ -20,18 +16,15 @@ import sheep.input.TouchListener;
  */
 
 public class DropState extends GameState implements TouchListener {
-	private Image bs = Graphics.bomb_site;
-	private Image ws = Graphics.water_splash;
 	private TextButton myBoardButton;
 	private int bombsLeft;
-	private ArrayList<Sprite> drops;
 
 	public DropState() {
 		myBoardButton = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
 				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.05f, "My board", Graphics.buttonPaint);
 		bombsLeft = Constants.p.getBombsPerTurn();
-		drops = new ArrayList<Sprite>();
-		drawBombDrops();
+		//drops = new ArrayList<Sprite>();
+		drawBombDrops(Constants.p);
 	}
 
 	// try to register bomb drop in model
@@ -41,31 +34,7 @@ public class DropState extends GameState implements TouchListener {
 		if (Constants.p.registerDrop(x, y)) {
 			if (!Constants.getOther().shipIsHit(x, y))
 				bombsLeft--;
-			drawBombDrop(x, y);
-		}
-	}
-
-	private void drawBombDrop(int x, int y) {
-		if (Constants.getOther().getBoard()[y][x] != -1) {
-			drops.add(new Sprite(bs));
-		} else {
-			drops.add(new Sprite(ws));
-		}
-		drops.get(drops.size() - 1).setPosition(
-				x * Constants.TILE_SIZE
-						+ drops.get(drops.size() - 1).getOffset().getX() + 1,
-				Constants.START_OF_GRID + y * Constants.TILE_SIZE
-						+ drops.get(drops.size() - 1).getOffset().getY() + 1);
-	}
-
-	// draw all bomb drops registered in model
-	private void drawBombDrops() {
-		for (int i = 0; i < Constants.GRID_HEIGHT; i++) {
-			for (int j = 0; j < Constants.GRID_WIDTH; j++) {
-				if (Constants.p.getDrops()[i][j]) {
-					drawBombDrop(j, i);
-				}
-			}
+			drawBombDrop(x, y, Constants.p);
 		}
 	}
 
