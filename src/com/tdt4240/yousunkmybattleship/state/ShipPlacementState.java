@@ -11,8 +11,6 @@ import com.tdt4240.yousunkmybattleship.model.Ship;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
-import sheep.game.State;
-import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
@@ -26,13 +24,10 @@ import sheep.input.TouchListener;
  * 
  */
 
-public class ShipPlacementState extends State implements TouchListener, PropertyChangeListener {
-
-	private Image bg = Graphics.bg;
-	private Image board = Graphics.board;
-
-	private Ship[] ships;
-	private Sprite[] sprites;
+public class ShipPlacementState extends GameState implements TouchListener, PropertyChangeListener {
+	
+	//private Ship[] ships;
+	//private Sprite[] sprites;
 	private int moveableShip;
 	private TextButton submit;
 	private TextButton check; // Testing purposes
@@ -52,13 +47,13 @@ public class ShipPlacementState extends State implements TouchListener, Property
 		}
 		createSprites();
 	}
-
+	/*
 	private void createSprites() {
 		sprites = new Sprite[5];
 		for (int i = 0; i < sprites.length; i++)
 			sprites[i] = new Sprite(ships[i].getType().getImgHor());
 		placeOnTiles();
-	}
+	}*/
 
 	/**
 	 * Changes the sprite (from vertical to horizontal or vice versa)
@@ -93,29 +88,18 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	 * on the player's board
 	 * 
 	 */
-	private void placeOnTiles() {
-		for (int i = 0; i < sprites.length; i++) {
-			sprites[i].setPosition(
-					ships[i].getPosX() * Constants.TILE_SIZE
-							+ sprites[i].getOffset().getX() + 1,
-					Constants.START_OF_GRID
-							+ ships[i].getPosY()
-							* Constants.TILE_SIZE
-							+ sprites[i].getOffset().getY() + 1);
-		}
+	
+	// Fix this. Requires pixel perfect positions. Doesn't work with the images we use, they overlap sometimes
+	private boolean checkLegal(){
+		//making sure all ships have slid back to right position before check
 		synchronized(this){
 			try {
-				wait(25);
+				wait(30);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		legal=checkLegal();
-	}
-	
-	// Fix this. Requires pixel perfect positions. Doesn't work with the images we use, they overlap sometimes
-	private boolean checkLegal(){
 		for (int i = 0; i < sprites.length - 1; i++) {
 			for (int j = i + 1; j < sprites.length; j++) {
 				if (sprites[i].collides(sprites[j])) {
@@ -139,8 +123,7 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	}
 
 	public void draw(Canvas canvas) {
-		bg.draw(canvas, 0, 0);
-		board.draw(canvas, 0, Constants.START_OF_GRID);
+		super.draw(canvas);
 		canvas.drawText(Constants.p.getName()+"'s turn", Constants.WINDOW_WIDTH*0.02f, 
 				Constants.WINDOW_HEIGHT*0.2f, Graphics.paint);
 		check.draw(canvas);
@@ -161,11 +144,11 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	public boolean onTouchDown(MotionEvent event) {
 		// Logic check for submit button
 		if (submit.onTouchDown(event)) {
-			if(!checkLegal())
+			if(!legal)
 				return false;
-			for (int i = 0; i < ships.length; i++){
+			for (int i = 0; i < ships.length; i++)
 				ships[i].removePropertyChangeListener(this);
-			}
+			
 			Constants.p.setReady();
 			Constants.game.popState();
 			Constants.changeTurn();
@@ -226,6 +209,7 @@ public class ShipPlacementState extends State implements TouchListener, Property
 		}
 
 		placeOnTiles();
+		legal=checkLegal();
 		moveableShip = -1;
 		return true;
 	}
