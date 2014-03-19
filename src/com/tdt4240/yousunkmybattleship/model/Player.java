@@ -208,10 +208,6 @@ public class Player {
 		return true;
 	}
 
-	public void changePlayerState() {
-
-	}
-
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		pcs.addPropertyChangeListener(listener);
 	}

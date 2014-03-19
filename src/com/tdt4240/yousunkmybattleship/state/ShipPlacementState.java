@@ -25,9 +25,7 @@ import sheep.input.TouchListener;
  */
 
 public class ShipPlacementState extends GameState implements TouchListener, PropertyChangeListener {
-	
-	//private Ship[] ships;
-	//private Sprite[] sprites;
+
 	private int moveableShip;
 	private TextButton submit;
 	private TextButton check; // Testing purposes
@@ -47,13 +45,6 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 		}
 		createSprites();
 	}
-	/*
-	private void createSprites() {
-		sprites = new Sprite[5];
-		for (int i = 0; i < sprites.length; i++)
-			sprites[i] = new Sprite(ships[i].getType().getImgHor());
-		placeOnTiles();
-	}*/
 
 	/**
 	 * Changes the sprite (from vertical to horizontal or vice versa)
