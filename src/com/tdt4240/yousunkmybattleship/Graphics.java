@@ -3,11 +3,16 @@ package com.tdt4240.yousunkmybattleship;
 import android.graphics.Paint;
 import sheep.graphics.Image;
 
+/**
+ * Contains all the graphics that are used in the game, like the background
+ * pictures, the grids, the water splashes, the bomb sites, etc.
+ */
+
 public class Graphics {
 	public static Paint[] buttonPaint = new Paint[2];
 	public static Paint paint = new Paint();
 	public static Paint warningPaint = new Paint();
-	
+
 	public static Image board = new Image(R.drawable.board);
 	public static Image bg = new Image(R.drawable.menu_bg);
 
