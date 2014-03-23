@@ -1,5 +1,7 @@
 package com.tdt4240.yousunkmybattleship.state;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
@@ -19,7 +21,7 @@ import com.tdt4240.yousunkmybattleship.model.Ship;
  * players’ ships and all the graphics used during the game play.
  */
 
-public abstract class GameState extends State {
+public abstract class GameState extends State implements PropertyChangeListener {
 	private Image bg = Graphics.bg;
 	private Image board = Graphics.board;
 	private Image bs = Graphics.bomb_site;
@@ -91,5 +93,9 @@ public abstract class GameState extends State {
 		canvas.drawText(Constants.p.getName() + "'s turn",
 				Constants.WINDOW_WIDTH * 0.02f, Constants.WINDOW_HEIGHT * 0.2f,
 				Graphics.paint);
+	}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
 	}
 }
