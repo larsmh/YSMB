@@ -28,7 +28,6 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 
 	private int moveableShip;
 	private TextButton submit;
-	private TextButton check; // Testing purposes
 
 	private long startClickTime;
 	private boolean legal;
@@ -36,8 +35,6 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 	public ShipPlacementState() {
 		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
 				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.05f, "Submit", Graphics.buttonPaint);
-		check = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
-				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.15f, "Heihei", Graphics.buttonPaint);
 		moveableShip = -1;
 		ships = Constants.p.getShips();
 		for (int i = 0; i < ships.length; i++) {
@@ -70,7 +67,6 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 	 *            index of the ship to rotate
 	 */
 	private void rotateShip(Ship ship) {
-		check.setLabel("Changing direction");
 		ship.changeDirection();
 	}
 
@@ -204,7 +200,6 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		//check.setLabel("PROPERTCHANGE MADAFAKKA");
 		if (event.getPropertyName() == Constants.CHANGE_DIRECTION && moveableShip != -1) {
 			changeSprite(moveableShip, ships[moveableShip]);
 		}

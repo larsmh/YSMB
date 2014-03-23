@@ -1,5 +1,6 @@
 package com.tdt4240.yousunkmybattleship.state;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ConcurrentModificationException;
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
@@ -31,10 +32,15 @@ public class DropState extends GameState implements TouchListener {
 	public void dropBomb(float x1, float y1) {
 		int x = (int) (x1 / Constants.TILE_SIZE);
 		int y = (int) ((-Constants.START_OF_GRID + y1) / Constants.TILE_SIZE);
+		int[] coords = new int[2];
+		coords[0] = x;
+		coords[1] = y;
+		pcs.firePropertyChange(Constants.BOMB_DROPPED, false, coords);
+		// Update player model, gamestate listens to player model, draws sprites
 		if (Constants.p.registerDrop(x, y)) {
 			if (!Constants.getOther().shipIsHit(x, y))
 				bombsLeft--;
-			drawBombDrop(x, y, Constants.p);
+			//drawBombDrop(x, y, Constants.p);
 		}
 	}
 

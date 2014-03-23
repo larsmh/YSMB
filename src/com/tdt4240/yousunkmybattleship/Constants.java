@@ -25,6 +25,7 @@ public class Constants {
 
 	/* Fire property change name properties*/
 	public static final String CHANGE_DIRECTION = "CHANGE_DIRECTION";
+	public static final String BOMB_DROPPED = "BOMB_DROPPED";
 	
 	public enum DirectionType {
 		HORIZONTAL, VERTICAL;

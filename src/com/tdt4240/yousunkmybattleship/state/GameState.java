@@ -1,5 +1,6 @@
 package com.tdt4240.yousunkmybattleship.state;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 import sheep.game.Sprite;
@@ -21,10 +22,12 @@ public abstract class GameState extends State {
 	protected Sprite[] sprites;
 	protected Ship[] ships;
 	protected ArrayList<Sprite> drops;
+	protected PropertyChangeSupport pcs;
 	
 	public GameState(){
 		ships = Constants.p.getShips();
 		drops = new ArrayList<Sprite>();
+		pcs = new PropertyChangeSupport(this);
 	}
 	
 	protected void createSprites() {
