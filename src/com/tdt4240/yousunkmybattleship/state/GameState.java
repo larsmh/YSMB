@@ -14,6 +14,11 @@ import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.model.Player;
 import com.tdt4240.yousunkmybattleship.model.Ship;
 
+/**
+ * Abstract class that represents the game play. It contains the background, the
+ * players’ ships and all the graphics used during the game play.
+ */
+
 public abstract class GameState extends State {
 	private Image bg = Graphics.bg;
 	private Image board = Graphics.board;
@@ -24,38 +29,39 @@ public abstract class GameState extends State {
 	protected ArrayList<Sprite> drops;
 	protected PropertyChangeSupport pcs;
 	
-	public GameState(){
+
+	public GameState() {
 		ships = Constants.p.getShips();
 		drops = new ArrayList<Sprite>();
 		pcs = new PropertyChangeSupport(this);
 	}
-	
+
 	protected void createSprites() {
 		sprites = new Sprite[5];
-		for (int i = 0; i < sprites.length; i++){
-			if(!ships[i].isVertical())
+		for (int i = 0; i < sprites.length; i++) {
+			if (!ships[i].isVertical())
 				sprites[i] = new Sprite(ships[i].getType().getImgHor());
 			else
 				sprites[i] = new Sprite(ships[i].getType().getImgVert());
 		}
 		placeOnTiles();
 	}
-	
+
 	protected void placeOnTiles() {
 		for (int i = 0; i < sprites.length; i++) {
-			sprites[i].setPosition(
-					ships[i].getPosX() * Constants.TILE_SIZE
-							+ sprites[i].getOffset().getX() + 1,
-					Constants.START_OF_GRID
-							+ ships[i].getPosY()
+			sprites[i].setPosition(ships[i].getPosX() * Constants.TILE_SIZE
+					+ sprites[i].getOffset().getX() + 1,
+					Constants.START_OF_GRID + ships[i].getPosY()
 							* Constants.TILE_SIZE
 							+ sprites[i].getOffset().getY() + 1);
 		}
 	}
-	
+
 	protected void drawBombDrop(int x, int y, Player p) {
-		if(p==Constants.p) p=Constants.getOther();
-		else p=Constants.p;
+		if (p == Constants.p)
+			p = Constants.getOther();
+		else
+			p = Constants.p;
 		if (p.getBoard()[y][x] != -1) {
 			drops.add(new Sprite(bs));
 		} else {
@@ -78,9 +84,8 @@ public abstract class GameState extends State {
 			}
 		}
 	}
-	
-	
-	public void draw(Canvas canvas){
+
+	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
 		board.draw(canvas, 0, Constants.START_OF_GRID);
 		canvas.drawText(Constants.p.getName() + "'s turn",

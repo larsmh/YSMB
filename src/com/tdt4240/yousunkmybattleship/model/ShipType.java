@@ -7,7 +7,7 @@ import sheep.graphics.Image;
  * Contains the different types of ships.
  * 
  * It restricts the ships that can be created to existing ships. Each type of
- * ship has a number to be identify on the players' boards.
+ * ship has a number to be identified on the players' boards.
  * 
  */
 
@@ -16,8 +16,8 @@ public enum ShipType {
 			2, 4);
 
 	/**
-	 * The size attribute is the ship length which depends on the ship type.
-	 * The sprite attribute is an integer that indicates the ship type.
+	 * The size attribute is the ship length which depends on the ship type. The
+	 * sprite attribute is an integer that indicates the ship type.
 	 * 
 	 */
 	private int size, id;
@@ -28,6 +28,11 @@ public enum ShipType {
 	 */
 	private Image shipImgVert, shipImgHor;
 
+	/**
+	 * The constructor of the class. It fills automatically the size, sprite and
+	 * image of the new ships.
+	 * 
+	 */
 	private ShipType(int size, int sprite) {
 		this.size = size;
 		this.id = sprite;

@@ -12,19 +12,21 @@ import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
 /**
- * It is the screen that shows the game play.
+ * Screen that shows the game play. It extends GameState and contains the
+ * methods for dropping bombs.
  * 
  */
 
 public class DropState extends GameState implements TouchListener {
-	private TextButton myBoardButton;
+	private TextButton viewBoardButton;
 	private int bombsLeft;
 
 	public DropState() {
-		myBoardButton = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
-				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.05f, "My board", Graphics.buttonPaint);
+		viewBoardButton = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
+				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT * 0.05f,
+				"My board", Graphics.buttonPaint);
 		bombsLeft = Constants.p.getBombsPerTurn();
-		//drops = new ArrayList<Sprite>();
+		// drops = new ArrayList<Sprite>();
 		drawBombDrops(Constants.p);
 	}
 
@@ -46,7 +48,7 @@ public class DropState extends GameState implements TouchListener {
 
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
-		myBoardButton.draw(canvas);
+		viewBoardButton.draw(canvas);
 		try {
 			for (Sprite s : drops) {
 				s.draw(canvas);
@@ -72,11 +74,11 @@ public class DropState extends GameState implements TouchListener {
 
 	public boolean onTouchDown(MotionEvent event) {
 		// check if all bombs are dropped
-		if(myBoardButton.onTouchDown(event)){
-			Constants.game.pushState(new MyBoardState());
+		if (viewBoardButton.onTouchDown(event)) {
+			Constants.game.pushState(new ViewBoardState());
 			return true;
 		}
-		
+
 		if (bombsLeft == 0) {
 			Constants.game.popState();
 			Constants.changeTurn();

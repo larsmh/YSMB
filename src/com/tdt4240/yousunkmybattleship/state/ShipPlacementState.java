@@ -3,11 +3,9 @@ package com.tdt4240.yousunkmybattleship.state;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
-
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.model.Ship;
-
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
@@ -78,7 +76,7 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 	
 	// Fix this. Requires pixel perfect positions. Doesn't work with the images we use, they overlap sometimes
 	private boolean checkLegal(){
-		//making sure all ships have slid back to right position before check
+		// wait to make sure all ships have slid back to right position before check
 		synchronized(this){
 			try {
 				wait(30);
