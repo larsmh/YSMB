@@ -1,7 +1,6 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeSupport;
 import java.util.ConcurrentModificationException;
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
