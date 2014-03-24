@@ -105,7 +105,6 @@ public class Player {
 	 *            the y-coordinate of the dropped bomb
 	 */
 	public void bombDropped(int i, int j) {
-		boolean old = drops[i][j];
 		drops[i][j] = true;
 	}
 
@@ -147,6 +146,8 @@ public class Player {
 
 	public boolean registerDrop(int x, int y) {
 		if (!drops[y][x]) {
+			pcs.firePropertyChange(Constants.BOMB_DROPPED, false, true);
+			
 			return (drops[y][x] = true);
 		}
 		return false;
