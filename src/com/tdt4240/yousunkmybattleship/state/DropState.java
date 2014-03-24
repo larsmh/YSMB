@@ -23,7 +23,6 @@ public class DropState extends GameState implements TouchListener {
 		viewBoardButton = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
 				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.05f, "My board", Graphics.buttonPaint);
 		bombsLeft = Constants.p.getBombsPerTurn();
-		//drops = new ArrayList<Sprite>();
 		drawBombDrops(Constants.p);
 	}
 
@@ -86,11 +85,7 @@ public class DropState extends GameState implements TouchListener {
 	}
 
 	private boolean isWinner() {
-		for (Ship s : Constants.getOther().getShips()) {
-			if (!s.isSunk())
-				return false;
-		}
-		return true;
+		return (Constants.getOther().getShipsRemaining() == 0);
 	}
 
 }
