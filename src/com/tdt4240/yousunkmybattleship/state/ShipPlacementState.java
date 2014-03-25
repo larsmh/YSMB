@@ -167,13 +167,7 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 				}
 
 				sprites[i].setPosition(x, y);
-				/* THIS PART IS MOVED TO OnTouchUp
-				ships[i].placeShip(
-						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i]
-								.getOffset().getX()) / Constants.TILE_SIZE),
-						(int) ((Constants.TILE_SIZE / 2
-								- Constants.START_OF_GRID + y - sprites[i]
-								.getOffset().getY()) / Constants.TILE_SIZE));*/
+				
 				return true;
 			}
 		}

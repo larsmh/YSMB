@@ -14,7 +14,7 @@ import com.tdt4240.yousunkmybattleship.Constants;
 
 public class Player {
 	private String name;
-	private int bombsPerTurn, totalHits;
+	private int bombsPerTurn;
 	private boolean shipsPlaced;
 	protected PropertyChangeSupport pcs;
 

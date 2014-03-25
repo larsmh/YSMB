@@ -18,8 +18,6 @@ import sheep.input.TouchListener;
  */
 
 public class GameOverState extends State implements TouchListener {
-	// Temporary background
-
 	Image background = Graphics.bg;
 
 	TextButton menu;

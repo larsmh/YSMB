@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.util.ConcurrentModificationException;
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
-import com.tdt4240.yousunkmybattleship.model.Ship;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
@@ -29,7 +28,7 @@ public class DropState extends GameState implements TouchListener {
 				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT * 0.05f,
 				"My board", Graphics.buttonPaint);
 		bombsLeft = Constants.p.getBombsPerTurn();
-		// drops = new ArrayList<Sprite>();
+
 		if (counter < 2) {
 			Constants.p.addPropertyChangeListener(this);
 			counter++;
@@ -43,12 +42,11 @@ public class DropState extends GameState implements TouchListener {
 		int y = (int) ((-Constants.START_OF_GRID + y1) / Constants.TILE_SIZE);
 		coords[0] = x;
 		coords[1] = y;
-		//pcs.firePropertyChange(Constants.BOMB_DROPPED, false, coords);
-		// Update player model, gamestate listens to player model, draws sprites
+
+		// Update player model, dropstate listens to player model, draws sprites
 		if (Constants.p.registerDrop(x, y)) {
 			if (!Constants.getOther().shipIsHit(x, y))
 				bombsLeft--;
-			//drawBombDrop(x, y, Constants.p);
 		}
 	}
 
