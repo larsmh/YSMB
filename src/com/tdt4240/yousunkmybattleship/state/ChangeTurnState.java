@@ -39,9 +39,8 @@ public class ChangeTurnState extends State implements TouchListener {
 
 	public boolean onTouchDown(MotionEvent event) {
 		if (progress.onTouchDown(event)) {
-			//Constants.changeTurn();
 			if (Constants.p2.isReady())
-				Constants.game.pushState(new GameState());
+				Constants.game.pushState(new DropState());
 			else
 				Constants.game.pushState(new ShipPlacementState());
 			return true;

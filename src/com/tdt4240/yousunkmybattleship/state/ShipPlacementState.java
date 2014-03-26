@@ -3,16 +3,12 @@ package com.tdt4240.yousunkmybattleship.state;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
-
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
 import com.tdt4240.yousunkmybattleship.model.Ship;
-
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
-import sheep.game.State;
-import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
@@ -20,22 +16,16 @@ import sheep.input.TouchListener;
  * On this screen, the players can to place ships on their grids before the game
  * starts.
  * 
- * When the ship placement is done the ChangePlayerState is pushed and the other
- * player places his ships on the same type of screen. When both players have
- * placed their ships they start the game in the GameState.
+ * When the ship placement is done this state is popped (back to ChangeTurnState), and the other
+ * player gets ready to place his ships on the same type of screen. When both players have
+ * placed their ships they start the game in the DropState.
  * 
  */
 
-public class ShipPlacementState extends State implements TouchListener, PropertyChangeListener {
+public class ShipPlacementState extends GameState implements TouchListener, PropertyChangeListener {
 
-	private Image bg = Graphics.bg;
-	private Image board = Graphics.board;
-
-	private Ship[] ships;
-	private Sprite[] sprites;
 	private int moveableShip;
 	private TextButton submit;
-	private TextButton check; // Testing purposes
 
 	private long startClickTime;
 	private boolean legal;
@@ -43,8 +33,6 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	public ShipPlacementState() {
 		submit = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
 				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.05f, "Submit", Graphics.buttonPaint);
-		check = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
-				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT*0.15f, "Heihei", Graphics.buttonPaint);
 		moveableShip = -1;
 		ships = Constants.p.getShips();
 		for (int i = 0; i < ships.length; i++) {
@@ -52,13 +40,7 @@ public class ShipPlacementState extends State implements TouchListener, Property
 		}
 		createSprites();
 	}
-
-	private void createSprites() {
-		sprites = new Sprite[5];
-		for (int i = 0; i < sprites.length; i++)
-			sprites[i] = new Sprite(ships[i].getType().getImgHor());
-		placeOnTiles();
-	}
+	
 
 	/**
 	 * Changes the sprite (from vertical to horizontal or vice versa)
@@ -84,7 +66,6 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	 *            index of the ship to rotate
 	 */
 	private void rotateShip(Ship ship) {
-		check.setLabel("Changing direction");
 		ship.changeDirection();
 	}
 
@@ -93,29 +74,18 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	 * on the player's board
 	 * 
 	 */
-	private void placeOnTiles() {
-		for (int i = 0; i < sprites.length; i++) {
-			sprites[i].setPosition(
-					ships[i].getPosX() * Constants.TILE_SIZE
-							+ sprites[i].getOffset().getX() + 1,
-					Constants.START_OF_GRID
-							+ ships[i].getPosY()
-							* Constants.TILE_SIZE
-							+ sprites[i].getOffset().getY() + 1);
-		}
+	
+	// Fix this. Requires pixel perfect positions. Doesn't work with the images we use, they overlap sometimes
+	private boolean checkLegal(){
+		// wait to make sure all ships have slid back to right position before check
 		synchronized(this){
 			try {
-				wait(25);
+				wait(30);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		legal=checkLegal();
-	}
-	
-	// Fix this. Requires pixel perfect positions. Doesn't work with the images we use, they overlap sometimes
-	private boolean checkLegal(){
 		for (int i = 0; i < sprites.length - 1; i++) {
 			for (int j = i + 1; j < sprites.length; j++) {
 				if (sprites[i].collides(sprites[j])) {
@@ -139,11 +109,7 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	}
 
 	public void draw(Canvas canvas) {
-		bg.draw(canvas, 0, 0);
-		board.draw(canvas, 0, Constants.START_OF_GRID);
-		canvas.drawText(Constants.p.getName()+"'s turn", Constants.WINDOW_WIDTH*0.02f, 
-				Constants.WINDOW_HEIGHT*0.2f, Graphics.paint);
-		check.draw(canvas);
+		super.draw(canvas);
 		if(legal)
 			submit.draw(canvas);
 		else
@@ -161,12 +127,12 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	public boolean onTouchDown(MotionEvent event) {
 		// Logic check for submit button
 		if (submit.onTouchDown(event)) {
-			if(!checkLegal())
-				return false;
-			for (int i = 0; i < ships.length; i++){
-				ships[i].removePropertyChangeListener(this);
-			}
 			Constants.p.setReady();
+			if(!Constants.p.isReady())
+				return false;
+			for (int i = 0; i < ships.length; i++)
+				ships[i].removePropertyChangeListener(this);
+			
 			Constants.game.popState();
 			Constants.changeTurn();
 			return true;
@@ -178,16 +144,12 @@ public class ShipPlacementState extends State implements TouchListener, Property
 
 	public boolean onTouchMove(MotionEvent event) {
 		for (int i = sprites.length - 1; i >= 0; i--) {
-			float x = sprites[i].getPosition().getX();
-			float y = sprites[i].getPosition().getY();
+			float x = sprites[i].getX();
+			float y = sprites[i].getY();
 
-			if (event.getX() >= sprites[i].getX()
-					- sprites[i].getOffset().getX()
-					&& event.getX() <= sprites[i].getX()
-							+ sprites[i].getOffset().getX()
-					&& event.getY() >= sprites[i].getY()
-							- sprites[i].getOffset().getY()
-					&& event.getY() <= sprites[i].getY()
+			if (event.getX() >= x - sprites[i].getOffset().getX() && event.getX() <= x
+							+ sprites[i].getOffset().getX() && event.getY() >= y
+							- sprites[i].getOffset().getY()	&& event.getY() <= y
 							+ sprites[i].getOffset().getY() && isMoveable(i)) {
 				moveableShip = i;
 
@@ -205,12 +167,7 @@ public class ShipPlacementState extends State implements TouchListener, Property
 				}
 
 				sprites[i].setPosition(x, y);
-				ships[i].placeShip(
-						(int) ((Constants.TILE_SIZE / 2 + x - sprites[i]
-								.getOffset().getX()) / Constants.TILE_SIZE),
-						(int) ((Constants.TILE_SIZE / 2
-								- Constants.START_OF_GRID + y - sprites[i]
-								.getOffset().getY()) / Constants.TILE_SIZE));
+				
 				return true;
 			}
 		}
@@ -220,19 +177,25 @@ public class ShipPlacementState extends State implements TouchListener, Property
 	public boolean onTouchUp(MotionEvent event) {
 		long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
 
+		if(moveableShip!=-1){
+			ships[moveableShip].placeShip(
+					(int) ((Constants.TILE_SIZE / 2 + sprites[moveableShip].getX() - sprites[moveableShip]
+							.getOffset().getX()) / Constants.TILE_SIZE),
+							(int) ((Constants.TILE_SIZE / 2 - Constants.START_OF_GRID + sprites[moveableShip].getY() 
+									- sprites[moveableShip].getOffset().getY()) / Constants.TILE_SIZE));
+		}
 		// If a click is registered on a ship, initiate rotating process
 		if (clickDuration < Constants.MAX_CLICK_DURATION && moveableShip != -1) {
 			rotateShip(ships[moveableShip]);
 		}
-
 		placeOnTiles();
+		legal=checkLegal();
 		moveableShip = -1;
 		return true;
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		//check.setLabel("PROPERTCHANGE MADAFAKKA");
 		if (event.getPropertyName() == Constants.CHANGE_DIRECTION && moveableShip != -1) {
 			changeSprite(moveableShip, ships[moveableShip]);
 		}

@@ -1,51 +1,70 @@
 package com.tdt4240.yousunkmybattleship.state;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 
-import com.tdt4240.yousunkmybattleship.Constants;
-import com.tdt4240.yousunkmybattleship.Graphics;
-import com.tdt4240.yousunkmybattleship.model.Ship;
-
-import android.graphics.Canvas;
-import android.view.MotionEvent;
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Image;
-import sheep.input.TouchListener;
+
+import android.graphics.Canvas;
+
+import com.tdt4240.yousunkmybattleship.Constants;
+import com.tdt4240.yousunkmybattleship.Graphics;
+import com.tdt4240.yousunkmybattleship.model.Player;
+import com.tdt4240.yousunkmybattleship.model.Ship;
 
 /**
- * It is the screen that shows the game play.
- * 
+ * Abstract class that represents the game play. It contains the background, the
+ * players’ ships and all the graphics used during the game play.
  */
 
-public class GameState extends State implements TouchListener {
-	Image bg = Graphics.bg;
-	Image board = Graphics.board;
-	Image bs = Graphics.bomb_site;
-	Image ws = Graphics.water_splash;
-	int bombsLeft;
-	ArrayList<Sprite> drops;
+public abstract class GameState extends State implements PropertyChangeListener {
+	private Image bg = Graphics.bg;
+	private Image board = Graphics.board;
+	private Image bs = Graphics.bomb_site;
+	private Image ws = Graphics.water_splash;
+	protected Sprite[] sprites;
+	protected Ship[] ships;
+	protected ArrayList<Sprite> drops;
+	protected PropertyChangeSupport pcs;
+	
 
 	public GameState() {
-		bombsLeft = Constants.p.getBombsPerTurn();
+		ships = Constants.p.getShips();
 		drops = new ArrayList<Sprite>();
-		drawBombDrops();
+		pcs = new PropertyChangeSupport(this);
 	}
 
-	// try to register bomb drop in model
-	public void dropBomb(float x1, float y1) {
-		int x = (int) (x1 / Constants.TILE_SIZE);
-		int y = (int) ((-Constants.START_OF_GRID + y1) / Constants.TILE_SIZE);
-		if (Constants.p.registerDrop(x, y)) {
-			if (!Constants.getOther().shipIsHit(x, y))
-				bombsLeft--;
-			drawBombDrop(x, y);
+	protected void createSprites() {
+		sprites = new Sprite[5];
+		for (int i = 0; i < sprites.length; i++) {
+			if (!ships[i].isVertical())
+				sprites[i] = new Sprite(ships[i].getType().getImgHor());
+			else
+				sprites[i] = new Sprite(ships[i].getType().getImgVert());
+		}
+		placeOnTiles();
+	}
+
+	protected void placeOnTiles() {
+		for (int i = 0; i < sprites.length; i++) {
+			sprites[i].setPosition(ships[i].getPosX() * Constants.TILE_SIZE
+					+ sprites[i].getOffset().getX() + 1,
+					Constants.START_OF_GRID + ships[i].getPosY()
+							* Constants.TILE_SIZE
+							+ sprites[i].getOffset().getY() + 1);
 		}
 	}
 
-	private void drawBombDrop(int x, int y) {
-		if (Constants.getOther().getBoard()[y][x] != -1) {
+	protected void drawBombDrop(int x, int y, Player p) {
+		if (p == Constants.p)
+			p = Constants.getOther();
+		else
+			p = Constants.p;
+		if (p.getBoard()[y][x] != -1) {
 			drops.add(new Sprite(bs));
 		} else {
 			drops.add(new Sprite(ws));
@@ -58,11 +77,11 @@ public class GameState extends State implements TouchListener {
 	}
 
 	// draw all bomb drops registered in model
-	private void drawBombDrops() {
+	protected void drawBombDrops(Player p) {
 		for (int i = 0; i < Constants.GRID_HEIGHT; i++) {
 			for (int j = 0; j < Constants.GRID_WIDTH; j++) {
-				if (Constants.p.getDrops()[i][j]) {
-					drawBombDrop(j, i);
+				if (p.getDrops()[i][j]) {
+					drawBombDrop(j, i, p);
 				}
 			}
 		}
@@ -74,51 +93,9 @@ public class GameState extends State implements TouchListener {
 		canvas.drawText(Constants.p.getName() + "'s turn",
 				Constants.WINDOW_WIDTH * 0.02f, Constants.WINDOW_HEIGHT * 0.2f,
 				Graphics.paint);
-		try {
-			for (Sprite s : drops) {
-				s.draw(canvas);
-			}
-		} catch (ConcurrentModificationException e) {
-			e.printStackTrace();
-		}
-
-		canvas.drawText("You have: " + bombsLeft + " bombs left!",
-				Constants.WINDOW_WIDTH * 0.18f, Constants.WINDOW_HEIGHT * 0.3f,
-				Graphics.buttonPaint[1]);
 	}
-
-	public void update(float dt) {
-		try {
-			for (Sprite s : drops) {
-				s.update(dt);
-			}
-		} catch (ConcurrentModificationException e) {
-			e.printStackTrace();
-		}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
 	}
-
-	public boolean onTouchDown(MotionEvent event) {
-		// check if all bombs are dropped
-		if (bombsLeft == 0) {
-			Constants.game.popState();
-			Constants.changeTurn();
-			return true;
-		}
-		// try to drop a bomb on selected grid
-		if (event.getY() > Constants.START_OF_GRID) {
-			dropBomb(event.getX(), event.getY());
-			if (isWinner())
-				Constants.game.pushState(new GameOverState());
-		}
-		return false;
-	}
-
-	private boolean isWinner() {
-		for (Ship s : Constants.getOther().getShips()) {
-			if (!s.isSunk())
-				return false;
-		}
-		return true;
-	}
-
 }

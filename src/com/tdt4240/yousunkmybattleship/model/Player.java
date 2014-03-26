@@ -2,7 +2,6 @@ package com.tdt4240.yousunkmybattleship.model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
 import com.tdt4240.yousunkmybattleship.Constants;
 
 /**
@@ -15,7 +14,7 @@ import com.tdt4240.yousunkmybattleship.Constants;
 
 public class Player {
 	private String name;
-	private int bombsPerTurn, totalHits;
+	private int bombsPerTurn;
 	private boolean shipsPlaced;
 	protected PropertyChangeSupport pcs;
 
@@ -106,7 +105,6 @@ public class Player {
 	 *            the y-coordinate of the dropped bomb
 	 */
 	public void bombDropped(int i, int j) {
-		boolean old = drops[i][j];
 		drops[i][j] = true;
 	}
 
@@ -132,7 +130,11 @@ public class Player {
 	public void shipSunk() {
 		shipsRemaining -= 1;
 	}
-
+	
+	public int getShipsRemaining(){
+		return shipsRemaining;
+	}
+	
 	/**
 	 * Getter of the property ships
 	 * 
@@ -144,6 +146,8 @@ public class Player {
 
 	public boolean registerDrop(int x, int y) {
 		if (!drops[y][x]) {
+			pcs.firePropertyChange(Constants.BOMB_DROPPED, false, true);
+			
 			return (drops[y][x] = true);
 		}
 		return false;
@@ -168,18 +172,33 @@ public class Player {
 	}
 
 	public void setReady() {
-		shipsPlaced = true;
+		int count1=0;
 		for (Ship s : ships) {
 			if (s.isVertical()) {
-				for (int j = 0; j < s.getType().getSize(); j++)
+				for (int j = 0; j < s.getType().getSize(); j++){
 					board[s.getPosY() + j][s.getPosX()] = s.getType().getID();
-
+					count1++;
+				}
 			} else {
-				for (int j = 0; j < s.getType().getSize(); j++)
+				for (int j = 0; j < s.getType().getSize(); j++){
 					board[s.getPosY()][s.getPosX() + j] = s.getType().getID();
+					count1++;
+				}
 			}
 		}
+		int count2=0;
+		for(int i=0; i<Constants.GRID_HEIGHT; i++){
+			for(int j=0; j<Constants.GRID_WIDTH; j++){
+				if(board[i][j]!=-1)
+					count2++;
+			}
+		}
+		if(count1==count2)
+			shipsPlaced=true;
+		else
+			shipsPlaced=false;
 	}
+	
 
 	public boolean isReady() {
 		return shipsPlaced;
@@ -206,10 +225,6 @@ public class Player {
 			Constants.p.reduceBombsPerTurn();
 		}
 		return true;
-	}
-
-	public void changePlayerState() {
-
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {

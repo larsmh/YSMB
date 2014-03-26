@@ -67,6 +67,7 @@ public class Ship {
 	public boolean shipHit() {
 		hits++;
 		if (hits == type.getSize()) {
+			Constants.getOther().shipSunk();
 			return (shipSunk = true);
 		}
 		return false;
