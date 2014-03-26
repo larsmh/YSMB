@@ -18,10 +18,10 @@ import sheep.input.TouchListener;
  */
 
 public class GameOverState extends State implements TouchListener {
-	Image background = Graphics.bg;
+	private Image background = Graphics.bg;
 
-	TextButton menu;
-	TextButton exit;
+	private TextButton menu;
+	private TextButton exit;
 
 	public GameOverState() {
 		menu = new TextButton(Constants.WINDOW_WIDTH * 0.1f,
