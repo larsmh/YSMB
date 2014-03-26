@@ -15,6 +15,7 @@ import sheep.input.TouchListener;
  * This is the settings menu where users are allowed to choose between different
  * settings.
  * 
+ * Currently NOT in use
  */
 
 public class SettingsState extends State implements TouchListener {

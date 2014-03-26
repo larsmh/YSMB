@@ -1,6 +1,7 @@
 package com.tdt4240.yousunkmybattleship.state;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ConcurrentModificationException;
 import com.tdt4240.yousunkmybattleship.Constants;
 import com.tdt4240.yousunkmybattleship.Graphics;
@@ -16,8 +17,9 @@ import sheep.input.TouchListener;
  * 
  */
 
-public class DropState extends GameState implements TouchListener {
+public class DropState extends GameState implements TouchListener, PropertyChangeListener {
 	private TextButton viewBoardButton;
+	private TextButton backToMainButton;
 	private int bombsLeft;
 	private int counter = 0;
 	private int[] coords = new int[2];
@@ -27,6 +29,9 @@ public class DropState extends GameState implements TouchListener {
 		viewBoardButton = new TextButton(Constants.WINDOW_WIDTH * 0.05f,
 				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT * 0.05f,
 				"My board", Graphics.buttonPaint);
+		backToMainButton = new TextButton(Constants.WINDOW_WIDTH * 0.6f,
+				Constants.START_OF_GRID - Constants.WINDOW_HEIGHT * 0.05f,
+				"Main menu", Graphics.buttonPaint);
 		bombsLeft = Constants.p.getBombsPerTurn();
 
 		if (counter < 2) {
@@ -53,6 +58,7 @@ public class DropState extends GameState implements TouchListener {
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 		viewBoardButton.draw(canvas);
+		backToMainButton.draw(canvas);
 		try {
 			for (Sprite s : drops) {
 				s.draw(canvas);
@@ -62,7 +68,7 @@ public class DropState extends GameState implements TouchListener {
 		}
 
 		canvas.drawText("You have: " + bombsLeft + " bombs left!",
-				Constants.WINDOW_WIDTH * 0.18f, Constants.WINDOW_HEIGHT * 0.3f,
+				Constants.WINDOW_WIDTH * 0.18f, Constants.WINDOW_HEIGHT * 0.28f,
 				Graphics.buttonPaint[1]);
 	}
 
@@ -80,6 +86,10 @@ public class DropState extends GameState implements TouchListener {
 		// check if all bombs are dropped
 		if (viewBoardButton.onTouchDown(event)) {
 			Constants.game.pushState(new ViewBoardState());
+			return true;
+		}
+		else if (backToMainButton.onTouchDown(event)) {
+			Constants.game.popState(2);
 			return true;
 		}
 

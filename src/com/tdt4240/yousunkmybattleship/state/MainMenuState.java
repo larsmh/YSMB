@@ -24,7 +24,7 @@ import sheep.input.TouchListener;
 public class MainMenuState extends State implements TouchListener {
 	Image bg = Graphics.bg;
 	TextButton newGame;
-	TextButton settings;
+	//TextButton settings;
 	TextButton instructions;
 
 	public MainMenuState() {
@@ -39,8 +39,8 @@ public class MainMenuState extends State implements TouchListener {
 		Graphics.warningPaint.setColor(Color.RED);
 		newGame = new TextButton(Constants.WINDOW_WIDTH * 0.37f,
 				Constants.WINDOW_HEIGHT * 0.2f, "New Game", Graphics.buttonPaint);
-		settings = new TextButton(Constants.WINDOW_WIDTH * 0.4f,
-				Constants.WINDOW_HEIGHT * 0.36f, "Settings", Graphics.buttonPaint);
+		/*settings = new TextButton(Constants.WINDOW_WIDTH * 0.4f,
+				Constants.WINDOW_HEIGHT * 0.36f, "Settings", Graphics.buttonPaint);*/
 		instructions = new TextButton(Constants.WINDOW_WIDTH * 0.36f,
 				Constants.WINDOW_HEIGHT * 0.52f, "Instructions",
 				Graphics.buttonPaint);
@@ -49,7 +49,7 @@ public class MainMenuState extends State implements TouchListener {
 	public void draw(Canvas canvas) {
 		bg.draw(canvas, 0, 0);
 		newGame.draw(canvas);
-		settings.draw(canvas);
+		//settings.draw(canvas);
 		instructions.draw(canvas);
 	}
 
@@ -60,8 +60,8 @@ public class MainMenuState extends State implements TouchListener {
 			Constants.p = Constants.p1;
 			Constants.game.pushState(new ChangeTurnState());
 		}
-		else if (settings.onTouchDown(event))
-			Constants.game.pushState(new SettingsState());
+		/*else if (settings.onTouchDown(event))
+			Constants.game.pushState(new SettingsState());*/
 		else if (instructions.onTouchDown(event))
 			Constants.game.pushState(new InstructionsState());
 		return true;
