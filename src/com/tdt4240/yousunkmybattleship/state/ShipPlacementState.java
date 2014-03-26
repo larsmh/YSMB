@@ -74,8 +74,6 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 	 * on the player's board
 	 * 
 	 */
-	
-	// Fix this. Requires pixel perfect positions. Doesn't work with the images we use, they overlap sometimes
 	private boolean checkLegal(){
 		// wait to make sure all ships have slid back to right position before check
 		synchronized(this){
@@ -126,7 +124,7 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 
 	public boolean onTouchDown(MotionEvent event) {
 		// Logic check for submit button
-		if (submit.onTouchDown(event)) {
+		if (submit.onTouchDown(event) && legal) {
 			Constants.p.setReady();
 			if(!Constants.p.isReady())
 				return false;
@@ -189,7 +187,7 @@ public class ShipPlacementState extends GameState implements TouchListener, Prop
 			rotateShip(ships[moveableShip]);
 		}
 		placeOnTiles();
-		legal=checkLegal();
+		legal = checkLegal();
 		moveableShip = -1;
 		return true;
 	}
