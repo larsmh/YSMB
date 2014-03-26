@@ -14,13 +14,13 @@ import sheep.input.TouchListener;
  * Shows the player's grid with his ships and the locations where his opponent
  * dropped bombs.
  * 
- * It is pushed if a player clicks on the “My board” button when it is his turn.
+ * It is pushed if a player clicks on the My board button when it is his turn.
  */
 
 public class ViewBoardState extends GameState implements TouchListener {
 	private TextButton backButton = new TextButton(
 			Constants.WINDOW_WIDTH * 0.05f, Constants.START_OF_GRID
-					- Constants.WINDOW_HEIGHT * 0.05f, "back",
+					- Constants.WINDOW_HEIGHT * 0.05f, "Back",
 			Graphics.buttonPaint);
 
 	/**

@@ -21,7 +21,7 @@ import com.tdt4240.yousunkmybattleship.model.Ship;
  * players’ ships and all the graphics used during the game play.
  */
 
-public abstract class GameState extends State implements PropertyChangeListener {
+public abstract class GameState extends State {
 	private Image bg = Graphics.bg;
 	private Image board = Graphics.board;
 	private Image bs = Graphics.bomb_site;
@@ -29,13 +29,10 @@ public abstract class GameState extends State implements PropertyChangeListener 
 	protected Sprite[] sprites;
 	protected Ship[] ships;
 	protected ArrayList<Sprite> drops;
-	protected PropertyChangeSupport pcs;
-	
 
 	public GameState() {
 		ships = Constants.p.getShips();
 		drops = new ArrayList<Sprite>();
-		pcs = new PropertyChangeSupport(this);
 	}
 
 	protected void createSprites() {
@@ -70,10 +67,9 @@ public abstract class GameState extends State implements PropertyChangeListener 
 			drops.add(new Sprite(ws));
 		}
 		drops.get(drops.size() - 1).setPosition(
-				x * Constants.TILE_SIZE
-						+ drops.get(drops.size() - 1).getOffset().getX() + 1,
-				Constants.START_OF_GRID + y * Constants.TILE_SIZE
-						+ drops.get(drops.size() - 1).getOffset().getY() + 1);
+				x * Constants.TILE_SIZE	+ drops.get(drops.size() - 1).getOffset().getX() + 1,
+				Constants.START_OF_GRID + y * Constants.TILE_SIZE + drops.get(drops.size() - 1).getOffset().getY() + 1
+				);
 	}
 
 	// draw all bomb drops registered in model
@@ -93,9 +89,5 @@ public abstract class GameState extends State implements PropertyChangeListener 
 		canvas.drawText(Constants.p.getName() + "'s turn",
 				Constants.WINDOW_WIDTH * 0.02f, Constants.WINDOW_HEIGHT * 0.2f,
 				Graphics.paint);
-	}
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent event) {
 	}
 }
